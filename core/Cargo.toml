@@ -1,0 +1,29 @@
+[package]
+name = "homedisk-core"
+authors = ["MedzikUser <nivua1fn@duck.com>"]
+homepage = "https://github.com/HomeDisk/cloud"
+repository = "https://github.com/HomeDisk/cloud"
+license = "GPL-3.0-or-later"
+version = "0.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bin]]
+name = "cloud"
+path = "./src/main.rs"
+
+[dependencies]
+better-panic = "0.3.0"
+
+[dependencies.tokio]
+version = "1.17.0"
+features = ["full"]
+
+[dependencies.log]
+version = "0.4.16"
+features = ["max_level_debug", "release_max_level_warn"]
+
+[dependencies.homedisk-utils]
+path = "../utils"
+features = ["database"]

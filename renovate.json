@@ -1,0 +1,19 @@
+{
+    "extends": [
+        "config:base"
+    ],
+    "prHourlyLimit": 0,
+    "automergeType": "pr",
+    "prCreation": "immediate",
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "automerge": true
+        }
+    ]
+}

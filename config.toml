@@ -1,0 +1,4 @@
+[http]
+host = "localhost"
+port = 8080
+cors = "127.0.0.1:8080"
