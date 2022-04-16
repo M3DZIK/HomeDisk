@@ -2,6 +2,4 @@
 
 ## 🖴 Create SQLite Database
 
-```bash
-sqlite3 homedisk.db < tables.sql
-```
+Run file `./scripts/create-sqlite-database.sh` to create SQLite database file.
