@@ -1,10 +1,8 @@
 use std::fs;
 
-use anyhow::Error;
 use serde::{Deserialize, Serialize};
 
-// configuration file path
-static CONFIG_PATH: &str = "config.toml";
+use super::Error;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Config {
@@ -21,7 +19,11 @@ pub struct ConfigHTTP {
 impl Config {
     /// parse configuration file
     pub fn parse() -> Result<Config, Error> {
-        let config = fs::read_to_string(CONFIG_PATH)?;
+        // configuration file path
+        let config_dir = if dirs::config_dir() == None { return Err(Error::UnknowConfigDir()) } else { dirs::config_dir().unwrap() };
+        let config_path = format!("{}/homedisk/config.toml", config_dir.to_string_lossy());
+
+        let config = fs::read_to_string(config_path)?;
         Ok(toml::from_str(&config)?)
     }
 }

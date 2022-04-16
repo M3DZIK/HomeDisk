@@ -26,4 +26,4 @@ features = ["max_level_debug", "release_max_level_warn"]
 
 [dependencies.homedisk-utils]
 path = "../utils"
-features = ["database"]
+features = ["full"]
