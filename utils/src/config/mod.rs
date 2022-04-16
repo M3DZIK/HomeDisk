@@ -1,4 +1,6 @@
-mod config;
 mod error;
+mod parser;
 
-pub use {config::*, error::*};
+use parser as config;
+
+pub use {error::*, config::*};
