@@ -35,7 +35,7 @@ pub fn hasher(algo: &str, input: String) -> Result<String> {
             encode(hasher.finalize())
         }
 
-        _ => Err(Error::UnknownAlgorithm("digest", algo.to_string()))?,
+        _ => return Err(Error::UnknownAlgorithm("digest", algo.to_string())),
     };
 
     Ok(hash)
