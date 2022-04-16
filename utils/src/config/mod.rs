@@ -3,4 +3,4 @@ mod parser;
 
 use parser as config;
 
-pub use {error::*, config::*};
+pub use {config::*, error::*};
