@@ -34,7 +34,7 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-          components: rustfmt, clippy
+          components: clippy
 
       - name: Cache
         uses: actions/cache@v3
@@ -54,17 +54,16 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: -D warnings
+          args: -- -D warnings
 
   test:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         rust: [stable, nightly]
 
-    name: ${{ matrix.rust }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.rust }} test
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -77,7 +76,6 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-          components: rustfmt, clippy
 
       - name: Cache
         uses: actions/cache@v3
