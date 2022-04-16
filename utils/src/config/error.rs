@@ -22,7 +22,9 @@ impl From<toml::de::Error> for Error {
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Error::UnknowConfigDir() => write!(f, "failed to lock up a system configuration directory"),
+            Error::UnknowConfigDir() => {
+                write!(f, "failed to lock up a system configuration directory")
+            }
             Error::Io(err) => write!(f, "{}", err),
             Error::Toml(err) => write!(f, "{}", err),
         }

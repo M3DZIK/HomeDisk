@@ -20,7 +20,12 @@ impl Config {
     /// parse configuration file
     pub fn parse() -> Result<Config, Error> {
         // configuration file path
-        let config_dir = if dirs::config_dir() == None { return Err(Error::UnknowConfigDir()) } else { dirs::config_dir().unwrap() };
+        let config_dir = if dirs::config_dir() == None {
+            return Err(Error::UnknowConfigDir());
+        } else {
+            dirs::config_dir().unwrap()
+        };
+
         let config_path = format!("{}/homedisk/config.toml", config_dir.to_string_lossy());
 
         let config = fs::read_to_string(config_path)?;

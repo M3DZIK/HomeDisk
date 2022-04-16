@@ -1,4 +1,4 @@
-use homedisk_utils::{database::Database, config::Config};
+use homedisk_utils::{config::Config, database::Database};
 
 #[tokio::main]
 async fn main() {
