@@ -41,4 +41,5 @@ optional = true
 # database
 [dependencies.rusqlite]
 version = "0.27.0"
+features = ["bundled"]
 optional = true
