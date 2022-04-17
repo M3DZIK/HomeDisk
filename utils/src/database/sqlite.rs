@@ -32,7 +32,7 @@ impl Database {
     /// let db = Database { conn: Connection::open_in_memory().unwrap() };
     /// let user = User::new("medzik", "SuperSecretPassword123").unwrap();
     ///
-    /// db.conn.execute(&fs::read_to_string("../template.sql").unwrap(), []).unwrap();
+    /// db.conn.execute(&fs::read_to_string("../tables.sql").unwrap(), []).unwrap();
     ///
     /// db.create_user(user).unwrap();
     /// ```
