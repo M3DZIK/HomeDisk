@@ -1,8 +1,6 @@
 use log::debug;
 use rusqlite::Connection;
 
-use crate::crypto;
-
 use super::{user, Error};
 
 pub struct Database {
@@ -10,22 +8,40 @@ pub struct Database {
 }
 
 impl Database {
-    pub fn open() -> Result<Self, Error> {
+    /// Open SQLite Database file
+    /// ```
+    /// use homedisk_utils::database::Database;
+    ///
+    /// Database::open("/tmp/homedisk.db").unwrap();
+    /// ```
+    pub fn open(path: &str) -> Result<Self, Error> {
         debug!("opening SQLite database");
 
-        let conn = Connection::open("homedisk.db")?;
+        let conn = Connection::open(path)?;
+
         Ok(Self { conn })
     }
 
-    pub fn create_user(&mut self, user: user::User) -> Result<usize, Error> {
+    /// Create new User
+    /// ```
+    /// use std::fs;
+    ///
+    /// use rusqlite::Connection;
+    /// use homedisk_utils::database::{Database, User};
+    ///
+    /// let db = Database { conn: Connection::open_in_memory().unwrap() };
+    /// let user = User::new("medzik", "SuperSecretPassword123").unwrap();
+    ///
+    /// db.conn.execute(&fs::read_to_string("../template.sql").unwrap(), []).unwrap();
+    ///
+    /// db.create_user(user).unwrap();
+    /// ```
+    pub fn create_user(&self, user: user::User) -> Result<usize, Error> {
         debug!("creating user - {}", user.username);
 
-        // hash password using sha512
-        let password = crypto::hasher("sha512", user.password)?;
-
         Ok(self.conn.execute(
-            "INSERT INTO user (username, password) VALUES (?1, ?2)",
-            [user.username, password],
+            "INSERT INTO user (id, username, password) VALUES (?1, ?2, ?3)",
+            [user.id, user.username, user.password],
         )?)
     }
 }
