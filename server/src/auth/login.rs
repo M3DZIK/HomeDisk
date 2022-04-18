@@ -1,6 +1,6 @@
 use axum::Json;
 use homedisk_types::{
-    auth::auth::login::{Request, Response},
+    auth::login::{Request, Response},
     errors::{AuthError, ServerError},
 };
 
