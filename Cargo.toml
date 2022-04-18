@@ -1,6 +1,8 @@
 [workspace]
 members = [
     "core",
+    "server",
+    "types",
     "utils",
 ]
 resolver = "2"

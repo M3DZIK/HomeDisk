@@ -12,8 +12,7 @@ pub struct Config {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ConfigHTTP {
     pub host: String,
-    pub port: u32,
-    pub cors: String,
+    pub cors: Vec<String>,
 }
 
 impl Config {

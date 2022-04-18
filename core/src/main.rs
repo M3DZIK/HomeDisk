@@ -1,21 +1,24 @@
 mod init;
 
-use homedisk_utils::{
-    config::Config,
-    database::{Database, User},
-};
+use homedisk_utils::{config::Config, database::Database};
 
 #[tokio::main]
 async fn main() {
     init::init();
 
-    let _config = Config::parse().expect("parse configuration file");
+    let config = Config::parse().expect("parse configuration file");
 
-    let _db = Database::open("homedisk.db").expect("open SQLite database");
+    let db = Database::open("homedisk.db").expect("open SQLite database");
 
-    let user = User::new("medzik", "password").unwrap();
+    // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
+    let origins = config
+        .http
+        .cors
+        .iter()
+        .map(|e| e.parse().expect("parse CORS host"))
+        .collect();
 
-    println!("{:?}", user);
-
-    _db.create_user(user).unwrap();
+    homedisk_server::serve(config.http.host, origins, db)
+        .await
+        .expect("start http server");
 }

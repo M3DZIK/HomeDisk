@@ -1,0 +1,15 @@
+[package]
+name = "homedisk-types"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+thiserror = "1.0.30"
+
+[dependencies.serde]
+version = "1.0.136"
+features = ["derive"]
+
+[dependencies.axum]
+version = "0.5.1"
+optional = true

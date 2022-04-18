@@ -3,6 +3,7 @@ use rusqlite::Connection;
 
 use super::{user, Error};
 
+#[derive(Debug)]
 pub struct Database {
     pub conn: Connection,
 }
