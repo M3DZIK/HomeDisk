@@ -7,4 +7,7 @@ pub enum Error {
 
     #[error("user already exists")]
     UserAlreadyExists,
+
+    #[error("unknow error")]
+    UnknowError(String),
 }

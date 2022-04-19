@@ -1,7 +1,7 @@
 use hex::encode;
 use uuid::Uuid;
 
-use crate::crypto::{self, CryptographicHash};
+use crate::crypto::CryptographicHash;
 
 #[derive(Debug)]
 pub struct User {
@@ -19,17 +19,17 @@ impl User {
     ///
     /// let user = User::new("medzik", "SuperSecretPassword123!").unwrap();
     /// ```
-    pub fn new(username: &str, password: &str) -> Result<Self, crypto::Error> {
+    pub fn new(username: &str, password: &str) -> Self {
         // create user UUID
-        let sha1_name = CryptographicHash::hash("SHA-1", username.as_bytes())?;
+        let sha1_name = CryptographicHash::hash("SHA-1", username.as_bytes()).unwrap();
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 
-        let password = encode(CryptographicHash::hash("SHA-512", password.as_bytes())?);
+        let password = encode(CryptographicHash::hash("SHA-512", password.as_bytes()).unwrap());
 
-        Ok(Self {
+        Self {
             id,
             username: username.to_string(),
             password,
-        })
+        }
     }
 }

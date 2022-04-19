@@ -8,7 +8,9 @@ async fn main() {
 
     let config = Config::parse().expect("parse configuration file");
 
-    let db = Database::open("homedisk.db").expect("open SQLite database");
+    let db = Database::open("homedisk.db")
+        .await
+        .expect("open SQLite database");
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
     let origins = config

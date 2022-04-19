@@ -1,11 +1,11 @@
 use log::debug;
-use rusqlite::Connection;
+use sqlx::{sqlite::SqliteQueryResult, Executor, SqlitePool};
 
 use super::{user, Error};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Database {
-    pub conn: Connection,
+    pub conn: SqlitePool,
 }
 
 impl Database {
@@ -13,12 +13,15 @@ impl Database {
     /// ```
     /// use homedisk_utils::database::Database;
     ///
-    /// Database::open("/tmp/homedisk.db").unwrap();
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     Database::open("sqlite::memory:").await.unwrap();
+    /// }
     /// ```
-    pub fn open(path: &str) -> Result<Self, Error> {
+    pub async fn open(path: &str) -> Result<Self, Error> {
         debug!("opening SQLite database");
 
-        let conn = Connection::open(path)?;
+        let conn = SqlitePool::connect(path).await?;
 
         Ok(Self { conn })
     }
@@ -27,22 +30,27 @@ impl Database {
     /// ```
     /// use std::fs;
     ///
-    /// use rusqlite::Connection;
+    /// use sqlx::Executor;
     /// use homedisk_utils::database::{Database, User};
     ///
-    /// let db = Database { conn: Connection::open_in_memory().unwrap() };
-    /// let user = User::new("medzik", "SuperSecretPassword123").unwrap();
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let db = Database::open("sqlite::memory:").await.unwrap();
     ///
-    /// db.conn.execute(&fs::read_to_string("../tables.sql").unwrap(), []).unwrap();
+    ///     db.conn.execute(sqlx::query(&fs::read_to_string("../tables.sql").unwrap())).await.unwrap();
     ///
-    /// db.create_user(user).unwrap();
+    ///     let user = User::new("medzik", "SuperSecretPassword123").unwrap();
+    ///     db.create_user(user).await.unwrap();
+    /// }
     /// ```
-    pub fn create_user(&self, user: user::User) -> Result<usize, Error> {
+    pub async fn create_user(&self, user: user::User) -> Result<SqliteQueryResult, Error> {
         debug!("creating user - {}", user.username);
 
-        Ok(self.conn.execute(
-            "INSERT INTO user (id, username, password) VALUES (?1, ?2, ?3)",
-            [user.id, user.username, user.password],
-        )?)
+        let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")
+            .bind(user.id)
+            .bind(user.username)
+            .bind(user.password);
+
+        Ok(self.conn.execute(query).await?)
     }
 }

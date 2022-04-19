@@ -7,7 +7,7 @@ edition = "2021"
 full = ["crypto", "config", "database"]
 crypto = ["sha-1", "sha2", "hex"]
 config = ["toml", "anyhow", "dirs"]
-database = ["rusqlite", "uuid"]
+database = ["sqlx", "uuid"]
 
 [dependencies]
 log = "0.4.16"
@@ -39,11 +39,15 @@ version = "4.0.0"
 optional = true
 
 # database
-[dependencies.rusqlite]
-version = "0.27.0"
-features = ["bundled"]
+[dependencies.sqlx]
+version = "0.5.13"
+features = ["runtime-tokio-rustls", "postgres", "sqlite"]
 optional = true
 [dependencies.uuid]
 version = "0.8.2"
 features = ["v4", "v5"]
 optional = true
+
+[dev-dependencies.tokio]
+version = "1.17.0"
+features = ["full"]
