@@ -16,6 +16,10 @@ anyhow = "1.0.56"
 version = "1.0.136"
 features = ["derive"]
 
+[dependencies.zeroize]
+version = "1.5.4"
+features = ["derive"]
+
 [dependencies.axum]
 version = "0.5.3"
 optional = true
