@@ -17,7 +17,7 @@ impl User {
     /// ```
     /// use homedisk_utils::database::User;
     ///
-    /// let user = User::new("medzik", "SuperSecretPassword123!").unwrap();
+    /// let user = User::new("medzik", "SuperSecretPassword123!");
     /// ```
     pub fn new(username: &str, password: &str) -> Self {
         // create user UUID

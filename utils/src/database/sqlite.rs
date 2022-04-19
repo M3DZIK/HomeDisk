@@ -39,7 +39,7 @@ impl Database {
     ///
     ///     db.conn.execute(sqlx::query(&fs::read_to_string("../tables.sql").unwrap())).await.unwrap();
     ///
-    ///     let user = User::new("medzik", "SuperSecretPassword123").unwrap();
+    ///     let user = User::new("medzik", "SuperSecretPassword123");
     ///     db.create_user(user).await.unwrap();
     /// }
     /// ```
