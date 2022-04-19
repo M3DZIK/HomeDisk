@@ -10,7 +10,7 @@ impl Config {
     /// parse configuration file
     pub fn parse() -> Result<Config> {
         // configuration file path
-        let config_dir = option_return!(dirs::config_dir(), "s")?;
+        let config_dir = option_return!(dirs::config_dir(), "get config dir")?;
 
         let config_path = format!("{}/homedisk/config.toml", config_dir.to_string_lossy());
 
