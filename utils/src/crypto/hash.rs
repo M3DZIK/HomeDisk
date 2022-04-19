@@ -1,11 +1,9 @@
-pub use hex::encode;
 use sha1::Sha1;
 use sha2::{Digest, Sha256, Sha512};
 
 use super::{Error, Result};
 
 /// create a cryptographic hash from a string (sha1, sha256, sha512)
-///
 /// ```
 /// use homedisk_utils::crypto::{CryptographicHash, encode};
 ///
@@ -24,6 +22,7 @@ pub enum CryptographicHash {
 }
 
 impl CryptographicHash {
+    /// Create a new hasher
     pub fn new(algo: &str) -> Result<Self> {
         match algo {
             "SHA-1" | "SHA1" | "Sha1" | "sha1" => Ok(Self::Sha1(Sha1::new())),
@@ -33,6 +32,7 @@ impl CryptographicHash {
         }
     }
 
+    /// Set a value for hasher
     pub fn update(&mut self, input: &[u8]) {
         match self {
             Self::Sha1(sha1) => sha1.update(input),
@@ -41,6 +41,7 @@ impl CryptographicHash {
         }
     }
 
+    /// Compute hash
     pub fn finalize(&mut self) -> Vec<u8> {
         match self {
             Self::Sha1(sha1) => sha1.finalize_reset().to_vec(),
@@ -49,6 +50,7 @@ impl CryptographicHash {
         }
     }
 
+    /// Streamline the hash calculation to a single function
     pub fn hash(algo: &str, input: &[u8]) -> Result<Vec<u8>> {
         let mut hasher = Self::new(algo)?;
 
@@ -94,6 +96,16 @@ mod tests {
 
         assert_eq!(
             hash,
+            "b43b4d7178014c92f55be828d66c9f98211fc67b385f7790a5b4b2fcb89fe1831645b5a4c17f3f7f11d8f34d2800a77a2b8faa5a0fb9d6b8f7befbc29a9ce795".to_string()
+        )
+    }
+
+    #[test]
+    fn hash_fn() {
+        let hash = CryptographicHash::hash("SHA-512", b"test sha512 hash").unwrap();
+
+        assert_eq!(
+            encode(hash),
             "b43b4d7178014c92f55be828d66c9f98211fc67b385f7790a5b4b2fcb89fe1831645b5a4c17f3f7f11d8f34d2800a77a2b8faa5a0fb9d6b8f7befbc29a9ce795".to_string()
         )
     }
