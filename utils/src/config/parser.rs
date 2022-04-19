@@ -13,6 +13,7 @@ pub struct Config {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigHTTP {
     pub host: String,
+    pub port: u16,
     pub cors: Vec<String>,
 }
 
