@@ -31,3 +31,7 @@ features = ["full"]
 
 [dependencies.homedisk-server]
 path = "../server"
+
+[dependencies.homedisk-types]
+path = "../types"
+features = ["config"]

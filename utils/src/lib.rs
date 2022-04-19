@@ -1,6 +1,3 @@
-#[cfg(feature = "config")]
-pub mod config;
-
 #[cfg(feature = "crypto")]
 pub mod crypto;
 

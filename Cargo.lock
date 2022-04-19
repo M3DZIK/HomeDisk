@@ -269,7 +269,6 @@ checksum = "f2fb860ca6fafa5552fb6d0e816a69c8e49f0908bf524e30a90d97c85892d506"
 dependencies = [
  "block-buffer",
  "crypto-common",
- "subtle",
 ]
 
 [[package]]
@@ -497,29 +496,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
-name = "hkdf"
-version = "0.12.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "791a029f6b9fc27657f6f188ec6e5e43f6911f6f878e0dc5501396e09809d437"
-dependencies = [
- "hmac",
-]
-
-[[package]]
-name = "hmac"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c49c37c09c17a53d937dfbb742eb3a961d65a994e6bcdcf37e7399d0cc8ab5e"
-dependencies = [
- "digest",
-]
-
-[[package]]
 name = "homedisk-core"
 version = "0.0.0"
 dependencies = [
  "better-panic",
  "homedisk-server",
+ "homedisk-types",
  "homedisk-utils",
  "log",
  "simplelog",
@@ -544,11 +526,14 @@ dependencies = [
 name = "homedisk-types"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
  "axum",
  "chrono",
+ "dirs",
  "jsonwebtoken",
  "serde",
  "thiserror",
+ "toml",
  "uuid",
 ]
 
@@ -556,8 +541,6 @@ dependencies = [
 name = "homedisk-utils"
 version = "0.0.0"
 dependencies = [
- "anyhow",
- "dirs",
  "hex",
  "log",
  "serde",
@@ -565,7 +548,6 @@ dependencies = [
  "sha2",
  "sqlx",
  "tokio",
- "toml",
  "uuid",
 ]
 
@@ -754,15 +736,6 @@ name = "matchit"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73cbba799671b762df5a175adf59ce145165747bb891505c43d09aefbbf38beb"
-
-[[package]]
-name = "md-5"
-version = "0.10.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "658646b21e0b72f7866c7038ab086d3d5e1cd6271f060fd37defb241949d0582"
-dependencies = [
- "digest",
-]
 
 [[package]]
 name = "memchr"
@@ -1006,12 +979,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1df8c4ec4b0627e53bdf214615ad287367e482558cf84b109250b37464dc03ae"
 
 [[package]]
-name = "ppv-lite86"
-version = "0.2.16"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb9f9e6e233e5c4a35559a617bf40a4ec447db2e84c20b55a6f83167b7e57872"
-
-[[package]]
 name = "proc-macro2"
 version = "1.0.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1044,18 +1011,6 @@ version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
 dependencies = [
- "libc",
- "rand_chacha",
- "rand_core",
-]
-
-[[package]]
-name = "rand_chacha"
-version = "0.3.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6c10a63a0fa32252be49d21e7709d4d4baf8d231c2dbce1eaa8141b9b127d88"
-dependencies = [
- "ppv-lite86",
  "rand_core",
 ]
 
@@ -1322,13 +1277,11 @@ checksum = "e48c61941ccf5ddcada342cd59e3e5173b007c509e1e8e990dafc830294d9dc5"
 dependencies = [
  "ahash",
  "atoi",
- "base64",
  "bitflags",
  "byteorder",
  "bytes",
  "crc",
  "crossbeam-queue",
- "dirs",
  "either",
  "event-listener",
  "flume",
@@ -1339,23 +1292,16 @@ dependencies = [
  "futures-util",
  "hashlink",
  "hex",
- "hkdf",
- "hmac",
  "indexmap",
  "itoa",
  "libc",
  "libsqlite3-sys",
  "log",
- "md-5",
  "memchr",
  "once_cell",
  "paste",
  "percent-encoding",
- "rand",
  "rustls",
- "serde",
- "serde_json",
- "sha-1",
  "sha2",
  "smallvec",
  "sqlformat",
@@ -1366,7 +1312,6 @@ dependencies = [
  "url",
  "webpki",
  "webpki-roots",
- "whoami",
 ]
 
 [[package]]
@@ -1408,12 +1353,6 @@ dependencies = [
  "unicode-bidi",
  "unicode-normalization",
 ]
-
-[[package]]
-name = "subtle"
-version = "2.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6bdef32e8150c2a081110b42772ffe7d7c9032b606bc226c8260fd97e0976601"
 
 [[package]]
 name = "syn"
@@ -1860,16 +1799,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "aabe153544e473b775453675851ecc86863d2a81d786d741f6b76778f2a48940"
 dependencies = [
  "webpki",
-]
-
-[[package]]
-name = "whoami"
-version = "1.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "524b58fa5a20a2fb3014dd6358b70e6579692a56ef6fce928834e488f42f65e8"
-dependencies = [
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]

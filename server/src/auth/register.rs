@@ -1,13 +1,11 @@
 use axum::{Extension, Json};
 use homedisk_types::{
     auth::login::{Request, Response},
+    config::types::Config,
     errors::{AuthError, ServerError},
     token::{Claims, Token},
 };
-use homedisk_utils::{
-    config::Config,
-    database::{Database, User},
-};
+use homedisk_utils::database::{Database, User};
 
 pub async fn handle(
     db: Extension<Database>,
