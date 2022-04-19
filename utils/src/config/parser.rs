@@ -4,15 +4,21 @@ use serde::{Deserialize, Serialize};
 
 use super::Error;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     pub http: ConfigHTTP,
+    pub jwt: ConfigJWT,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigHTTP {
     pub host: String,
     pub cors: Vec<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ConfigJWT {
+    pub secret: String,
 }
 
 impl Config {

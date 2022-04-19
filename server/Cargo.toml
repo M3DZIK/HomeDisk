@@ -26,4 +26,4 @@ features = ["full"]
 
 [dependencies.homedisk-types]
 path = "../types"
-features = ["axum"]
+features = ["axum", "token"]

@@ -20,7 +20,7 @@ async fn main() {
         .map(|e| e.parse().expect("parse CORS host"))
         .collect();
 
-    homedisk_server::serve(config.http.host, origins, db)
+    homedisk_server::serve(config.http.host.clone(), origins, db, config)
         .await
         .expect("start http server");
 }

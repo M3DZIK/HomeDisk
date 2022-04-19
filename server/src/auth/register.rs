@@ -2,21 +2,28 @@ use axum::{Extension, Json};
 use homedisk_types::{
     auth::login::{Request, Response},
     errors::{AuthError, ServerError},
+    token::{Claims, Token},
 };
-use homedisk_utils::database::{Database, User};
+use homedisk_utils::{
+    config::Config,
+    database::{Database, User},
+};
 
 pub async fn handle(
     db: Extension<Database>,
+    config: Extension<Config>,
     Json(request): Json<Request>,
 ) -> Result<Json<Response>, ServerError> {
-    let response = match db
-        .create_user(User::new(&request.username, &request.password))
-        .await
-    {
-        Ok(_) => Response::LoggedIn {
-            access_token: "access_token".to_string(),
-            refresh_token: "refresh_token".to_string(),
-        },
+    let user = User::new(&request.username, &request.password);
+
+    let response = match db.create_user(&user).await {
+        Ok(_) => {
+            let token = Token::new(config.jwt.secret.as_bytes(), Claims::new(user.id)).unwrap();
+
+            Response::LoggedIn {
+                access_token: token.encoded,
+            }
+        }
 
         Err(e) => {
             if e.to_string().contains("UNIQUE constraint failed") {

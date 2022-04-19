@@ -8,8 +8,5 @@ pub struct Request {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Response {
-    LoggedIn {
-        access_token: String,
-        refresh_token: String,
-    },
+    LoggedIn { access_token: String },
 }

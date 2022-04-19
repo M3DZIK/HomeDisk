@@ -40,16 +40,16 @@ impl Database {
     ///     db.conn.execute(sqlx::query(&fs::read_to_string("../tables.sql").unwrap())).await.unwrap();
     ///
     ///     let user = User::new("medzik", "SuperSecretPassword123");
-    ///     db.create_user(user).await.unwrap();
+    ///     db.create_user(&user).await.unwrap();
     /// }
     /// ```
-    pub async fn create_user(&self, user: user::User) -> Result<SqliteQueryResult, Error> {
+    pub async fn create_user(&self, user: &user::User) -> Result<SqliteQueryResult, Error> {
         debug!("creating user - {}", user.username);
 
         let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")
-            .bind(user.id)
-            .bind(user.username)
-            .bind(user.password);
+            .bind(&user.id)
+            .bind(&user.username)
+            .bind(&user.password);
 
         Ok(self.conn.execute(query).await?)
     }
