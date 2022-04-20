@@ -32,7 +32,7 @@ version = "0.5.13"
 features = ["runtime-tokio-rustls", "sqlite"]
 optional = true
 [dependencies.uuid]
-version = "0.8.2"
+version = "1.0.0"
 features = ["v4", "v5"]
 optional = true
 

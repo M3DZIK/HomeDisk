@@ -9,7 +9,7 @@ config = ["toml", "dirs"]
 
 [dependencies]
 thiserror = "1.0.30"
-uuid = "0.8.2"
+uuid = "1.0.0"
 anyhow = "1.0.56"
 
 [dependencies.serde]
