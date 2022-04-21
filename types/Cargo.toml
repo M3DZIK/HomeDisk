@@ -10,7 +10,7 @@ config = ["toml", "dirs"]
 [dependencies]
 thiserror = "1.0.30"
 uuid = "1.0.0"
-anyhow = "1.0.56"
+anyhow = "1.0.57"
 
 [dependencies.serde]
 version = "1.0.136"
