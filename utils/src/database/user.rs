@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 use crate::crypto::CryptographicHash;
 
-#[derive(Debug)]
+#[derive(Debug, sqlx::FromRow)]
 pub struct User {
     pub id: String,
     pub username: String,
@@ -24,12 +24,33 @@ impl User {
         let sha1_name = CryptographicHash::hash("SHA-1", username.as_bytes()).unwrap();
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 
+        let username = username.to_lowercase();
         let password = encode(CryptographicHash::hash("SHA-512", password.as_bytes()).unwrap());
 
         Self {
             id,
-            username: username.to_string(),
+            username,
             password,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::User;
+
+    #[test]
+    fn check_username_is_in_lowercase() {
+        let user = User::new("MEdzIk", "SuperSecretPassword123!");
+
+        assert_eq!(user.username, "medzik")
+    }
+
+    #[test]
+    fn check_password_is_hashed() {
+        let password = "Password";
+        let user = User::new("test", password);
+
+        assert!(user.password != password)
     }
 }
