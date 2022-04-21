@@ -8,6 +8,9 @@ pub enum Error {
     #[error("user already exists")]
     UserAlreadyExists,
 
+    #[error("generate jwt token")]
+    TokenGenerate,
+
     #[error("unknow error")]
     UnknowError(String),
 }
