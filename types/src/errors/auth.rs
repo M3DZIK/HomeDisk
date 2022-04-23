@@ -11,6 +11,9 @@ pub enum Error {
     #[error("generate jwt token")]
     TokenGenerate,
 
+    #[error("invalid jwt token")]
+    InvalidToken,
+
     #[error("unknow error")]
     UnknowError(String),
 }

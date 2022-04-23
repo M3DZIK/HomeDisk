@@ -66,6 +66,24 @@ impl Database {
             password,
         })
     }
+
+    pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
+        let query = sqlx::query_as::<_, User>("SELECT * FROM user WHERE id = ?").bind(id);
+
+        let mut stream = self.conn.fetch(query);
+
+        let row = stream.try_next().await?.ok_or(Error::UserNotFound)?;
+
+        let id = row.try_get("id")?;
+        let username = row.try_get("username")?;
+        let password = row.try_get("password")?;
+
+        Ok(User {
+            id,
+            username,
+            password,
+        })
+    }
 }
 
 #[cfg(test)]

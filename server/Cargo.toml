@@ -13,3 +13,5 @@ hyper = { version = "0.14.18", features = ["full"] }
 rust_utilities = { version = "0.2.0", features = ["jsonwebtoken"] }
 homedisk-database = { path = "../database" }
 homedisk-types = { path = "../types", features = ["axum"] }
+axum-auth = "0.2.0"
+jsonwebtoken = "8.1.0"

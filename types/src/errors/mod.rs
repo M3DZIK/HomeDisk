@@ -41,6 +41,7 @@ impl axum::response::IntoResponse for ServerError {
                 AuthError::UserAlreadyExists => StatusCode::NOT_ACCEPTABLE,
                 AuthError::TokenGenerate => StatusCode::INTERNAL_SERVER_ERROR,
                 AuthError::UnknowError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+                AuthError::InvalidToken => StatusCode::BAD_REQUEST,
             },
 
             Self::MissingJsonContentType => StatusCode::BAD_REQUEST,

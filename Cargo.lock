@@ -121,6 +121,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "axum-auth"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a78cc399f2af2dd7adf88e0fcc0e21dbf730258c1b34785f47816ff224238f74"
+dependencies = [
+ "axum",
+ "base64",
+ "http",
+]
+
+[[package]]
 name = "axum-core"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -609,9 +620,11 @@ name = "homedisk-server"
 version = "0.0.0"
 dependencies = [
  "axum",
+ "axum-auth",
  "homedisk-database",
  "homedisk-types",
  "hyper",
+ "jsonwebtoken",
  "log",
  "rust_utilities",
  "serde",
