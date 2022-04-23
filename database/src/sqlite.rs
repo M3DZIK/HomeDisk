@@ -67,6 +67,7 @@ impl Database {
         })
     }
 
+    /// Find user by UUID
     pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
         let query = sqlx::query_as::<_, User>("SELECT * FROM user WHERE id = ?").bind(id);
 
@@ -166,6 +167,38 @@ mod tests {
 
         let err = db
             .find_user(&user.username, &user.password)
+            .await
+            .unwrap_err();
+
+        assert_eq!(err.to_string(), "user not found")
+    }
+
+    #[tokio::test]
+    async fn find_user_by_id() {
+        let db = open_db().await;
+
+        new_user(&db).await;
+
+        let user = User::new("medzik", "Qwerty1234!");
+
+        let res = db
+            .find_user_by_id(user.id)
+            .await
+            .expect("find user");
+
+        assert_eq!(res.password, user.password)
+    }
+
+    #[tokio::test]
+    async fn find_user_wrong_id() {
+        let db = open_db().await;
+
+        new_user(&db).await;
+
+        let other_user = User::new("other_user", "secretpassphrase123!");
+
+        let err = db
+            .find_user_by_id(other_user.id)
             .await
             .unwrap_err();
 
