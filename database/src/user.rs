@@ -1,4 +1,4 @@
-use rust_utilities::crypto::sha::{CryptographicHash, encode, Algorithm};
+use rust_utilities::crypto::sha::{encode, Algorithm, CryptographicHash};
 use uuid::Uuid;
 
 #[derive(Debug, sqlx::FromRow)]
@@ -14,7 +14,7 @@ impl User {
     /// This function creates a unique UUID for a user and creates a password hash using SHA-512
     /// and returns in the User type
     /// ```
-    /// use homedisk_utils::database::User;
+    /// use homedisk_database::User;
     ///
     /// let user = User::new("medzik", "SuperSecretPassword123!");
     /// ```
@@ -26,7 +26,11 @@ impl User {
         let sha1_name = CryptographicHash::hash(Algorithm::SHA1, username.as_bytes());
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 
-        let password = encode(CryptographicHash::hash(Algorithm::SHA512, password.as_bytes()));
+        // hash password using SHA-512
+        let password = encode(CryptographicHash::hash(
+            Algorithm::SHA512,
+            password.as_bytes(),
+        ));
 
         Self {
             id,
@@ -48,7 +52,7 @@ mod tests {
     }
 
     #[test]
-    fn check_password_is_hashed() {
+    fn check_if_password_is_hashed() {
         let password = "password";
         let user = User::new("test", password);
 

@@ -13,7 +13,7 @@ pub struct Database {
 impl Database {
     /// Open SQLite Database file
     /// ```ignore
-    /// use homedisk_utils::database::Database;
+    /// use homedisk_database::Database;
     ///
     /// Database::open("sqlite::memory:").await?;
     /// ```
@@ -27,7 +27,7 @@ impl Database {
 
     /// Create new User
     /// ```ignore
-    /// use homedisk_utils::database::{Database, User};
+    /// use homedisk_database::{Database, User};
     ///
     /// let user = User::new("username", "password");
     /// db.create_user(&user).await?;
@@ -74,7 +74,7 @@ mod tests {
 
     use sqlx::Executor;
 
-    use crate::database::{Database, User};
+    use crate::{Database, User};
 
     async fn open_db() -> Database {
         Database::open("sqlite::memory:").await.expect("open db")

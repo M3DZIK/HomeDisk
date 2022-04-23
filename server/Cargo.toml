@@ -7,27 +7,9 @@ edition = "2021"
 axum = "0.5.3"
 log = "0.4.16"
 thiserror = "1.0.30"
-
-[dependencies.tower-http]
-version = "0.2.5"
-features = ["cors"]
-
-[dependencies.hyper]
-version = "0.14.18"
-features = ["full"]
-
-[dependencies.serde]
-version = "1.0.136"
-features = ["derive"]
-
-[dependencies.rust_utilities]
-version = "0.2.0"
-features = ["jsonwebtoken"]
-
-[dependencies.homedisk-utils]
-path = "../utils"
-features = ["database"]
-
-[dependencies.homedisk-types]
-path = "../types"
-features = ["axum"]
+serde = { version = "1.0.136", features = ["derive"] }
+tower-http = { version = "0.2.5", features = ["full"] }
+hyper = { version = "0.14.18", features = ["full"] }
+rust_utilities = { version = "0.2.0", features = ["jsonwebtoken"] }
+homedisk-database = { path = "../database" }
+homedisk-types = { path = "../types", features = ["axum"] }

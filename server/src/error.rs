@@ -32,7 +32,7 @@ impl fmt::Display for Error {
         match self {
             Error::Axum(err) => write!(f, "axum error: {}", err),
             Error::Hyper(err) => write!(f, "hyper error: {}", err),
-            Error::AddrParseError(err) => write!(f, "AddrParse error: {}", err),
+            Error::AddrParseError(err) => write!(f, "std::net::AddrParseError: {}", err),
         }
     }
 }

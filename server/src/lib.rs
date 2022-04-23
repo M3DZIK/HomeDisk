@@ -1,9 +1,10 @@
 pub mod auth;
+
 mod error;
 
 use axum::{http::HeaderValue, routing::get, Extension, Router, Server};
+use homedisk_database::Database;
 use homedisk_types::config::types::Config;
-use homedisk_utils::database::Database;
 use log::{debug, info};
 use tower_http::cors::{CorsLayer, Origin};
 

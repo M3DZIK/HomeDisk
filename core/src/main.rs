@@ -1,7 +1,7 @@
 mod init;
 
+use homedisk_database::Database;
 use homedisk_types::config::types::Config;
-use homedisk_utils::database::Database;
 
 #[tokio::main]
 async fn main() {

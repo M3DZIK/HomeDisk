@@ -1,16 +1,16 @@
 use axum::{Extension, Json};
+use homedisk_database::{Database, Error, User};
 use homedisk_types::{
     auth::login::{Request, Response},
     config::types::Config,
     errors::{AuthError, ServerError},
 };
-use homedisk_utils::database::{Database, Error, User};
 use rust_utilities::crypto::jsonwebtoken::{Claims, Token};
 
 pub async fn handle(
     db: Extension<Database>,
     config: Extension<Config>,
-    Json(request): Json<Request>,
+    request: Json<Request>,
 ) -> Result<Json<Response>, ServerError> {
     let user = User::new(&request.username, &request.password);
 
