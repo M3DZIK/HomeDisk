@@ -1,29 +1,28 @@
-use axum::{Extension, Json};
+use axum::{extract::rejection::JsonRejection, Extension, Json};
 use homedisk_database::{Database, User};
 use homedisk_types::{
     auth::login::{Request, Response},
     config::types::Config,
     errors::{AuthError, ServerError},
 };
-use rust_utilities::crypto::jsonwebtoken::{Claims, Token};
+
+use crate::middleware::{create_token, validate_json};
 
 pub async fn handle(
     db: Extension<Database>,
     config: Extension<Config>,
-    request: Json<Request>,
+    request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
+    let request = validate_json::<Request>(request)?;
+
     let user = User::new(&request.username, &request.password);
 
     let response = match db.create_user(&user).await {
         Ok(_) => {
-            let token = Token::new(
-                config.jwt.secret.as_bytes(),
-                Claims::new(user.id, config.jwt.expires),
-            )
-            .unwrap();
+            let token = create_token(user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
             Response::LoggedIn {
-                access_token: token.encoded,
+                access_token: token,
             }
         }
 

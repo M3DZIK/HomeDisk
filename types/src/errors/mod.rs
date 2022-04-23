@@ -12,6 +12,21 @@ pub enum ServerError {
 
     #[error("too may requests, please slow down")]
     TooManyRequests,
+
+    #[error("missing json content type")]
+    MissingJsonContentType,
+
+    #[error("error deserialize json")]
+    JsonDataError,
+
+    #[error("json syntax error")]
+    JsonSyntaxError,
+
+    #[error("failed to extract the request body")]
+    BytesRejection,
+
+    #[error("unexcepted error")]
+    Other(String),
 }
 
 #[cfg(feature = "axum")]
@@ -27,6 +42,12 @@ impl axum::response::IntoResponse for ServerError {
                 AuthError::TokenGenerate => StatusCode::INTERNAL_SERVER_ERROR,
                 AuthError::UnknowError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },
+
+            Self::MissingJsonContentType => StatusCode::BAD_REQUEST,
+            Self::JsonDataError => StatusCode::BAD_REQUEST,
+            Self::JsonSyntaxError => StatusCode::BAD_REQUEST,
+            Self::BytesRejection => StatusCode::INTERNAL_SERVER_ERROR,
+            Self::Other(_) => StatusCode::INTERNAL_SERVER_ERROR,
         };
 
         let mut response = axum::Json(self).into_response();
