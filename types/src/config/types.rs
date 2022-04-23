@@ -16,4 +16,5 @@ pub struct ConfigHTTP {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigJWT {
     pub secret: String,
+    pub expires: i64,
 }

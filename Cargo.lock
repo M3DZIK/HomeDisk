@@ -529,6 +529,7 @@ dependencies = [
  "homedisk-utils",
  "hyper",
  "log",
+ "rust_utilities",
  "serde",
  "thiserror",
  "tower-http",
@@ -540,9 +541,7 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "axum",
- "chrono",
  "dirs",
- "jsonwebtoken",
  "serde",
  "thiserror",
  "toml",
@@ -555,11 +554,9 @@ name = "homedisk-utils"
 version = "0.0.0"
 dependencies = [
  "futures-util",
- "hex",
  "log",
+ "rust_utilities",
  "serde",
- "sha-1",
- "sha2",
  "sqlx",
  "tokio",
  "uuid",
@@ -1070,6 +1067,20 @@ dependencies = [
  "untrusted",
  "web-sys",
  "winapi",
+]
+
+[[package]]
+name = "rust_utilities"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8524c76496ed3097b6d24d7cb3b435cc8a84cbded6da7153942f6daa3ade9da7"
+dependencies = [
+ "chrono",
+ "hex",
+ "jsonwebtoken",
+ "serde",
+ "sha-1",
+ "sha2",
 ]
 
 [[package]]

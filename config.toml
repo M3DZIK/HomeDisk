@@ -1,3 +1,4 @@
+# HTTP Server
 [http]
 host = "0.0.0.0"
 port = 8080
@@ -6,5 +7,7 @@ cors = [
     "localhost:8000",
 ]
 
+# Json Web Token
 [jwt]
-secret = "secret key used to sign tokens"
+secret = "secret key used to sign tokens" # secret used to sign tokens
+expires = 24 # validity of token in hours

@@ -20,10 +20,14 @@ features = ["full"]
 version = "1.0.136"
 features = ["derive"]
 
+[dependencies.rust_utilities]
+version = "0.2.0"
+features = ["jsonwebtoken"]
+
 [dependencies.homedisk-utils]
 path = "../utils"
-features = ["full"]
+features = ["database"]
 
 [dependencies.homedisk-types]
 path = "../types"
-features = ["axum", "token"]
+features = ["axum"]

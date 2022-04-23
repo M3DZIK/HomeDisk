@@ -4,8 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [features]
-full = ["crypto", "database"]
-crypto = ["sha-1", "sha2", "hex"]
+full = ["database"]
 database = ["sqlx", "uuid"]
 
 [dependencies]
@@ -16,17 +15,6 @@ futures-util = "0.3.21"
 version = "1.0.136"
 features = ["derive"]
 
-# crypto
-[dependencies.sha-1]
-version = "0.10.0"
-optional = true
-[dependencies.sha2]
-version = "0.10.2"
-optional = true
-[dependencies.hex]
-version = "0.4.3"
-optional = true
-
 # database
 [dependencies.sqlx]
 version = "0.5.13"
@@ -36,6 +24,9 @@ optional = true
 version = "1.0.0"
 features = ["v5"]
 optional = true
+[dependencies.rust_utilities]
+version = "0.2.0"
+features = ["sha"]
 
 [dev-dependencies.tokio]
 version = "1.17.0"

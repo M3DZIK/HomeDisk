@@ -4,7 +4,6 @@ version = "0.0.0"
 edition = "2021"
 
 [features]
-token = ["chrono", "jsonwebtoken"]
 config = ["toml", "dirs"]
 
 [dependencies]
@@ -30,12 +29,4 @@ version = "0.5.9"
 optional = true
 [dependencies.dirs]
 version = "4.0.0"
-optional = true
-
-# token
-[dependencies.chrono]
-version = "0.4.19"
-optional = true
-[dependencies.jsonwebtoken]
-version = "8.1.0"
 optional = true

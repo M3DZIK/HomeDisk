@@ -3,9 +3,9 @@ use homedisk_types::{
     auth::login::{Request, Response},
     config::types::Config,
     errors::{AuthError, ServerError},
-    token::{Claims, Token},
 };
 use homedisk_utils::database::{Database, User};
+use rust_utilities::crypto::jsonwebtoken::{Claims, Token};
 
 pub async fn handle(
     db: Extension<Database>,
@@ -16,7 +16,11 @@ pub async fn handle(
 
     let response = match db.create_user(&user).await {
         Ok(_) => {
-            let token = Token::new(config.jwt.secret.as_bytes(), Claims::new(user.id)).unwrap();
+            let token = Token::new(
+                config.jwt.secret.as_bytes(),
+                Claims::new(user.id, config.jwt.expires),
+            )
+            .unwrap();
 
             Response::LoggedIn {
                 access_token: token.encoded,
