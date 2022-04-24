@@ -1,5 +1,5 @@
 mod error;
 mod sqlite;
-mod user;
 
-pub use {error::*, sqlite::*, user::*};
+pub use homedisk_types::database::User;
+pub use {error::*, sqlite::*};

@@ -1,9 +1,8 @@
 use futures_util::TryStreamExt;
 use log::debug;
 use sqlx::{sqlite::SqliteQueryResult, Executor, Row, SqlitePool};
-use user::User;
 
-use super::{user, Error};
+use super::{Error, User};
 
 #[derive(Debug, Clone)]
 pub struct Database {
@@ -32,7 +31,7 @@ impl Database {
     /// let user = User::new("username", "password");
     /// db.create_user(&user).await?;
     /// ```
-    pub async fn create_user(&self, user: &user::User) -> Result<SqliteQueryResult, Error> {
+    pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
         debug!("creating user - {}", user.username);
 
         let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")

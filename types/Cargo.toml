@@ -5,6 +5,7 @@ edition = "2021"
 
 [features]
 config = ["toml", "dirs"]
+database = ["rust_utilities", "sqlx"]
 
 [dependencies]
 thiserror = "1.0.30"
@@ -17,3 +18,7 @@ axum = { version = "0.5.3", optional = true }
 # config
 toml = { version = "0.5.9", optional = true }
 dirs = { version = "4.0.0", optional = true }
+
+# database
+rust_utilities = { version = "0.2.0", optional = true }
+sqlx = { version = "0.5.13", features = ["sqlite"], optional = true }

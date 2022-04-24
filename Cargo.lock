@@ -607,6 +607,7 @@ name = "homedisk-database"
 version = "0.0.0"
 dependencies = [
  "futures-util",
+ "homedisk-types",
  "log",
  "rust_utilities",
  "serde",
@@ -639,7 +640,9 @@ dependencies = [
  "anyhow",
  "axum",
  "dirs",
+ "rust_utilities",
  "serde",
+ "sqlx",
  "thiserror",
  "toml",
  "uuid",

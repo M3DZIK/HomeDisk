@@ -1,6 +1,7 @@
 use rust_utilities::crypto::sha::{encode, Algorithm, CryptographicHash};
 use uuid::Uuid;
 
+/// SQL `user` Table
 #[derive(Debug, sqlx::FromRow)]
 pub struct User {
     pub id: String,
@@ -14,7 +15,7 @@ impl User {
     /// This function creates a unique UUID for a user and creates a password hash using SHA-512
     /// and returns in the User type
     /// ```
-    /// use homedisk_database::User;
+    /// use homedisk_types::database::User;
     ///
     /// let user = User::new("medzik", "SuperSecretPassword123!");
     /// ```
