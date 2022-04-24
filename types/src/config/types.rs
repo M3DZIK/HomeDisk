@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 pub struct Config {
     pub http: ConfigHTTP,
     pub jwt: ConfigJWT,
+    pub storage: ConfigStorage,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -17,4 +18,9 @@ pub struct ConfigHTTP {
 pub struct ConfigJWT {
     pub secret: String,
     pub expires: i64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ConfigStorage {
+    pub path: String,
 }

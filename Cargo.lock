@@ -622,6 +622,7 @@ version = "0.0.0"
 dependencies = [
  "axum",
  "axum-auth",
+ "base64",
  "homedisk-database",
  "homedisk-types",
  "hyper",

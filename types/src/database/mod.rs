@@ -1,3 +1,3 @@
 mod user;
 
-pub use {user::*};
+pub use user::*;

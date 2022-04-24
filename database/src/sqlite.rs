@@ -180,10 +180,7 @@ mod tests {
 
         let user = User::new("medzik", "Qwerty1234!");
 
-        let res = db
-            .find_user_by_id(user.id)
-            .await
-            .expect("find user");
+        let res = db.find_user_by_id(user.id).await.expect("find user");
 
         assert_eq!(res.password, user.password)
     }
@@ -196,10 +193,7 @@ mod tests {
 
         let other_user = User::new("other_user", "secretpassphrase123!");
 
-        let err = db
-            .find_user_by_id(other_user.id)
-            .await
-            .unwrap_err();
+        let err = db.find_user_by_id(other_user.id).await.unwrap_err();
 
         assert_eq!(err.to_string(), "user not found")
     }

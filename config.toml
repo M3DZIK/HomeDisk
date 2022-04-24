@@ -11,3 +11,7 @@ cors = [
 [jwt]
 secret = "secret key used to sign tokens" # secret used to sign tokens
 expires = 24 # validity of token in hours
+
+# Storage
+[storage]
+path = "/home/homedisk" # the folder where the user files will be stored

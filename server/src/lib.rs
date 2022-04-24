@@ -1,4 +1,5 @@
 pub mod auth;
+pub mod fs;
 pub mod middleware;
 
 mod error;
@@ -25,6 +26,7 @@ pub async fn serve(
     let app = Router::new()
         .route("/health-check", get(health_check))
         .nest("/auth", auth::app())
+        .nest("/fs", fs::app())
         .layer(CorsLayer::new().allow_origin(Origin::list(origins)))
         .layer(Extension(db))
         .layer(Extension(config));
