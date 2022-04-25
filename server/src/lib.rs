@@ -8,7 +8,7 @@ use axum::{http::HeaderValue, routing::get, Extension, Router, Server};
 use homedisk_database::Database;
 use homedisk_types::config::types::Config;
 use log::{debug, info};
-use tower_http::cors::{CorsLayer, Origin};
+use tower_http::cors::{CorsLayer, AllowOrigin};
 
 async fn health_check() -> &'static str {
     "I'm alive!"
@@ -27,7 +27,7 @@ pub async fn serve(
         .route("/health-check", get(health_check))
         .nest("/auth", auth::app())
         .nest("/fs", fs::app())
-        .layer(CorsLayer::new().allow_origin(Origin::list(origins)))
+        .layer(CorsLayer::new().allow_origin(AllowOrigin::list(origins)))
         .layer(Extension(db))
         .layer(Extension(config));
 
