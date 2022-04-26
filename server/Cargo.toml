@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-axum = "0.5.3"
+axum = "0.5.4"
 log = "0.4.16"
 thiserror = "1.0.30"
 serde = { version = "1.0.136", features = ["derive"] }
