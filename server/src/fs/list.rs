@@ -2,11 +2,12 @@ use std::fs;
 
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
+use byte_unit::Byte;
 use homedisk_database::{Database, Error};
 use homedisk_types::{
     config::types::Config,
     errors::{AuthError, FsError, ServerError},
-    fs::list::{Request, Response},
+    fs::list::{FileInfo, Request, Response},
 };
 
 use crate::middleware::{validate_json, validate_jwt};
@@ -43,11 +44,15 @@ pub async fn handle(
                     .map_err(|err| ServerError::FsError(FsError::UnknowError(err.to_string())))?;
 
                 let name = path.path().display().to_string().replace(&user_path, "");
+                let filesize = Byte::from_bytes(metadata.len().into()).get_appropriate_unit(true);
 
                 if metadata.is_dir() {
                     dirs.push(name)
                 } else {
-                    files.push(name)
+                    files.push(FileInfo {
+                        name,
+                        size: filesize.to_string(),
+                    })
                 }
             }
 

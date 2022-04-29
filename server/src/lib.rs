@@ -8,7 +8,7 @@ use axum::{http::HeaderValue, routing::get, Extension, Router, Server};
 use homedisk_database::Database;
 use homedisk_types::config::types::Config;
 use log::{debug, info};
-use tower_http::cors::{CorsLayer, AllowOrigin};
+use tower_http::cors::{AllowOrigin, CorsLayer};
 
 async fn health_check() -> &'static str {
     "I'm alive!"

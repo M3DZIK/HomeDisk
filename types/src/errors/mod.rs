@@ -7,7 +7,7 @@ pub use fs::Error as FsError;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
-#[serde(tag = "error", content = "error-message", rename_all = "kebab-case")]
+#[serde(tag = "error", content = "error_message", rename_all = "kebab-case")]
 pub enum ServerError {
     #[error("auth error: {0}")]
     AuthError(#[from] AuthError),

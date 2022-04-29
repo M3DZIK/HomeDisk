@@ -7,6 +7,12 @@ pub struct Request {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Response {
-    pub files: Vec<String>,
+    pub files: Vec<FileInfo>,
     pub dirs: Vec<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct FileInfo {
+    pub name: String,
+    pub size: String,
 }
