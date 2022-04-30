@@ -43,6 +43,9 @@ impl axum::response::IntoResponse for ServerError {
             Self::AuthError(ref err) => match err {
                 AuthError::UserNotFound => StatusCode::BAD_REQUEST,
                 AuthError::UserAlreadyExists => StatusCode::NOT_ACCEPTABLE,
+                AuthError::UsernameTooShort => StatusCode::NOT_ACCEPTABLE,
+                AuthError::UsernameTooLong => StatusCode::NOT_ACCEPTABLE,
+                AuthError::PasswordTooShort => StatusCode::NOT_ACCEPTABLE,
                 AuthError::TokenGenerate => StatusCode::INTERNAL_SERVER_ERROR,
                 AuthError::InvalidToken => StatusCode::BAD_REQUEST,
                 AuthError::UnknowError(_) => StatusCode::INTERNAL_SERVER_ERROR,

@@ -8,6 +8,15 @@ pub enum Error {
     #[error("user already exists")]
     UserAlreadyExists,
 
+    #[error("username is too short")]
+    UsernameTooShort,
+
+    #[error("username is too long")]
+    UsernameTooLong,
+
+    #[error("password is too short")]
+    PasswordTooShort,
+
     #[error("generate jwt token")]
     TokenGenerate,
 

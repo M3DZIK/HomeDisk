@@ -15,6 +15,21 @@ pub async fn handle(
 ) -> Result<Json<Response>, ServerError> {
     let request = validate_json::<Request>(request)?;
 
+    // username must contain at least 4 characters
+    if request.username.len() < 4 {
+        return Err(ServerError::AuthError(AuthError::UsernameTooShort));
+    }
+
+    // username must be less than 20 characters
+    if request.username.len() < 20 {
+        return Err(ServerError::AuthError(AuthError::UsernameTooLong));
+    }
+
+    // password must contain at least 8 characters
+    if request.password.len() < 8 {
+        return Err(ServerError::AuthError(AuthError::PasswordTooShort));
+    }
+
     let user = User::new(&request.username, &request.password);
 
     let response = match db.create_user(&user).await {
