@@ -11,3 +11,7 @@
 # why sqlx?
 *.db-shm
 *.db-wal
+
+# ide config
+.idea
+.vscode
