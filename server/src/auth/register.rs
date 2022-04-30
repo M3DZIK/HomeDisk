@@ -22,8 +22,8 @@ pub async fn handle(
         return Err(ServerError::AuthError(AuthError::UsernameTooShort));
     }
 
-    // username must be less than 20 characters
-    if request.username.len() < 20 {
+    // username must be less than 25 characters
+    if request.username.len() > 25 {
         return Err(ServerError::AuthError(AuthError::UsernameTooLong));
     }
 
