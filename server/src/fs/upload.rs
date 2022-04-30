@@ -26,20 +26,26 @@ pub async fn handle(
             let content = base64::decode(request.content)
                 .map_err(|err| ServerError::FsError(FsError::Base64(err.to_string())))?;
 
-            // check if file already exists
-            if Path::new(&request.path).exists() {
+            let path = format!(
+                "{path}/{username}/{filepath}",
+                path = config.storage.path,
+                username = res.username,
+                filepath = request.path
+            );
+            let path = Path::new(&path);
+
+            // check if the file currently exists to avoid overwriting it
+            if path.exists() {
                 return Err(ServerError::FsError(FsError::FileAlreadyExists));
             }
 
-            let folder_path = format!(
-                "{path}/{username}",
-                path = config.storage.path,
-                username = res.username,
-            );
-            let path = format!("{folder_path}/{filepath}", filepath = request.path);
-
-            // create user directory
-            fs::create_dir_all(&folder_path).unwrap();
+            // create a directorys where the file will be placed
+            // e.g. path ==> `/secret/files/images/screenshot.png`
+            // directories up to `/home/homedisk/{username}/secret/files/images/` will be created
+            match path.parent() {
+                Some(prefix) => fs::create_dir_all(&prefix).unwrap(),
+                None => (),
+            }
 
             // write file
             fs::write(&path, content)
