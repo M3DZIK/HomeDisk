@@ -1,3 +1,5 @@
+use std::fs;
+
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use homedisk_database::{Database, User};
 use homedisk_types::{
@@ -34,7 +36,7 @@ pub async fn handle(
 
     let response = match db.create_user(&user).await {
         Ok(_) => {
-            let token = create_token(user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
+            let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
             Response::LoggedIn {
                 access_token: token,
@@ -51,6 +53,14 @@ pub async fn handle(
             )));
         }
     };
+
+    // create directory for user files
+    let user_dir = format!(
+        "{storage}/{username}",
+        storage = config.storage.path,
+        username = user.username,
+    );
+    fs::create_dir_all(&user_dir).unwrap();
 
     Ok(Json(response))
 }

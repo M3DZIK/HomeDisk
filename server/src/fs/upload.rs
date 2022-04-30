@@ -48,7 +48,7 @@ pub async fn handle(
             }
 
             // write file
-            fs::write(&path, content)
+            fs::write(&path, &content)
                 .map_err(|err| ServerError::FsError(FsError::WriteFile(err.to_string())))?;
 
             Response { uploaded: true }

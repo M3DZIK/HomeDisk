@@ -18,8 +18,8 @@ pub async fn handle(
     let user = User::new(&request.username, &request.password);
 
     let response = match db.find_user(&user.username, &user.password).await {
-        Ok(res) => {
-            let token = create_token(res, config.jwt.secret.as_bytes(), config.jwt.expires)?;
+        Ok(user) => {
+            let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
             Response::LoggedIn {
                 access_token: token,
