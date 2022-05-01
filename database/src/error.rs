@@ -23,8 +23,8 @@ impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Error::UserNotFound => write!(f, "user not found"),
-            Error::SQLx(err) => write!(f, "sqlx error: {}", err),
-            Error::Io(err) => write!(f, "std::io error: {}", err),
+            Error::SQLx(err) => write!(f, "kind `sqlx`: {:?}", err),
+            Error::Io(err) => write!(f, "kind `io`: {:?}", err),
         }
     }
 }

@@ -43,8 +43,15 @@ impl Database {
     }
 
     /// Find user
+    /// ```ignore
+    /// use homedisk_database::{Database, User};
+    ///
+    /// let user = User::new("username", "password");
+    ///
+    /// db.find_user(&user.username, &user.password).await?;
+    /// ```
     pub async fn find_user(&self, username: &str, password: &str) -> Result<User, Error> {
-        debug!("search for user - {}", username);
+        debug!("searching for user - {}", username);
 
         let query =
             sqlx::query_as::<_, User>("SELECT * FROM user WHERE username = ? AND password = ?")
@@ -67,7 +74,16 @@ impl Database {
     }
 
     /// Find user by UUID
+    /// ```ignore
+    /// use homedisk_database::{Database, User};
+    ///
+    /// let user = User::new("username", "password");
+    ///
+    /// db.find_user_by_id(&user.id).await?;
+    /// ```
     pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
+        debug!("searching for a user by UUID - {}", id);
+
         let query = sqlx::query_as::<_, User>("SELECT * FROM user WHERE id = ?").bind(id);
 
         let mut stream = self.conn.fetch(query);
@@ -191,7 +207,7 @@ mod tests {
 
         new_user(&db).await;
 
-        let other_user = User::new("other_user", "secretpassphrase123!");
+        let other_user = User::new("other_user", "secret@passphrase123!");
 
         let err = db.find_user_by_id(other_user.id).await.unwrap_err();
 
