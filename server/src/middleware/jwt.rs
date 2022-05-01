@@ -18,7 +18,7 @@ pub async fn find_user(db: Database, user_id: String) -> Result<User, ServerErro
             homedisk_database::Error::UserNotFound => {
                 Err(ServerError::AuthError(AuthError::UserNotFound))
             }
-            _ => Err(ServerError::AuthError(AuthError::UnknowError(
+            _ => Err(ServerError::AuthError(AuthError::UnknownError(
                 err.to_string(),
             ))),
         },

@@ -1,11 +1,9 @@
-use axum::routing::get;
-
 pub mod login;
 pub mod register;
 pub mod whoami;
 
 pub fn app() -> axum::Router {
-    use axum::routing::post;
+    use axum::routing::{get, post};
 
     axum::Router::new()
         .route("/login", post(login::handle))

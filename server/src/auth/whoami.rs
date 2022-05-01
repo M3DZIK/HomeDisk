@@ -24,7 +24,7 @@ pub async fn handle(
         Err(err) => match err {
             Error::UserNotFound => return Err(ServerError::AuthError(AuthError::UserNotFound)),
             _ => {
-                return Err(ServerError::AuthError(AuthError::UnknowError(
+                return Err(ServerError::AuthError(AuthError::UnknownError(
                     err.to_string(),
                 )))
             }

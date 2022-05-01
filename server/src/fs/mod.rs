@@ -1,5 +1,3 @@
-use homedisk_types::errors::{FsError, ServerError};
-
 pub mod list;
 pub mod upload;
 
@@ -11,7 +9,9 @@ pub fn app() -> axum::Router {
         .route("/upload", post(upload::handle))
 }
 
-pub fn validate_path(path: &str) -> Result<(), ServerError> {
+pub fn validate_path(path: &str) -> Result<(), homedisk_types::errors::ServerError> {
+    use homedisk_types::errors::{FsError, ServerError};
+
     // `path` cannot contain `..`
     // to prevent attack attempts because by using a `..` you can access the previous folder
     if path.contains("..") {

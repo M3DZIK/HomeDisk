@@ -48,7 +48,9 @@ impl User {
     ///
     /// let user = User::new("medzik", "whatever");
     ///
-    /// user.user_dir("/home/homedisk"); // will return  `/home/homedisk/medzik`
+    /// let dir = user.user_dir("/home/homedisk"); // will return  `/home/homedisk/medzik`
+    ///
+    /// assert_eq!(dir, "/home/homedisk/medzik")
     /// ```
     pub fn user_dir(&self, storage: &str) -> String {
         let path = format!(

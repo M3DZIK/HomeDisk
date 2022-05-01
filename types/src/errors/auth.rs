@@ -23,6 +23,6 @@ pub enum Error {
     #[error("invalid jwt token")]
     InvalidToken,
 
-    #[error("unknow error")]
-    UnknowError(String),
+    #[error("unknown error")]
+    UnknownError(String),
 }

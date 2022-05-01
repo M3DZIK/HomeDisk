@@ -48,7 +48,7 @@ pub async fn handle(
                 return Err(ServerError::AuthError(AuthError::UserAlreadyExists));
             }
 
-            return Err(ServerError::AuthError(AuthError::UnknowError(
+            return Err(ServerError::AuthError(AuthError::UnknownError(
                 e.to_string(),
             )));
         }

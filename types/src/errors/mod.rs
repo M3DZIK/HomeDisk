@@ -48,7 +48,7 @@ impl axum::response::IntoResponse for ServerError {
                 AuthError::PasswordTooShort => StatusCode::NOT_ACCEPTABLE,
                 AuthError::TokenGenerate => StatusCode::INTERNAL_SERVER_ERROR,
                 AuthError::InvalidToken => StatusCode::BAD_REQUEST,
-                AuthError::UnknowError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+                AuthError::UnknownError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },
             Self::FsError(ref err) => match err {
                 FsError::FileAlreadyExists => StatusCode::BAD_REQUEST,
