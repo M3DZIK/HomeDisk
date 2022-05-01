@@ -9,8 +9,8 @@ use homedisk_types::{
 use crate::middleware::{create_token, validate_json};
 
 pub async fn handle(
-    db: Extension<Database>,
-    config: Extension<Config>,
+    Extension(db): Extension<Database>,
+    Extension(config): Extension<Config>,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
     let request = validate_json::<Request>(request)?;
@@ -26,14 +26,14 @@ pub async fn handle(
             }
         }
 
-        Err(err) => match err {
-            Error::UserNotFound => return Err(ServerError::AuthError(AuthError::UserNotFound)),
-            _ => {
-                return Err(ServerError::AuthError(AuthError::UnknowError(
+        Err(err) => {
+            return match err {
+                Error::UserNotFound => Err(ServerError::AuthError(AuthError::UserNotFound)),
+                _ => Err(ServerError::AuthError(AuthError::UnknowError(
                     err.to_string(),
-                )))
+                ))),
             }
-        },
+        }
     };
 
     Ok(Json(response))

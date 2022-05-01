@@ -11,8 +11,8 @@ use homedisk_types::{
 use crate::middleware::{create_token, validate_json};
 
 pub async fn handle(
-    db: Extension<Database>,
-    config: Extension<Config>,
+    Extension(db): Extension<Database>,
+    Extension(config): Extension<Config>,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
     let request = validate_json::<Request>(request)?;

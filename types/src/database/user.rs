@@ -39,6 +39,26 @@ impl User {
             password,
         }
     }
+
+    /// User directory
+    /// function returns the directory where the user file is located
+    /// e.g.
+    /// ```
+    /// use homedisk_types::database::User;
+    ///
+    /// let user = User::new("medzik", "whatever");
+    ///
+    /// user.user_dir("/home/homedisk"); // will return  `/home/homedisk/medzik`
+    /// ```
+    pub fn user_dir(&self, storage: &str) -> String {
+        let path = format!(
+            "{path}/{username}",
+            path = storage,
+            username = self.username,
+        );
+
+        path
+    }
 }
 
 #[cfg(test)]
