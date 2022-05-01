@@ -21,6 +21,14 @@ pub async fn handle(
     let Json(request) = validate_json::<Request>(request)?;
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
+    // `path` cannot contain `..`
+    // to prevent attack attempts because by using a `..` you can access the previous folder
+    if request.path.contains("..") {
+        return Err(ServerError::FsError(FsError::ReadDir(
+            "the `path` must not contain `..`".to_string(),
+        )));
+    }
+
     let response = match db.find_user_by_id(token.claims.sub).await {
         Ok(res) => {
             let user_path = format!(
@@ -59,14 +67,14 @@ pub async fn handle(
             Response { files, dirs }
         }
 
-        Err(err) => match err {
-            Error::UserNotFound => return Err(ServerError::AuthError(AuthError::UserNotFound)),
-            _ => {
-                return Err(ServerError::AuthError(AuthError::UnknowError(
+        Err(err) => {
+            return match err {
+                Error::UserNotFound => Err(ServerError::AuthError(AuthError::UserNotFound)),
+                _ => Err(ServerError::AuthError(AuthError::UnknowError(
                     err.to_string(),
-                )))
+                ))),
             }
-        },
+        }
     };
 
     Ok(Json(response))

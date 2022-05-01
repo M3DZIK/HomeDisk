@@ -20,6 +20,14 @@ pub async fn handle(
     let Json(request) = validate_json::<Request>(request)?;
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
+    // `path` cannot contain `..`
+    // to prevent attack attempts because by using a `..` you can access the previous folder
+    if request.path.contains("..") {
+        return Err(ServerError::FsError(FsError::ReadDir(
+            "the `path` must not contain `..`".to_string(),
+        )));
+    }
+
     let response = match db.find_user_by_id(token.claims.sub).await {
         Ok(res) => {
             // get file content
@@ -39,7 +47,7 @@ pub async fn handle(
                 return Err(ServerError::FsError(FsError::FileAlreadyExists));
             }
 
-            // create a directorys where the file will be placed
+            // create a directory where the file will be placed
             // e.g. path ==> `/secret/files/images/screenshot.png`
             // directories up to `/home/homedisk/{username}/secret/files/images/` will be created
             match path.parent() {
