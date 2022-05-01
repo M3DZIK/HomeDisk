@@ -12,7 +12,7 @@ thiserror = "1.0.31"
 uuid = "1.0.0"
 anyhow = "1.0.57"
 serde = { version = "1.0.136", features = ["derive"] }
-zeroize = { version = "1.5.4", features = ["derive"] }
+zeroize = { version = "1.5.5", features = ["derive"] }
 axum = { version = "0.5.4", optional = true }
 
 # config
