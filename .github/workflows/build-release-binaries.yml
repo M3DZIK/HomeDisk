@@ -1,0 +1,159 @@
+name: Build release binaries (and publish them if this is a tag)
+
+on:
+  push:
+    paths-ignore:
+      - '*.md'
+
+  pull_request:
+
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  binaries:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl
+          - armv7-unknown-linux-musleabi
+          - aarch64-unknown-linux-musl
+          - x86_64-pc-windows-msvc
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            artifact_name: target/x86_64-unknown-linux-musl/release/cloud
+            release_name: x86_64-unknown-linux-musl
+            cross: true
+            strip: true
+            cargo_flags: ""
+
+          - os: ubuntu-latest
+            target: armv7-unknown-linux-musleabi
+            artifact_name: target/armv7-unknown-linux-musleabi/release/cloud
+            release_name: armv7-unknown-linux-musleabi
+            cross: true
+            strip: false
+            cargo_flags: ""
+
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            artifact_name: target/aarch64-unknown-linux-musl/release/cloud
+            release_name: aarch64-unknown-linux-musl
+            cross: true
+            strip: false
+            cargo_flags: ""
+
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: target/x86_64-pc-windows-msvc/release/cloud.exe
+            release_name: x86_64-pc-windows-msvc.exe
+            cross: false
+            strip: true
+            cargo_flags: ""
+
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: target/x86_64-apple-darwin/release/cloud
+            release_name: x86_64-apple-darwin
+            cross: false
+            strip: true
+            cargo_flags: ""
+
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: target/aarch64-apple-darwin/release/cloud
+            release_name: aarch64-apple-darwin
+            cross: false
+            strip: true
+            cargo_flags: ""
+
+    name: ${{ matrix.os }} for ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Rust toolchain
+        id: rust-toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+
+      - name: Cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            ~/.cargo/registry/cache/
+            target/
+          key: release-${{ matrix.target }}-rust-${{ steps.rust-toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: cargo build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --target=${{ matrix.target }} ${{ matrix.cargo_flags }}
+          use-cross: ${{ matrix.cross }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.target }}
+          path: ${{ matrix.artifact_name }}
+
+      - name: Get tag name
+        id: tag_name
+        run: |
+          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+        shell: bash
+        if: startsWith(github.ref, 'refs/tags/v')
+
+      - name: Get CHANGELOG.md entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v1
+        with:
+          version: ${{ steps.tag_name.outputs.current_version }}
+          path: ./CHANGELOG.md
+        if: startsWith(github.ref, 'refs/tags/v')
+
+      - name: Publish
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ matrix.artifact_name }}
+          tag: ${{ github.ref }}
+          asset_name: cloud-$tag-${{ matrix.release_name }}
+          body: ${{ steps.changelog_reader.outputs.log_entry }}
+        if: startsWith(github.ref, 'refs/tags/v')
+
+  crates:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+
+      - name: Publish to crates.io
+        uses: actions-rs/cargo@v1
+        with:
+          command: publish
+          args: --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
