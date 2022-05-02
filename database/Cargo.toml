@@ -13,4 +13,4 @@ rust_utilities = { version = "0.2.0", features = ["sha"] }
 homedisk-types = { path = "../types", features = ["database"] }
 
 [dev-dependencies]
-tokio = { version = "1.18.0", features = ["full"] }
+tokio = { version = "1.18.1", features = ["full"] }
