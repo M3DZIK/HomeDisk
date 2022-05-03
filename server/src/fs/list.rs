@@ -1,10 +1,12 @@
-use std::fs;
+use std::path::PathBuf;
+use std::{fs, io};
 
 use crate::fs::validate_path;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use byte_unit::Byte;
 use homedisk_database::Database;
+use homedisk_types::fs::list::DirInfo;
 use homedisk_types::{
     config::types::Config,
     errors::{FsError, ServerError},
@@ -12,6 +14,21 @@ use homedisk_types::{
 };
 
 use crate::middleware::{find_user, validate_json, validate_jwt};
+
+fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
+    fn dir_size(mut dir: fs::ReadDir) -> io::Result<u64> {
+        dir.try_fold(0, |acc, file| {
+            let file = file?;
+            let size = match file.metadata()? {
+                data if data.is_dir() => dir_size(fs::read_dir(file.path())?)?,
+                data => data.len(),
+            };
+            Ok(acc + size)
+        })
+    }
+
+    dir_size(fs::read_dir(path.into())?)
+}
 
 pub async fn handle(
     Extension(db): Extension<Database>,
@@ -51,7 +68,12 @@ pub async fn handle(
         let file_size = Byte::from_bytes(metadata.len().into()).get_appropriate_unit(true);
 
         if metadata.is_dir() {
-            dirs.push(name)
+            dirs.push(DirInfo {
+                name,
+                size: Byte::from_bytes(dir_size(f.path().display().to_string()).unwrap() as u128)
+                    .get_appropriate_unit(true)
+                    .to_string(),
+            })
         } else {
             files.push(FileInfo {
                 name,
