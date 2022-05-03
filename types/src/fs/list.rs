@@ -15,6 +15,7 @@ pub struct Response {
 pub struct FileInfo {
     pub name: String,
     pub size: String,
+    pub modified: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

@@ -1,10 +1,12 @@
 use std::path::PathBuf;
+use std::time::SystemTime;
 use std::{fs, io};
 
 use crate::fs::validate_path;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use byte_unit::Byte;
+use chrono::{DateTime, NaiveDateTime, Utc};
 use homedisk_database::Database;
 use homedisk_types::fs::list::DirInfo;
 use homedisk_types::{
@@ -65,19 +67,41 @@ pub async fn handle(
             .map_err(|err| ServerError::FsError(FsError::UnknowError(err.to_string())))?;
 
         let name = f.path().display().to_string().replace(&path, "");
-        let file_size = Byte::from_bytes(metadata.len().into()).get_appropriate_unit(true);
 
         if metadata.is_dir() {
-            dirs.push(DirInfo {
-                name,
-                size: Byte::from_bytes(dir_size(f.path().display().to_string()).unwrap() as u128)
-                    .get_appropriate_unit(true)
-                    .to_string(),
-            })
+            let size = Byte::from_bytes(dir_size(f.path().display().to_string()).unwrap() as u128)
+                .get_appropriate_unit(true)
+                .to_string();
+
+            dirs.push(DirInfo { name, size })
         } else {
+            let size = Byte::from_bytes(metadata.len().into())
+                .get_appropriate_unit(true)
+                .to_string();
+
+            let elapsed = metadata.modified().unwrap().elapsed().unwrap();
+
+            let seconds = elapsed.as_secs();
+            let minutes = seconds / 60;
+            let hours = minutes / 60;
+            let days = hours / 24;
+
+            let modified;
+
+            if days > 1 {
+                modified = format!("{} day(s)", days)
+            } else if hours > 1 {
+                modified = format!("{} hour(s)", hours)
+            } else if minutes > 1 {
+                modified = format!("{} minute(s)", minutes)
+            } else {
+                modified = format!("{} second(s)", seconds)
+            }
+
             files.push(FileInfo {
                 name,
-                size: file_size.to_string(),
+                size,
+                modified,
             })
         }
     }
