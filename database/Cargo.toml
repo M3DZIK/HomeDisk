@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-log = "0.4.16"
+log = "0.4.17"
 futures-util = "0.3.21"
 serde = { version = "1.0.137", features = ["derive"] }
 sqlx = { version = "0.5.13", features = ["runtime-tokio-rustls", "sqlite"] }
