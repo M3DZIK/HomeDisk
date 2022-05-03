@@ -1,12 +1,10 @@
 use std::path::PathBuf;
-use std::time::SystemTime;
 use std::{fs, io};
 
 use crate::fs::validate_path;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use byte_unit::Byte;
-use chrono::{DateTime, NaiveDateTime, Utc};
 use homedisk_database::Database;
 use homedisk_types::fs::list::DirInfo;
 use homedisk_types::{
