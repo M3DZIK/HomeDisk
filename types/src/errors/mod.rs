@@ -51,7 +51,9 @@ impl axum::response::IntoResponse for ServerError {
                 AuthError::UnknownError(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },
             Self::FsError(ref err) => match err {
+                FsError::MultipartError => StatusCode::BAD_REQUEST,
                 FsError::FileAlreadyExists => StatusCode::BAD_REQUEST,
+                FsError::CreateFile(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::WriteFile(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::Base64(_) => StatusCode::BAD_REQUEST,
                 FsError::ReadDir(_) => StatusCode::BAD_REQUEST,

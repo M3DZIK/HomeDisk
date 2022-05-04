@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-axum = "0.5.4"
+axum = { version = "0.5.4", features = ["multipart"] }
 log = "0.4.17"
 thiserror = "1.0.31"
 serde = { version = "1.0.137", features = ["derive"] }
@@ -17,3 +17,4 @@ axum-auth = "0.2.0"
 jsonwebtoken = "8.1.0"
 base64 = "0.13.0"
 byte-unit = "4.0.14"
+futures = "0.3.21"

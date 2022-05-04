@@ -1,59 +1,76 @@
+use std::io::Write;
 use std::{fs, path::Path};
 
-use crate::fs::validate_path;
-use axum::{extract::rejection::JsonRejection, Extension, Json};
+use axum::extract::{Multipart, Query};
+use axum::{Extension, Json};
 use axum_auth::AuthBearer;
+use futures::TryStreamExt;
 use homedisk_database::Database;
 use homedisk_types::{
     config::types::Config,
     errors::{FsError, ServerError},
-    fs::upload::{Request, Response},
+    fs::upload::{Pagination, Response},
 };
 
-use crate::middleware::{find_user, validate_json, validate_jwt};
+use crate::fs::validate_path;
+use crate::middleware::{find_user, validate_jwt};
 
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,
     AuthBearer(token): AuthBearer,
-    request: Result<Json<Request>, JsonRejection>,
+    mut multipart: Multipart,
+    query: Query<Pagination>,
 ) -> Result<Json<Response>, ServerError> {
-    let Json(request) = validate_json::<Request>(request)?;
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // validate the `path` can be used
-    validate_path(&request.path)?;
+    validate_path(&query.path)?;
 
     // search for a user by UUID from a token
     let user = find_user(db, token.claims.sub).await?;
 
-    // get file content
-    let content = base64::decode(request.content)
-        .map_err(|err| ServerError::FsError(FsError::Base64(err.to_string())))?;
-
-    // directory where the file will be placed
-    let dir = format!(
-        "{user_dir}/{req_dir}",
+    // path to the file
+    let file_path = format!(
+        "{user_dir}/{request_path}",
         user_dir = user.user_dir(&config.storage.path),
-        req_dir = request.path
+        request_path = query.path
     );
-    let path = Path::new(&dir);
+    let file_path = Path::new(&file_path);
 
     // check if the file currently exists to avoid overwriting it
-    if path.exists() {
+    if file_path.exists() {
         return Err(ServerError::FsError(FsError::FileAlreadyExists));
     }
 
     // create a directory where the file will be placed
     // e.g. path ==> `/secret/files/images/screenshot.png`
     // directories up to `/home/homedisk/{username}/secret/files/images/` will be created
-    match path.parent() {
-        Some(prefix) => fs::create_dir_all(&prefix).unwrap(),
+    match file_path.parent() {
+        Some(prefix) => fs::create_dir_all(&prefix)
+            .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?,
         None => (),
     }
 
+    // get multipart field
+    let field = multipart
+        .next_field()
+        .await
+        .map_err(|_| ServerError::FsError(FsError::MultipartError))?
+        .ok_or(ServerError::FsError(FsError::MultipartError))?;
+
+    // create file
+    let file = std::fs::File::create(&file_path)
+        .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?;
+
     // write file
-    fs::write(&path, &content)
+    field
+        .try_fold((file, 0u64), |(mut file, written_len), bytes| async move {
+            file.write_all(bytes.as_ref()).expect("write file error");
+
+            Ok((file, written_len + bytes.len() as u64))
+        })
+        .await
         .map_err(|err| ServerError::FsError(FsError::WriteFile(err.to_string())))?;
 
     Ok(Json(Response { uploaded: true }))
