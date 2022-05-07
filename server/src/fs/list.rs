@@ -59,10 +59,10 @@ pub async fn handle(
     let mut dirs = vec![];
 
     for f in paths {
-        let f = f.map_err(|err| ServerError::FsError(FsError::UnknowError(err.to_string())))?;
+        let f = f.map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
         let metadata = f
             .metadata()
-            .map_err(|err| ServerError::FsError(FsError::UnknowError(err.to_string())))?;
+            .map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
 
         let name = f.path().display().to_string().replace(&path, "");
 

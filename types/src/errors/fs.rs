@@ -5,11 +5,20 @@ pub enum Error {
     #[error("file already exists")]
     FileAlreadyExists,
 
+    #[error("file doesn't exists")]
+    FileDoesNotExist,
+
     #[error("unexpected multipart error")]
     MultipartError,
 
     #[error("create file - {0}")]
     CreateFile(String),
+
+    #[error("delete file - {0}")]
+    DeleteFile(String),
+
+    #[error("delete dir - {0}")]
+    DeleteDirectory(String),
 
     #[error("write file - {0}")]
     WriteFile(String),
@@ -20,6 +29,6 @@ pub enum Error {
     #[error("read dir - {0}")]
     ReadDir(String),
 
-    #[error("unknow error")]
-    UnknowError(String),
+    #[error("unknown error")]
+    UnknownError(String),
 }
