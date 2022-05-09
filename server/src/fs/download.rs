@@ -1,21 +1,17 @@
-use std::path::PathBuf;
-use std::{fs, io};
+use std::fs;
 
 use crate::fs::validate_path;
 use axum::extract::Query;
-use axum::{extract::rejection::JsonRejection, Extension, Json};
+use axum::Extension;
 use axum_auth::AuthBearer;
-use byte_unit::Byte;
 use homedisk_database::Database;
-use homedisk_types::fs::list::DirInfo;
 use homedisk_types::fs::upload::Pagination;
 use homedisk_types::{
     config::types::Config,
-    errors::{FsError, ServerError},
-    fs::list::{FileInfo, Request, Response},
+    errors::ServerError,
 };
 
-use crate::middleware::{find_user, validate_json, validate_jwt};
+use crate::middleware::{find_user, validate_jwt};
 
 pub async fn handle(
     Extension(db): Extension<Database>,
