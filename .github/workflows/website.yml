@@ -58,10 +58,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('website/pnpm-lock.yaml') }}-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --prefix website
 
       - name: Build page
-        run: pnpm run build
+        run: pnpm --prefix website run build
 
       - name: Export page
-        run: pnpm run export
+        run: pnpm --prefix website run export
