@@ -1,4 +1,4 @@
-import { Button, ThemeProvider as MuiThemeProvider, createTheme as muiCreateTheme, PaletteMode } from '@mui/material'
+import { ThemeProvider as MuiThemeProvider, createTheme as muiCreateTheme, PaletteMode } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'

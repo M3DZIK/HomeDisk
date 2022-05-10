@@ -1,8 +1,7 @@
-import { faM, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { RocketLaunch } from "@mui/icons-material";
-import { AppBar, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material";
-import { useState } from "react";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { RocketLaunch } from "@mui/icons-material"
+import { AppBar, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material"
 
 export default function Footer({ toggleTheme, theme}: Props) {
   return (

@@ -131,5 +131,6 @@ type Props = {
   path: string,
   size: string,
   modified: string,
-  refresh: (path: string) => any
+  // eslint-disable-next-line no-unused-vars
+  refresh: (path: string) => void
 }

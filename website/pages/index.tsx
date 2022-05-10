@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import styled from 'styled-components'
 import { links } from '../config'
-import ThemeInterface from '../types/theme'
 
 const Title = styled.h1`
   margin: 0;
