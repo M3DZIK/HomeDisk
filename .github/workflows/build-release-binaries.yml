@@ -2,13 +2,14 @@ name: Build release binaries (and publish them if this is a tag)
 
 on:
   push:
-    paths-ignore:
-      - '*.md'
-      - website/**
+    paths:
+      - '**'
+      - '!website/**'
 
   pull_request:
-    paths-ignore:
-      - website/**
+    paths:
+      - '**'
+      - '!website/**'
 
   workflow_dispatch:
 

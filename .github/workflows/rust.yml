@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - website/**
+    paths:
+      - '**'
+      - '!website/**'
 
   pull_request:
-    paths-ignore:
-      - website/**
+    paths:
+      - '**'
+      - '!website/**'
 
   workflow_dispatch:
 
