@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
+        uses: pnpm/action-setup@v2.2.1
         id: pnpm-install
         with:
           version: 7
