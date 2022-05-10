@@ -6,10 +6,10 @@ on:
       - '**'
       - '!website/**'
 
-  pull_request:
-    paths:
-      - '**'
-      - '!website/**'
+#  pull_request:
+#    paths:
+#      - '**'
+#      - '!website/**'
 
   workflow_dispatch:
 
