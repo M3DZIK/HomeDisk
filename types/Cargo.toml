@@ -13,7 +13,7 @@ uuid = "1.0.0"
 anyhow = "1.0.57"
 serde = { version = "1.0.137", features = ["derive"] }
 zeroize = { version = "1.5.5", features = ["derive"] }
-axum = { version = "0.5.5", optional = true }
+axum = { version = "0.5.6", optional = true }
 
 # config
 toml = { version = "0.5.9", optional = true }
