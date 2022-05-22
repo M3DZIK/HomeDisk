@@ -1,4 +1,4 @@
-import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons"
+import { faMoon, faSignOut, faSun } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { RocketLaunch } from "@mui/icons-material"
 import { AppBar, IconButton, Link, Stack, Toolbar, Typography } from "@mui/material"
@@ -26,9 +26,13 @@ export default function Footer({ toggleTheme, theme}: Props) {
         </Typography>
 
         <Stack direction="row" spacing={2}>
-          <div onClick={() => toggleTheme()}>
+          <IconButton onClick={() => toggleTheme()}>
             <FontAwesomeIcon icon={theme == "light" ? faMoon : faSun} />
-          </div>
+          </IconButton>
+
+          <IconButton>
+            <FontAwesomeIcon icon={faSignOut} />
+          </IconButton>
         </Stack>
       </Toolbar>
     </AppBar>

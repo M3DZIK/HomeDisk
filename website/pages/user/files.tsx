@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { resolve as pathResolve } from 'path'
 import api from '../../api_utils'
 import Icon from "../../components/other/icon"
 import Table from "../../components/user/table"
@@ -27,7 +28,7 @@ export default function Files() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const path = params.get("dir") || ""
+    const path = params.get("path") || ""
 
     api.list(path, cookies.token)
       .then(data => {
@@ -54,6 +55,21 @@ export default function Files() {
         </thead>
 
         <tbody>
+          {path != "" && path != "/" && (
+            <tr>
+              <td>
+                <Link href={`?path=${pathResolve(path, '..')}`}>
+                  <MuiLink onClick={() => refresh(pathResolve(path, '..'))}>
+                    <Icon icon={faFolder} />
+                    .. (go up)
+                  </MuiLink>
+                </Link>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+          )}
+
           {folders.map((f, index) => <FolderComponent key={index} name={f.name} path={`${path}/${f.name}`} size={f.size} modified={f.modified} refresh={refresh} />)}
           {files.map((f, index) => <FileComponent key={index} name={f.name} path={`${path}/${f.name}`} size={f.size} modified={f.modified} refresh={refresh} />)}
         </tbody>
@@ -66,7 +82,7 @@ function FolderComponent({ name, path, size, modified, refresh }: Props) {
   return (
     <tr>
       <td>
-        <Link href={`?dir=${path}`}>
+        <Link href={`?path=${path}`}>
           <MuiLink onClick={() => refresh(path)}>
             <Icon icon={faFolder} />
             {name.replace("/", "")}
@@ -83,7 +99,7 @@ function FileComponent({ name, path, size, modified, refresh }: Props) {
   return (
     <tr>
       <td>
-        <Link href={`?dir=${path}`}>
+        <Link href={`?path=${path}`}>
           <MuiLink onClick={() => refresh(path)}>
             <Icon icon={faFile} />
             {name.replace("/", "")}

@@ -16,6 +16,15 @@ const Table = styled.table`
     padding: 8px;
   }
 
+  td:first-child {
+    width: 70%;
+  }
+
+  td:last-child {
+    width: 10%;
+  }
+
+
   a {
     text-decoration: none;
   }
