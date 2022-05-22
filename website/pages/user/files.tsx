@@ -1,42 +1,12 @@
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link as MuiLink } from "@mui/material"
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import styled from 'styled-components'
 import api from '../../api_utils'
-
-const Table = styled.table`
-  border: 1px solid;
-  width: 80vw;
-  border-collapse: collapse;
-
-  thead {
-    background-color: #01754b;
-    color: white;
-  }
-
-  tr,
-  td {
-    border: 1px solid #000;
-    padding: 8px;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  a:hover {
-    cursor: pointer;
-  }
-`
-
-const Icon = styled(FontAwesomeIcon)`
-  padding-right: 5px;
-  padding-left: 5px;
-`
+import Icon from "../../components/other/icon"
+import Table from "../../components/user/table"
 
 export default function Files() {
   const [cookies] = useCookies(["token"])
@@ -121,7 +91,7 @@ function FileComponent({ name, path, size, modified, refresh }: Props) {
         </Link>
       </td>
       <td>{size}</td>
-      <td>{modified}</td>
+      <td>{modified} ago</td>
     </tr>
   )
 }

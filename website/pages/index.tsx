@@ -1,99 +1,11 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
-import styled from 'styled-components'
+import { Card, CardFiles, CardRegister, CardSettings, CardSignIn } from '../components/home/cards'
+import Description from '../components/home/description'
+import Grid from '../components/home/grid'
+import Title from '../components/home/title'
 import { links } from '../config'
-
-const Title = styled.h1`
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
-
-  a {
-    color: ${({ theme }) => theme.pages.index.title.a};
-    text-decoration: none;
-    animation: animate 1.5s linear infinite;
-  }
-
-  @keyframes animate {
-     0% {
-       opacity: 0;
-     }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-
-  a:hover,
-  a:focus,
-  a:active {
-    text-decoration: underline;
-  }
-`
-
-const Description = styled.p`
-  line-height: 1.5;
-  font-size: 1.5rem;
-  text-align: center;
-`
-
-const Grid = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-`
-
-const Card = styled.div`
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
-
-  :hover,
-  :focus,
-  :active {
-    color: #0070f3;
-    border-color: #0070f3;
-  }
-
-  h2 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-  }
-
-  p {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.5;
-  }
-`
-
-const CardSignIn = styled.a`
-  color: ${({ theme }) => theme.pages.index.cards.signin};
-`
-
-const CardRegister = styled.a`
-  color: ${({ theme }) => theme.pages.index.cards.register};
-`
-
-const CardFiles = styled.a`
-  color: ${({ theme }) => theme.pages.index.cards.files};
-`
-
-const CardSettings = styled.a`
-  color: ${({ theme }) => theme.pages.index.cards.settings};
-`
 
 export default function Home() {
   const [cookies] = useCookies(["token"])
