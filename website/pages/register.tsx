@@ -5,8 +5,8 @@ import Router from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import api from '../api_utils'
-import Title from '../components/auth/title'
 import ErrorComponent from '../components/auth/error'
+import Title from '../components/auth/title'
 import SubmitButton from '../components/auth/button'
 
 export default function Login() {
@@ -40,7 +40,7 @@ export default function Login() {
   }
 
   const handleLogin = () => {
-    const request = api.login(username, password)
+    const request = api.register(username, password)
 
     request
       .then(token => {
@@ -53,11 +53,11 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login - HomeDisk</title>
+        <title>Register - HomeDisk</title>
       </Head>
 
       <Title>
-        Sign in
+        Register
       </Title>
 
       {error != "" && (
@@ -90,7 +90,7 @@ export default function Login() {
         onClick={handleLogin}
         disabled={username == "" || password == ""}
       >
-        Login
+        Register
       </SubmitButton>
     </>
   )

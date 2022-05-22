@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import styled from 'styled-components'
-import api from '../../api'
+import api from '../../api_utils'
 
 const Table = styled.table`
   border: 1px solid;
@@ -99,7 +99,7 @@ function FolderComponent({ name, path, size, modified, refresh }: Props) {
         <Link href={`?dir=${path}`}>
           <MuiLink onClick={() => refresh(path)}>
             <Icon icon={faFolder} />
-            {name}
+            {name.replace("/", "")}
           </MuiLink>
         </Link>
       </td>
@@ -116,7 +116,7 @@ function FileComponent({ name, path, size, modified, refresh }: Props) {
         <Link href={`?dir=${path}`}>
           <MuiLink onClick={() => refresh(path)}>
             <Icon icon={faFile} />
-            {name}
+            {name.replace("/", "")}
           </MuiLink>
         </Link>
       </td>

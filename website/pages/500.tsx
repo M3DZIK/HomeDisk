@@ -41,11 +41,11 @@ export default function NotFound() {
   return (
     <>
       <Head>
-        <title>404 - HomeDisk</title>
+        <title>500 - HomeDisk</title>
       </Head>
 
       <Title>
-        404 | This page could not be found
+        500 | Server-side error occurred
       </Title>
 
       <StyledButton href="/">

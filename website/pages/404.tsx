@@ -45,7 +45,7 @@ export default function NotFound() {
       </Head>
 
       <Title>
-        404 | Server-side error occurred
+        404 | This page could not be found
       </Title>
 
       <StyledButton href="/">
