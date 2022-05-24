@@ -28,5 +28,5 @@ export default async function login(username: string, password: string): Promise
       throw new Error(err)
     })
 
-    return response
+  return response
 }

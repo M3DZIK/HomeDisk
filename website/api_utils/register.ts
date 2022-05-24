@@ -28,5 +28,5 @@ export default async function register(username: string, password: string): Prom
       throw new Error(err)
     })
 
-    return response
+  return response
 }

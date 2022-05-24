@@ -1,11 +1,13 @@
 import { ThemeProvider as MuiThemeProvider, createTheme as muiCreateTheme, PaletteMode } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { ToastContainer } from 'react-toastify'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import Container from '../components/container'
 import Footer from '../components/footer'
 import Header from '../components/header'
 import Main from '../components/main'
+import "react-toastify/dist/ReactToastify.css"
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -113,6 +115,8 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
+
+      <ToastContainer theme={themeName} />
 
       <MuiThemeProvider theme={muiThene}>
         <ThemeProvider theme={theme}>

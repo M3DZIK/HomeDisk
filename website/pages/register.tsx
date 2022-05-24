@@ -10,10 +10,10 @@ import Title from '../components/auth/title'
 import SubmitButton from '../components/auth/button'
 
 export default function Login() {
-  const [cookie, setCookie] = useCookies(["token"])
+  const [cookies, setCookies] = useCookies(["token"])
 
   useEffect(() => {
-    if (cookie.token) {
+    if (cookies.token) {
       Router.push('/user/files')
     }
   })
@@ -44,7 +44,7 @@ export default function Login() {
 
     request
       .then(token => {
-        setCookie("token", token)
+        setCookies("token", token)
         setError("")
       })
       .catch(err => setError(err.toString()))

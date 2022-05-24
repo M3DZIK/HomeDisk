@@ -1,9 +1,7 @@
 import axios from './axios'
 
-export default async function list(path: string, token: string): Promise<any> {
-  const request = axios.post("/fs/list", {
-    path
-  }, {
+export default async function list(path: string, formData: FormData, token: string): Promise<any> {
+  const request = axios.post(`/fs/upload?path=${path}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     }

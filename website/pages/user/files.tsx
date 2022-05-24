@@ -1,5 +1,6 @@
 import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"
-import { Link as MuiLink } from "@mui/material"
+import { CloudUpload } from "@mui/icons-material"
+import { IconButton, Link as MuiLink } from "@mui/material"
 import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -8,6 +9,7 @@ import { resolve as pathResolve } from 'path'
 import api from '../../api_utils'
 import Icon from "../../components/other/icon"
 import Table from "../../components/user/table"
+import UploadModal from "../../components/user/modals/upload"
 
 export default function Files() {
   const [cookies] = useCookies(["token"])
@@ -26,6 +28,8 @@ export default function Files() {
       .catch(err => console.error(err))
   }
 
+  const refreshFolder = () => refresh(path)
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const path = params.get("path") || ""
@@ -39,11 +43,27 @@ export default function Files() {
       .catch(err => console.error(err))
   }, [cookies])
 
+  // modals
+  const [uploadModal, setUploadModal] = useState(false)
+
   return (
     <>
       <Head>
         <title>Files - HomeDisk</title>
       </Head>
+
+      <MuiLink onClick={() => setUploadModal(true)}>
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="logo"
+        >
+          <CloudUpload />
+        </IconButton>
+      </MuiLink>
+
+      <UploadModal open={uploadModal} setOpen={setUploadModal} path={path} refresh={refreshFolder} />
 
       <Table>
         <thead>
