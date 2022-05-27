@@ -1,3 +1,4 @@
+pub mod create_dir;
 pub mod delete;
 pub mod download;
 pub mod list;
@@ -11,6 +12,7 @@ pub fn app() -> axum::Router {
         .route("/upload", post(upload::handle))
         .route("/delete", delete(upload::handle))
         .route("/download", get(download::handle))
+        .route("/createdir", post(create_dir::handle))
 }
 
 pub fn validate_path(path: &str) -> Result<(), homedisk_types::errors::ServerError> {

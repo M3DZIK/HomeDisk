@@ -55,6 +55,7 @@ impl axum::response::IntoResponse for ServerError {
                 FsError::FileDoesNotExist => StatusCode::BAD_REQUEST,
                 FsError::MultipartError => StatusCode::BAD_REQUEST,
                 FsError::CreateFile(_) => StatusCode::INTERNAL_SERVER_ERROR,
+                FsError::CreateDirectory(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::DeleteFile(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::DeleteDirectory(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::WriteFile(_) => StatusCode::INTERNAL_SERVER_ERROR,

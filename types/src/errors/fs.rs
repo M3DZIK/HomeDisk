@@ -14,6 +14,9 @@ pub enum Error {
     #[error("create file - {0}")]
     CreateFile(String),
 
+    #[error("create dir - {0}")]
+    CreateDirectory(String),
+
     #[error("delete file - {0}")]
     DeleteFile(String),
 
