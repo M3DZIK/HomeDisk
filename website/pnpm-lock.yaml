@@ -21,7 +21,7 @@ specifiers:
   react-cookie: 4.1.1
   react-dom: 18.1.0
   react-is: 18.1.0
-  react-toastify: 9.0.2
+  react-toastify: 9.0.3
   styled-components: 5.3.5
   typescript: 4.7.2
 
@@ -41,7 +41,7 @@ dependencies:
   react-cookie: 4.1.1_react@18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-is: 18.1.0
-  react-toastify: 9.0.2_ef5jwxihqo6n7gxfmzogljlgcm
+  react-toastify: 9.0.3_ef5jwxihqo6n7gxfmzogljlgcm
   styled-components: 5.3.5_4klixn56hmiqf6hh5nx3jyckvq
 
 devDependencies:
@@ -2429,8 +2429,8 @@ packages:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
     dev: false
 
-  /react-toastify/9.0.2_ef5jwxihqo6n7gxfmzogljlgcm:
-    resolution: {integrity: sha512-IknOvdh7LNzeLKmZTn7EXYC4kaSM0VdUvRuNdBJs/F/NMgRW9kFXbzAUb8rpQxIH+p1YJ3KVbfmL5ThCPH6o0A==}
+  /react-toastify/9.0.3_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-0QZJk0SqYBxouRBGCFU3ymvjlwimRRhVH7SzqGRiVrQ001KSoUNbGKx9Yq42aoPv18n45yJzEFG82zqv3HnASg==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
