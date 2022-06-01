@@ -9,7 +9,7 @@ database = ["rust_utilities", "sqlx"]
 
 [dependencies]
 thiserror = "1.0.31"
-uuid = "1.1.0"
+uuid = "1.1.1"
 anyhow = "1.0.57"
 serde = { version = "1.0.137", features = ["derive"] }
 zeroize = { version = "1.5.5", features = ["derive"] }
