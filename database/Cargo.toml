@@ -8,7 +8,7 @@ log = "0.4.17"
 futures-util = "0.3.21"
 serde = { version = "1.0.137", features = ["derive"] }
 sqlx = { version = "0.5.13", features = ["runtime-tokio-rustls", "sqlite"] }
-uuid = { version = "1.1.0", features = ["v5"] }
+uuid = { version = "1.1.1", features = ["v5"] }
 rust_utilities = { version = "0.2.0", features = ["sha"] }
 homedisk-types = { path = "../types", features = ["database"] }
 
