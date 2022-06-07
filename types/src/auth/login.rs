@@ -3,7 +3,6 @@ use zeroize::{Zeroize, ZeroizeOnDrop};
 
 #[derive(Debug, Serialize, Deserialize, Clone, Zeroize, ZeroizeOnDrop)]
 pub struct Request {
-    #[zeroize(skip)]
     pub username: String,
     pub password: String,
 }

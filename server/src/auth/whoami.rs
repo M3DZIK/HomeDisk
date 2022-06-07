@@ -14,6 +14,7 @@ pub async fn handle(
     config: Extension<Config>,
     AuthBearer(token): AuthBearer,
 ) -> Result<Json<Response>, ServerError> {
+    // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     let response = match db.find_user_by_id(token.claims.sub).await {

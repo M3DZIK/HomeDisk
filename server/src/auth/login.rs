@@ -13,6 +13,7 @@ pub async fn handle(
     Extension(config): Extension<Config>,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
+    // validate json request
     let request = validate_json::<Request>(request)?;
 
     let user = User::new(&request.username, &request.password);

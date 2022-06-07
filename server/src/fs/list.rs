@@ -15,6 +15,7 @@ use homedisk_types::{
 
 use crate::middleware::{find_user, validate_json, validate_jwt};
 
+/// Get directory size on disk (size of all files in directory).
 fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
     fn dir_size(mut dir: fs::ReadDir) -> io::Result<u64> {
         dir.try_fold(0, |acc, file| {
@@ -36,7 +37,10 @@ pub async fn handle(
     AuthBearer(token): AuthBearer,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
+    // validate json request
     let Json(request) = validate_json::<Request>(request)?;
+
+    // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // validate the `path` can be used
@@ -52,6 +56,7 @@ pub async fn handle(
         req_dir = request.path
     );
 
+    // get paths from dir
     let paths = fs::read_dir(&path)
         .map_err(|err| ServerError::FsError(FsError::ReadDir(err.to_string())))?;
 
@@ -59,24 +64,37 @@ pub async fn handle(
     let mut dirs = vec![];
 
     for f in paths {
+        // handle Error
         let f = f.map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
+
+        // get path metadata
         let metadata = f
             .metadata()
             .map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
 
+        // get name of the path
         let name = f.path().display().to_string().replace(&path, "");
 
+        // if path is directory
         if metadata.is_dir() {
-            let size = Byte::from_bytes(dir_size(f.path().display().to_string()).unwrap() as u128)
-                .get_appropriate_unit(true)
-                .to_string();
+            let size = Byte::from_bytes(
+                dir_size(f.path().display().to_string())
+                    .map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?
+                    .into(),
+            )
+            .get_appropriate_unit(true)
+            .to_string();
 
             dirs.push(DirInfo { name, size })
-        } else {
+        }
+        // if path is file
+        else {
+            // get file size in bytes
             let size = Byte::from_bytes(metadata.len().into())
                 .get_appropriate_unit(true)
                 .to_string();
 
+            // check how long it has been since the file was last modified
             let elapsed = metadata.modified().unwrap().elapsed().unwrap();
 
             let seconds = elapsed.as_secs();
@@ -86,6 +104,7 @@ pub async fn handle(
 
             let modified;
 
+            // format elapsed time
             if days > 1 {
                 modified = format!("{} day(s)", days)
             } else if hours > 1 {

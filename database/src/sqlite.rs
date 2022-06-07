@@ -6,18 +6,19 @@ use super::{Error, User};
 
 #[derive(Debug, Clone)]
 pub struct Database {
+    /// Sqlite Connection Pool
     pub conn: SqlitePool,
 }
 
 impl Database {
     /// Open SQLite Database file
-    /// ```ignore
+    /// ```ignore,rust
     /// use homedisk_database::Database;
     ///
     /// Database::open("sqlite::memory:").await?;
     /// ```
     pub async fn open(path: &str) -> Result<Self, Error> {
-        debug!("opening SQLite database");
+        debug!("Opening SQLite database");
 
         let conn = SqlitePool::connect(path).await?;
 
@@ -25,14 +26,14 @@ impl Database {
     }
 
     /// Create new User
-    /// ```ignore
+    /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
     /// let user = User::new("username", "password");
     /// db.create_user(&user).await?;
     /// ```
     pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
-        debug!("creating user - {}", user.username);
+        debug!("Creating user - {}", user.username);
 
         let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")
             .bind(&user.id)
@@ -43,7 +44,7 @@ impl Database {
     }
 
     /// Find user
-    /// ```ignore
+    /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
     /// let user = User::new("username", "password");
@@ -51,7 +52,7 @@ impl Database {
     /// db.find_user(&user.username, &user.password).await?;
     /// ```
     pub async fn find_user(&self, username: &str, password: &str) -> Result<User, Error> {
-        debug!("searching for user - {}", username);
+        debug!("Searching for user - {}", username);
 
         let query =
             sqlx::query_as::<_, User>("SELECT * FROM user WHERE username = ? AND password = ?")
@@ -74,7 +75,7 @@ impl Database {
     }
 
     /// Find user by UUID
-    /// ```ignore
+    /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
     /// let user = User::new("username", "password");
@@ -82,7 +83,7 @@ impl Database {
     /// db.find_user_by_id(&user.id).await?;
     /// ```
     pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
-        debug!("searching for a user by UUID - {}", id);
+        debug!("Searching for a user by UUID - {}", id);
 
         let query = sqlx::query_as::<_, User>("SELECT * FROM user WHERE id = ?").bind(id);
 

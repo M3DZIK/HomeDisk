@@ -67,6 +67,7 @@ impl User {
 mod tests {
     use super::User;
 
+    /// Check if the username has been changed to lowercase
     #[test]
     fn check_username_is_in_lowercase() {
         let user = User::new("MEdzIk", "SuperSecretPassword123!");
@@ -74,6 +75,7 @@ mod tests {
         assert_eq!(user.username, "medzik")
     }
 
+    /// Check that the password is a checksum
     #[test]
     fn check_if_password_is_hashed() {
         let password = "password";

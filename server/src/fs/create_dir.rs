@@ -18,7 +18,10 @@ pub async fn handle(
     AuthBearer(token): AuthBearer,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
+    // validate json request
     let Json(request) = validate_json::<Request>(request)?;
+
+    // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // validate the `path` can be used
@@ -34,6 +37,7 @@ pub async fn handle(
         req_dir = request.path
     );
 
+    // create dirs
     fs::create_dir_all(path)
         .map_err(|err| ServerError::FsError(FsError::CreateDirectory(err.to_string())))?;
 

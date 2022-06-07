@@ -16,7 +16,7 @@ pub async fn handle(
     AuthBearer(token): AuthBearer,
     query: Query<Pagination>,
 ) -> Result<Vec<u8>, ServerError> {
-    // validate token
+    // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // validate the `path` can be used

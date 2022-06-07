@@ -1,9 +1,12 @@
-use std::fmt;
-
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
+    #[error("user not found")]
     UserNotFound,
+
+    #[error("sqlx error - {0}")]
     SQLx(sqlx::Error),
+
+    #[error("std::io error - {0}")]
     Io(std::io::Error),
 }
 
@@ -16,15 +19,5 @@ impl From<sqlx::Error> for Error {
 impl From<std::io::Error> for Error {
     fn from(err: std::io::Error) -> Self {
         Error::Io(err)
-    }
-}
-
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Error::UserNotFound => write!(f, "user not found"),
-            Error::SQLx(err) => write!(f, "kind `sqlx`: {:?}", err),
-            Error::Io(err) => write!(f, "kind `io`: {:?}", err),
-        }
     }
 }

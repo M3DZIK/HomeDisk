@@ -15,6 +15,7 @@ pub async fn handle(
     Extension(config): Extension<Config>,
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
+    // validate json request
     let request = validate_json::<Request>(request)?;
 
     // username must contain at least 4 characters

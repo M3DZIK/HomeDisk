@@ -14,15 +14,16 @@ async fn health_check() -> &'static str {
     "I'm alive!"
 }
 
-pub async fn serve(
+pub async fn run_http_server(
     host: String,
     origins: Vec<HeaderValue>,
     db: Database,
     config: Config,
 ) -> error::Result<()> {
-    debug!("starting http server");
+    debug!("Starting http server");
     info!("Website available at: http://{host}");
 
+    // create http Router
     let app = Router::new()
         .route("/health-check", get(health_check))
         .nest("/auth", auth::app())
@@ -31,6 +32,7 @@ pub async fn serve(
         .layer(Extension(db))
         .layer(Extension(config));
 
+    // bind the provided address and serve Router
     Server::bind(&host.parse()?)
         .serve(app.into_make_service())
         .await?;

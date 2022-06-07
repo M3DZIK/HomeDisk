@@ -22,6 +22,7 @@ pub async fn handle(
     mut multipart: Multipart,
     query: Query<Pagination>,
 ) -> Result<Json<Response>, ServerError> {
+    // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // validate the `path` can be used

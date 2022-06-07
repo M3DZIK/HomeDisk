@@ -1,9 +1,12 @@
-use std::fmt;
-
-#[derive(Debug)]
+#[derive(Debug, thiserror::Error)]
 pub enum Error {
+    #[error("axum error - {0}")]
     Axum(axum::Error),
+
+    #[error("hyper error - {0}")]
     Hyper(hyper::Error),
+
+    #[error("std::net::AddrParseError - {0}")]
     AddrParseError(std::net::AddrParseError),
 }
 
@@ -24,15 +27,5 @@ impl From<hyper::Error> for Error {
 impl From<std::net::AddrParseError> for Error {
     fn from(err: std::net::AddrParseError) -> Self {
         Error::AddrParseError(err)
-    }
-}
-
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Error::Axum(err) => write!(f, "axum error: {}", err),
-            Error::Hyper(err) => write!(f, "hyper error: {}", err),
-            Error::AddrParseError(err) => write!(f, "std::net::AddrParseError: {}", err),
-        }
     }
 }

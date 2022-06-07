@@ -3,9 +3,11 @@ use std::fs::File;
 use log::LevelFilter;
 use simplelog::{ColorChoice, CombinedLogger, Config, TermLogger, TerminalMode, WriteLogger};
 
-pub fn init() {
+pub fn init() -> anyhow::Result<()> {
+    // init better_panic
     better_panic::install();
 
+    // init logger
     CombinedLogger::init(vec![
         TermLogger::new(
             LevelFilter::Debug,
@@ -18,6 +20,7 @@ pub fn init() {
             Config::default(),
             File::create("logs.log").expect("create logs file"),
         ),
-    ])
-    .expect("init simplelog");
+    ])?;
+
+    Ok(())
 }
