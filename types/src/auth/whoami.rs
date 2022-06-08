@@ -2,7 +2,9 @@
 
 use serde::{Deserialize, Serialize};
 
+/// `/auth/whoami` Response
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Response {
+    /// Logged user username
     pub username: String,
 }

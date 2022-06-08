@@ -26,3 +26,18 @@ pub async fn find_user(db: Database, user_id: String) -> Result<User, ServerErro
         },
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use homedisk_database::User;
+
+    use super::create_token;
+
+    #[test]
+    fn test_create_token() {
+        let secret = b"secret";
+        let user = User::new("username", "password");
+
+        create_token(&user, secret, 1).unwrap();
+    }
+}

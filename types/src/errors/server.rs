@@ -6,10 +6,10 @@ use super::{AuthError, FsError};
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 #[serde(tag = "error", content = "error_message", rename_all = "kebab-case")]
 pub enum Error {
-    #[error("auth error: {0}")]
+    #[error("auth error - {0}")]
     AuthError(#[from] AuthError),
 
-    #[error("fs error: {0}")]
+    #[error("fs error - {0}")]
     FsError(#[from] FsError),
 
     #[error("too may requests, please slow down")]
@@ -27,7 +27,7 @@ pub enum Error {
     #[error("failed to extract the request body")]
     BytesRejection,
 
-    #[error("unexpected error - {0}")]
+    #[error("unknown error - {0}")]
     Other(String),
 }
 

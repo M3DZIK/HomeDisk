@@ -17,16 +17,16 @@ pub struct ConfigHTTP {
     pub host: String,
     /// Port HTTP Port
     pub port: u16,
-    /// CORS Domaing (e.g ["site1.example.com", "site2.example.com"])
+    /// CORS Domains (e.g ["site1.example.com", "site2.example.com"])
     pub cors: Vec<String>,
 }
 
 /// Json Web Token config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigJWT {
-    /// JWT Secret string
+    /// JWT Secret string (used to sign tokens)
     pub secret: String,
-    /// Token expiers time in seconds
+    /// Token expiration time in hours
     pub expires: i64,
 }
 

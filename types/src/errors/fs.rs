@@ -33,6 +33,6 @@ pub enum Error {
     #[error("read dir - {0}")]
     ReadDir(String),
 
-    #[error("unknown error")]
+    #[error("unknown error - {0}")]
     UnknownError(String),
 }

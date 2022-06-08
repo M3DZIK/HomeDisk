@@ -2,14 +2,14 @@
 # will have compiled files and executables
 /target
 
-# log files
+# Logs files
 *.log
 
-# database
+# SQLite
 *.db
 *.db-shm
 *.db-wal
 
-# ide config
+# IDE configs
 .idea
 .vscode

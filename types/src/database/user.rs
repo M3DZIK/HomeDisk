@@ -4,8 +4,11 @@ use uuid::Uuid;
 /// SQL user table
 #[derive(Debug, sqlx::FromRow)]
 pub struct User {
+    /// UUID of the user
     pub id: String,
+    /// Username
     pub username: String,
+    /// Encryped user password
     pub password: String,
 }
 
@@ -33,6 +36,7 @@ impl User {
             password.as_bytes(),
         ));
 
+        // return `User`
         Self {
             id,
             username,

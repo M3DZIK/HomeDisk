@@ -1,5 +1,6 @@
 # HomeDisk cloud server
 
+[![docs](https://img.shields.io/badge/docs-rust_docs-fff)](https://homedisk-doc.vercel.app/cloud/)
 [![license badge](https://img.shields.io/github/license/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
 [![code size badge](https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
 [![total lines badge](https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)

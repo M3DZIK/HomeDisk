@@ -14,11 +14,11 @@ impl Config {
     /// let config = Config::parse().unwrap();
     /// ```
     pub fn parse() -> Result<Config> {
-        // config file path
+        // get file path of config file
         let config_dir = option_return!(dirs::config_dir(), "find config dir")?;
         let config_path = format!("{}/homedisk/config.toml", config_dir.to_string_lossy());
 
-        // read file
+        // read file content to string
         let config = fs::read_to_string(config_path)?;
 
         // parse config and return it

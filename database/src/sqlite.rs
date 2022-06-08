@@ -12,7 +12,7 @@ pub struct Database {
 }
 
 impl Database {
-    /// Open SQLite Database file
+    /// Open a SQLite database
     /// ```ignore,rust
     /// use homedisk_database::Database;
     ///
@@ -30,7 +30,7 @@ impl Database {
         Ok(Self { conn })
     }
 
-    /// Create new User
+    /// Create a new User
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
