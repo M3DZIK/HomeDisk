@@ -1,5 +1,10 @@
 # HomeDisk cloud server
 
+[![license badge](https://img.shields.io/github/license/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![code size badge](https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![total lines badge](https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![Build release binaries (and publish them if this is a tag)](https://github.com/MedzikUser/HomeDisk/actions/workflows/build-release-binaries.yml/badge.svg)](https://github.com/MedzikUser/HomeDisk/actions/workflows/build-release-binaries.yml)
+
 ![](https://i.imgur.com/gi7KBVE.png)
 
 ![](https://i.imgur.com/vLautmq.png)
