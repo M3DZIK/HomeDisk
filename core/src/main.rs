@@ -1,12 +1,14 @@
-mod init;
-
 use homedisk_database::Database;
-use homedisk_server::run_http_server;
-use homedisk_types::config::types::Config;
+use homedisk_server::serve_http;
+use homedisk_types::config::Config;
 
+/// Main function
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    init::init()?;
+    // init better_panic
+    better_panic::install();
+    // init logger
+    init_logger()?;
 
     // parse config
     let config = Config::parse()?;
@@ -22,6 +24,7 @@ async fn main() -> anyhow::Result<()> {
         .map(|e| e.parse().expect("parse CORS hosts"))
         .collect();
 
+    // format host ip and port
     let host = format!(
         "{host}:{port}",
         host = config.http.host,
@@ -29,7 +32,31 @@ async fn main() -> anyhow::Result<()> {
     );
 
     // start http server
-    run_http_server(host, origins, db, config).await?;
+    serve_http(host, origins, db, config).await?;
+
+    Ok(())
+}
+
+/// Init logger
+fn init_logger() -> anyhow::Result<()> {
+    use std::fs::File;
+
+    use log::LevelFilter;
+    use simplelog::{ColorChoice, CombinedLogger, Config, TermLogger, TerminalMode, WriteLogger};
+
+    CombinedLogger::init(vec![
+        TermLogger::new(
+            LevelFilter::Debug,
+            Config::default(),
+            TerminalMode::Mixed,
+            ColorChoice::Auto,
+        ),
+        WriteLogger::new(
+            LevelFilter::Info,
+            Config::default(),
+            File::create("logs.log").expect("create logs file"),
+        ),
+    ])?;
 
     Ok(())
 }

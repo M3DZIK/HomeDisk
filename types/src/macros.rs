@@ -1,3 +1,4 @@
+/// Return value or error (if None) from Some(T)
 #[macro_export]
 macro_rules! option_return {
     ($variable:expr,$err_desc:expr) => {

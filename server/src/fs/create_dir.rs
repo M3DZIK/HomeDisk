@@ -5,13 +5,14 @@ use axum_auth::AuthBearer;
 use homedisk_database::Database;
 use homedisk_types::fs::create_dir::{Request, Response};
 use homedisk_types::{
-    config::types::Config,
+    config::Config,
     errors::{FsError, ServerError},
 };
 
 use crate::fs::validate_path;
 use crate::middleware::{find_user, validate_json, validate_jwt};
 
+/// Handle `/fs/createdir` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

@@ -1,4 +1,7 @@
-pub mod types;
+//! Types for configuration file
 
 #[cfg(feature = "config")]
-pub mod toml;
+mod toml;
+mod types;
+
+pub use types::*;

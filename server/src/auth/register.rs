@@ -4,12 +4,13 @@ use axum::{extract::rejection::JsonRejection, Extension, Json};
 use homedisk_database::{Database, User};
 use homedisk_types::{
     auth::login::{Request, Response},
-    config::types::Config,
+    config::Config,
     errors::{AuthError, ServerError},
 };
 
 use crate::middleware::{create_token, validate_json};
 
+/// Handle `/auth/register` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

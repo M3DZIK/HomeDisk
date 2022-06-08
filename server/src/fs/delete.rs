@@ -5,7 +5,7 @@ use axum::Extension;
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
 use homedisk_types::{
-    config::types::Config,
+    config::Config,
     errors::{FsError, ServerError},
     fs::delete::Request,
 };

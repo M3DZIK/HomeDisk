@@ -1,3 +1,5 @@
+//! `/auth/whoami` Response type
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

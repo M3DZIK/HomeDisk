@@ -1,5 +1,8 @@
+//! Configuration file types
+
 use serde::{Deserialize, Serialize};
 
+/// Config type
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     pub http: ConfigHTTP,
@@ -7,6 +10,7 @@ pub struct Config {
     pub storage: ConfigStorage,
 }
 
+/// HTTP config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigHTTP {
     /// HTTP Host
@@ -17,6 +21,7 @@ pub struct ConfigHTTP {
     pub cors: Vec<String>,
 }
 
+/// Json Web Token config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigJWT {
     /// JWT Secret string
@@ -25,6 +30,7 @@ pub struct ConfigJWT {
     pub expires: i64,
 }
 
+/// Storage config
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConfigStorage {
     /// Directory where user files will be stored

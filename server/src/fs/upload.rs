@@ -7,7 +7,7 @@ use axum_auth::AuthBearer;
 use futures::TryStreamExt;
 use homedisk_database::Database;
 use homedisk_types::{
-    config::types::Config,
+    config::Config,
     errors::{FsError, ServerError},
     fs::upload::{Pagination, Response},
 };
@@ -15,6 +15,7 @@ use homedisk_types::{
 use crate::fs::validate_path;
 use crate::middleware::{find_user, validate_jwt};
 
+/// Handle `/fs/upload` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

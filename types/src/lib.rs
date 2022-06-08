@@ -4,4 +4,5 @@ pub mod config;
 pub mod database;
 pub mod errors;
 pub mod fs;
-pub mod macros;
+
+mod macros;

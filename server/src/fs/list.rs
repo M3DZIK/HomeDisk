@@ -8,7 +8,7 @@ use byte_unit::Byte;
 use homedisk_database::Database;
 use homedisk_types::fs::list::DirInfo;
 use homedisk_types::{
-    config::types::Config,
+    config::Config,
     errors::{FsError, ServerError},
     fs::list::{FileInfo, Request, Response},
 };

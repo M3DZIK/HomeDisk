@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// `/fs/*` Error
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 pub enum Error {
     #[error("file already exists")]

@@ -8,6 +8,11 @@ use super::types::Config;
 
 impl Config {
     /// Parse configuration file
+    /// ```
+    /// use homedisk_types::config::Config;
+    ///
+    /// let config = Config::parse().unwrap();
+    /// ```
     pub fn parse() -> Result<Config> {
         // config file path
         let config_dir = option_return!(dirs::config_dir(), "get config dir")?;

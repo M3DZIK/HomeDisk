@@ -1,7 +1,7 @@
 use rust_utilities::crypto::sha::{encode, Algorithm, CryptographicHash};
 use uuid::Uuid;
 
-/// SQL `user` Table
+/// SQL user table
 #[derive(Debug, sqlx::FromRow)]
 pub struct User {
     pub id: String,
@@ -53,12 +53,14 @@ impl User {
     /// assert_eq!(dir, "/home/homedisk/medzik")
     /// ```
     pub fn user_dir(&self, storage: &str) -> String {
+        // get a user storage path
         let path = format!(
             "{path}/{username}",
             path = storage,
             username = self.username,
         );
 
+        // return user storage path
         path
     }
 }

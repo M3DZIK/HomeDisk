@@ -2,7 +2,7 @@ use axum::{extract::rejection::JsonRejection, Extension, Json};
 use homedisk_database::{Database, Error, User};
 use homedisk_types::{
     auth::login::{Request, Response},
-    config::types::Config,
+    config::Config,
     errors::{AuthError, ServerError},
 };
 

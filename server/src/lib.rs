@@ -1,12 +1,11 @@
-pub mod auth;
-pub mod fs;
-pub mod middleware;
-
+mod auth;
 mod error;
+mod fs;
+mod middleware;
 
 use axum::{http::HeaderValue, routing::get, Extension, Router, Server};
 use homedisk_database::Database;
-use homedisk_types::config::types::Config;
+use homedisk_types::config::Config;
 use log::{debug, info};
 use tower_http::cors::{AllowOrigin, CorsLayer};
 
@@ -15,7 +14,8 @@ async fn health_check() -> &'static str {
     "I'm alive!"
 }
 
-pub async fn run_http_server(
+/// Start HTTP server
+pub async fn serve_http(
     host: String,
     origins: Vec<HeaderValue>,
     db: Database,

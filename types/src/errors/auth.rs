@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// `/auth/*` Error
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 pub enum Error {
     #[error("user not found")]

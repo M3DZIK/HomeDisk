@@ -6,10 +6,11 @@ use axum::Extension;
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
 use homedisk_types::fs::upload::Pagination;
-use homedisk_types::{config::types::Config, errors::ServerError};
+use homedisk_types::{config::Config, errors::ServerError};
 
 use crate::middleware::{find_user, validate_jwt};
 
+/// Handle `/fs/download` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

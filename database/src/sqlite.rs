@@ -4,9 +4,10 @@ use sqlx::{sqlite::SqliteQueryResult, Executor, Row, SqlitePool};
 
 use super::{Error, User};
 
+/// SQL Database
 #[derive(Debug, Clone)]
 pub struct Database {
-    /// Sqlite Connection Pool
+    /// SQLite Connection Pool
     pub conn: SqlitePool,
 }
 
@@ -15,7 +16,11 @@ impl Database {
     /// ```ignore,rust
     /// use homedisk_database::Database;
     ///
+    /// // open database in memory
     /// Database::open("sqlite::memory:").await?;
+    ///
+    /// // open database from file
+    /// Database::open("path/to/file.db").await?;
     /// ```
     pub async fn open(path: &str) -> Result<Self, Error> {
         debug!("Opening SQLite database");
@@ -29,7 +34,10 @@ impl Database {
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
+    /// // create `User` type
     /// let user = User::new("username", "password");
+    ///
+    /// // create a user in database
     /// db.create_user(&user).await?;
     /// ```
     pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
@@ -47,24 +55,32 @@ impl Database {
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
+    /// // create `User` type
     /// let user = User::new("username", "password");
     ///
+    /// // search for a user in database
     /// db.find_user(&user.username, &user.password).await?;
     /// ```
     pub async fn find_user(&self, username: &str, password: &str) -> Result<User, Error> {
         debug!("Searching for a user - {}", username);
 
+        // create query request to database
         let query =
             sqlx::query_as::<_, User>("SELECT * FROM user WHERE username = ? AND password = ?")
                 .bind(username)
                 .bind(password);
 
+        // fetch query
         let mut stream = self.conn.fetch(query);
 
+        // get rows from query
         let row = stream.try_next().await?.ok_or(Error::UserNotFound)?;
 
+        // get `id` row
         let id = row.try_get("id")?;
+        // get `username` row
         let username = row.try_get("username")?;
+        // get `password` row
         let password = row.try_get("password")?;
 
         Ok(User {
@@ -78,21 +94,29 @@ impl Database {
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
+    /// // create `User` type
     /// let user = User::new("username", "password");
     ///
+    /// // search for a user by UUID in database
     /// db.find_user_by_id(&user.id).await?;
     /// ```
     pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
         debug!("Searching for a user by UUID - {}", id);
 
+        // create query request to database
         let query = sqlx::query_as::<_, User>("SELECT * FROM user WHERE id = ?").bind(id);
 
+        // fetch query
         let mut stream = self.conn.fetch(query);
 
+        // get rows from query
         let row = stream.try_next().await?.ok_or(Error::UserNotFound)?;
 
+        // get `id` row
         let id = row.try_get("id")?;
+        // get `username` row
         let username = row.try_get("username")?;
+        // get `password` row
         let password = row.try_get("password")?;
 
         Ok(User {

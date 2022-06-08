@@ -1,3 +1,5 @@
+//! `/auth/login` Request and Response types
+
 use serde::{Deserialize, Serialize};
 use zeroize::{Zeroize, ZeroizeOnDrop};
 

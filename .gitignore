@@ -7,8 +7,6 @@
 
 # database
 *.db
-
-# why sqlx?
 *.db-shm
 *.db-wal
 
