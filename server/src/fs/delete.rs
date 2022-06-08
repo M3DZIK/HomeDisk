@@ -13,6 +13,7 @@ use homedisk_types::{
 use crate::fs::validate_path;
 use crate::middleware::{find_user, validate_jwt};
 
+/// Handle `/fs/delete` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

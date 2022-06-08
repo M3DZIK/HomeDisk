@@ -1,6 +1,7 @@
 use axum::{extract::rejection::JsonRejection, Json};
 use homedisk_types::errors::ServerError;
 
+/// Validate json request
 pub fn validate_json<Typ>(
     payload: Result<Json<Typ>, JsonRejection>,
 ) -> Result<Json<Typ>, ServerError> {

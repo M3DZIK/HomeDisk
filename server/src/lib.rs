@@ -10,6 +10,7 @@ use homedisk_types::config::types::Config;
 use log::{debug, info};
 use tower_http::cors::{AllowOrigin, CorsLayer};
 
+/// Handle `/health-check` requests
 async fn health_check() -> &'static str {
     "I'm alive!"
 }

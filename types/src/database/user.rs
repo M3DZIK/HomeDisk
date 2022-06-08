@@ -23,7 +23,7 @@ impl User {
         // change username to lowercase
         let username = username.to_lowercase();
 
-        // create user UUID
+        // generate a user UUID
         let sha1_name = CryptographicHash::hash(Algorithm::SHA1, username.as_bytes());
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 

@@ -30,7 +30,7 @@ pub enum ServerError {
     #[error("failed to extract the request body")]
     BytesRejection,
 
-    #[error("unexcepted error")]
+    #[error("unexpected error - {0}")]
     Other(String),
 }
 

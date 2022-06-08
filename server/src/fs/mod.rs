@@ -10,7 +10,7 @@ pub fn app() -> axum::Router {
     axum::Router::new()
         .route("/list", post(list::handle))
         .route("/upload", post(upload::handle))
-        .route("/delete", delete(upload::handle))
+        .route("/delete", delete(delete::handle))
         .route("/download", get(download::handle))
         .route("/createdir", post(create_dir::handle))
 }

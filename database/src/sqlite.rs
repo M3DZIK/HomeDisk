@@ -43,7 +43,7 @@ impl Database {
         Ok(self.conn.execute(query).await?)
     }
 
-    /// Find user
+    /// Search for a user
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
@@ -52,7 +52,7 @@ impl Database {
     /// db.find_user(&user.username, &user.password).await?;
     /// ```
     pub async fn find_user(&self, username: &str, password: &str) -> Result<User, Error> {
-        debug!("Searching for user - {}", username);
+        debug!("Searching for a user - {}", username);
 
         let query =
             sqlx::query_as::<_, User>("SELECT * FROM user WHERE username = ? AND password = ?")
@@ -74,7 +74,7 @@ impl Database {
         })
     }
 
-    /// Find user by UUID
+    /// Search for a user by UUID
     /// ```ignore,rust
     /// use homedisk_database::{Database, User};
     ///
@@ -111,10 +111,12 @@ mod tests {
 
     use crate::{Database, User};
 
+    /// Utils to open database in tests    
     async fn open_db() -> Database {
         Database::open("sqlite::memory:").await.expect("open db")
     }
 
+    /// Utils to create a new user in tests
     async fn new_user(db: &Database) {
         // create user table
         db.conn
@@ -129,11 +131,13 @@ mod tests {
         db.create_user(&user).await.expect("create user");
     }
 
+    /// Open database in memory
     #[tokio::test]
     async fn open_db_in_memory() {
         open_db().await;
     }
 
+    /// Create a new user
     #[tokio::test]
     async fn create_user() {
         let db = open_db().await;
@@ -141,6 +145,7 @@ mod tests {
         new_user(&db).await;
     }
 
+    /// Search for a user
     #[tokio::test]
     async fn find_user() {
         let db = open_db().await;
@@ -157,6 +162,7 @@ mod tests {
         assert_eq!(res.password, user.password)
     }
 
+    /// Search for a user with an invalid password to see if the user is returned (it shouldn't be)
     #[tokio::test]
     async fn find_user_wrong_password() {
         let db = open_db().await;
@@ -173,6 +179,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
+    /// Search for a user who does not exist
     #[tokio::test]
     async fn find_user_wrong_username() {
         let db = open_db().await;
@@ -189,6 +196,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
+    /// Search for a user by UUID
     #[tokio::test]
     async fn find_user_by_id() {
         let db = open_db().await;
@@ -202,13 +210,14 @@ mod tests {
         assert_eq!(res.password, user.password)
     }
 
+    /// Search for a user by UUID who does not exist
     #[tokio::test]
     async fn find_user_wrong_id() {
         let db = open_db().await;
 
         new_user(&db).await;
 
-        let other_user = User::new("other_user", "secret@passphrase123!");
+        let other_user = User::new("other_user", "my secret passphrase");
 
         let err = db.find_user_by_id(other_user.id).await.unwrap_err();
 

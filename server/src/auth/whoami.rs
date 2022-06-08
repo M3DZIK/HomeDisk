@@ -9,6 +9,7 @@ use homedisk_types::{
 
 use crate::middleware::validate_jwt;
 
+/// Handle `/auth/whoami` requests
 pub async fn handle(
     db: Extension<Database>,
     config: Extension<Config>,

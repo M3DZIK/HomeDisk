@@ -31,6 +31,7 @@ fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
     dir_size(fs::read_dir(path.into())?)
 }
 
+/// Handle `/fs/list` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,
