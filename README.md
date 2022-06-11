@@ -1,12 +1,12 @@
 # HomeDisk cloud server
 
-[![docs](https://img.shields.io/badge/docs-rust_docs-fff)](https://homedisk-doc.vercel.app/cloud/)
-[![license badge](https://img.shields.io/github/license/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![code size badge](https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![total lines badge](https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![Build release binaries (and publish them if this is a tag)](https://github.com/MedzikUser/HomeDisk/actions/workflows/build-release-binaries.yml/badge.svg)](https://github.com/MedzikUser/HomeDisk/actions/workflows/build-release-binaries.yml)
+[![docs](https://img.shields.io/badge/docs-rust_docs-fff)](https://homedisk-doc.vercel.app)
+[![](https://img.shields.io/github/license/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![](https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![](https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
+[![Rust CI](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml/badge.svg)](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
 
-![](https://i.imgur.com/gi7KBVE.png)
+![](https://i.imgur.com/fOtiSf7.png)
 
 ![](https://i.imgur.com/vLautmq.png)
 

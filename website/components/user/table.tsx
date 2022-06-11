@@ -17,11 +17,11 @@ const Table = styled.table`
   }
 
   td:first-child {
-    width: 70%;
+    width: 50%;
   }
 
   td:last-child {
-    width: 10%;
+    width: 20%;
   }
 
 

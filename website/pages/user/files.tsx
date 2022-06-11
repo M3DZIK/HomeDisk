@@ -11,6 +11,7 @@ import Icon from "../../components/other/icon"
 import Table from "../../components/user/table"
 import UploadModal from "../../components/user/modals/upload"
 import CreateFolderModal from "../../components/user/modals/create-folder"
+import IconDiv from "../../components/other/icon-div"
 
 export default function Files() {
   const [cookies] = useCookies(["token"])
@@ -54,26 +55,30 @@ export default function Files() {
         <title>Files - HomeDisk</title>
       </Head>
 
-      <MuiLink>
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="logo"
-          onClick={() => setUploadModal(true)}
-        >
-          <CloudUpload />
-        </IconButton>
+      <MuiLink sx={{display: "flex"}}>
+        <IconDiv>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="logo"
+            onClick={() => setUploadModal(true)}
+          >
+            <CloudUpload />
+          </IconButton>
+        </IconDiv>
 
-        <IconButton
-          size="large"
-          edge="start"
-          color="inherit"
-          aria-label="logo"
-          onClick={() => setCreateFolderModal(true)}
-        >
-          <CreateNewFolder />
-        </IconButton>
+        <IconDiv>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="logo"
+            onClick={() => setCreateFolderModal(true)}
+          >
+            <CreateNewFolder />
+          </IconButton>
+        </IconDiv>
       </MuiLink>
 
       <UploadModal open={uploadModal} setOpen={setUploadModal} path={path} refresh={refreshFolder} />
