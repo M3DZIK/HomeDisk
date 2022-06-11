@@ -36,5 +36,6 @@ pub async fn handle(
     // read file content
     let content = fs::read(path).unwrap();
 
+    // send file content in Response
     Ok(content)
 }

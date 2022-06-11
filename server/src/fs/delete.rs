@@ -45,13 +45,16 @@ pub async fn handle(
     // delete file
     if path.is_file() {
         fs::remove_file(&path)
+            // return error
             .map_err(|err| ServerError::FsError(FsError::DeleteFile(err.to_string())))?;
     }
     // delete directory
     else if path.is_dir() {
         fs::remove_dir(&path)
+            // return error
             .map_err(|err| ServerError::FsError(FsError::DeleteDirectory(err.to_string())))?;
     }
 
+    // send a blank Response
     Ok(())
 }

@@ -2,13 +2,13 @@
 
 use serde::{Deserialize, Serialize};
 
-/// `/fs/list` Request
+/// HTTP `/fs/list` Request
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Request {
     pub path: String,
 }
 
-/// `/fs/list` Response
+/// HTTP `/fs/list` Response
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Response {
     pub files: Vec<FileInfo>,

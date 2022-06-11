@@ -5,7 +5,9 @@ use rust_utilities::crypto::jsonwebtoken::{Claims, Token};
 /// Validate user token
 pub fn validate_jwt(secret: &[u8], token: &str) -> Result<TokenData<Claims>, ServerError> {
     match Token::decode(secret, token.to_string()) {
+        // if success return claims
         Ok(claims) => Ok(claims),
+        // invalid token
         Err(_) => Err(ServerError::AuthError(AuthError::InvalidToken)),
     }
 }
@@ -18,6 +20,7 @@ mod tests {
 
     use super::validate_jwt;
 
+    /// Test a token validation
     #[test]
     fn validate_token() {
         let secret = b"secret";

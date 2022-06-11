@@ -1,5 +1,5 @@
 [package]
-name = "homedisk-core"
+name = "homedisk"
 authors = ["MedzikUser <nivua1fn@duck.com>"]
 homepage = "https://github.com/HomeDisk/cloud"
 repository = "https://github.com/HomeDisk/cloud"
@@ -10,7 +10,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
-name = "cloud"
+name = "homedisk"
 path = "./src/main.rs"
 
 [dependencies]

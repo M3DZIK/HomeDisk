@@ -1,8 +1,8 @@
-//! `/auth/whoami` Response type
+//! HTTP `/auth/whoami` Response type
 
 use serde::{Deserialize, Serialize};
 
-/// `/auth/whoami` Response
+/// HTTP `/auth/whoami` Response
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Response {
     /// Logged user username

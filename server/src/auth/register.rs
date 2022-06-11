@@ -45,14 +45,15 @@ pub async fn handle(
             }
         }
 
-        Err(e) => {
-            if e.to_string().contains("UNIQUE constraint failed") {
+        // error while searching for a user
+        Err(err) => {
+            // user already exists
+            if err.to_string().contains("UNIQUE constraint failed") {
                 return Err(ServerError::AuthError(AuthError::UserAlreadyExists));
             }
 
-            return Err(ServerError::AuthError(AuthError::UnknownError(
-                e.to_string(),
-            )));
+            // other error
+            return Err(ServerError::AuthError(AuthError::Other(err.to_string())));
         }
     };
 

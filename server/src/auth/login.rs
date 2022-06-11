@@ -26,18 +26,20 @@ pub async fn handle(
             // create user token
             let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
+            // Reponse user token
             Response::LoggedIn {
                 access_token: token,
             }
         }
 
+        // error while searching for a user
         Err(err) => {
             return match err {
+                // user not found
                 Error::UserNotFound => Err(ServerError::AuthError(AuthError::UserNotFound)),
-                _ => Err(ServerError::AuthError(AuthError::UnknownError(
-                    err.to_string(),
-                ))),
-            }
+                // other error
+                _ => Err(ServerError::AuthError(AuthError::Other(err.to_string()))),
+            };
         }
     };
 

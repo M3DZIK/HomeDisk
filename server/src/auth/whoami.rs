@@ -24,13 +24,12 @@ pub async fn handle(
             username: res.username,
         },
 
+        // error while searching for a user
         Err(err) => match err {
+            // user not found
             Error::UserNotFound => return Err(ServerError::AuthError(AuthError::UserNotFound)),
-            _ => {
-                return Err(ServerError::AuthError(AuthError::UnknownError(
-                    err.to_string(),
-                )))
-            }
+            // other error
+            _ => return Err(ServerError::AuthError(AuthError::Other(err.to_string()))),
         },
     };
 

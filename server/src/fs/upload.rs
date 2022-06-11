@@ -2,14 +2,14 @@ use std::io::Write;
 use std::{fs, path::Path};
 
 use axum::extract::{Multipart, Query};
-use axum::{Extension, Json};
+use axum::Extension;
 use axum_auth::AuthBearer;
 use futures::TryStreamExt;
 use homedisk_database::Database;
 use homedisk_types::{
     config::Config,
     errors::{FsError, ServerError},
-    fs::upload::{Pagination, Response},
+    fs::upload::Pagination,
 };
 
 use crate::fs::validate_path;
@@ -22,7 +22,7 @@ pub async fn handle(
     AuthBearer(token): AuthBearer,
     mut multipart: Multipart,
     query: Query<Pagination>,
-) -> Result<Json<Response>, ServerError> {
+) -> Result<(), ServerError> {
     // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
@@ -47,7 +47,7 @@ pub async fn handle(
 
     // create a directory where the file will be placed
     // e.g. path ==> `/secret/files/images/screenshot.png`
-    // directories up to `/home/homedisk/{username}/secret/files/images/` will be created
+    // directories up to `{storage dir}/{username}/secret/files/images/` will be created
     match file_path.parent() {
         Some(prefix) => fs::create_dir_all(&prefix)
             .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?,
@@ -75,5 +75,6 @@ pub async fn handle(
         .await
         .map_err(|err| ServerError::FsError(FsError::WriteFile(err.to_string())))?;
 
-    Ok(Json(Response { uploaded: true }))
+    // send a blank Response
+    Ok(())
 }

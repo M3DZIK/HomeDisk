@@ -3,7 +3,7 @@ use std::fs;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
-use homedisk_types::fs::create_dir::{Request, Response};
+use homedisk_types::fs::create_dir::Request;
 use homedisk_types::{
     config::Config,
     errors::{FsError, ServerError},
@@ -18,7 +18,7 @@ pub async fn handle(
     Extension(config): Extension<Config>,
     AuthBearer(token): AuthBearer,
     request: Result<Json<Request>, JsonRejection>,
-) -> Result<Json<Response>, ServerError> {
+) -> Result<(), ServerError> {
     // validate json request
     let Json(request) = validate_json::<Request>(request)?;
 
@@ -38,9 +38,10 @@ pub async fn handle(
         req_dir = request.path
     );
 
-    // create dirs
+    // create directories
     fs::create_dir_all(path)
         .map_err(|err| ServerError::FsError(FsError::CreateDirectory(err.to_string())))?;
 
-    Ok(Json(Response { created: true }))
+    // send a blank Response
+    Ok(())
 }

@@ -3,7 +3,7 @@
 # HTTP host
 host = "0.0.0.0"
 # HTTP port
-port = 8080 
+port = 8080
 # Cors domains
 cors = [
     "127.0.0.1:8000",

@@ -59,19 +59,19 @@ pub async fn handle(
 
     // get paths from dir
     let paths = fs::read_dir(&path)
-        .map_err(|err| ServerError::FsError(FsError::ReadDir(err.to_string())))?;
+        .map_err(|err| ServerError::FsError(FsError::ReadDirectory(err.to_string())))?;
 
     let mut files = vec![];
     let mut dirs = vec![];
 
     for f in paths {
         // handle Error
-        let f = f.map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
+        let f = f.map_err(|err| ServerError::FsError(FsError::Other(err.to_string())))?;
 
         // get path metadata
         let metadata = f
             .metadata()
-            .map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?;
+            .map_err(|err| ServerError::FsError(FsError::Other(err.to_string())))?;
 
         // get name of the path
         let name = f.path().display().to_string().replace(&path, "");
@@ -80,7 +80,7 @@ pub async fn handle(
         if metadata.is_dir() {
             let size = Byte::from_bytes(
                 dir_size(f.path().display().to_string())
-                    .map_err(|err| ServerError::FsError(FsError::UnknownError(err.to_string())))?
+                    .map_err(|err| ServerError::FsError(FsError::Other(err.to_string())))?
                     .into(),
             )
             .get_appropriate_unit(true)

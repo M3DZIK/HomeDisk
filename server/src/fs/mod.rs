@@ -21,7 +21,7 @@ pub fn validate_path(path: &str) -> Result<(), homedisk_types::errors::ServerErr
     // `path` can't contain `..`
     // to prevent attack attempts because by using a `..` you can access the previous folder
     if path.contains("..") {
-        return Err(ServerError::FsError(FsError::ReadDir(
+        return Err(ServerError::FsError(FsError::ReadDirectory(
             "the `path` must not contain `..`".to_string(),
         )));
     }
@@ -29,7 +29,7 @@ pub fn validate_path(path: &str) -> Result<(), homedisk_types::errors::ServerErr
     // `path` can't contain `~`
     // to prevent attack attempts because `~` can get up a directory on `$HOME`
     if path.contains('~') {
-        return Err(ServerError::FsError(FsError::ReadDir(
+        return Err(ServerError::FsError(FsError::ReadDirectory(
             "the `path` must not contain `~`".to_string(),
         )));
     }

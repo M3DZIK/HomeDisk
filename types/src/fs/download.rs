@@ -2,9 +2,9 @@
 
 use serde::{Deserialize, Serialize};
 
-/// `/fs/download` Request
+/// HTTP `/fs/download` Request
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Request {
-    /// Path of file to download
+    /// Path of file to be download
     pub path: String,
 }

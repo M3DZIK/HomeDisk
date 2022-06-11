@@ -2,9 +2,9 @@
 
 use serde::{Deserialize, Serialize};
 
-/// `/fs/delete` Request
+/// HTTP `/fs/delete` Request
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Request {
-    /// Path of file/directory to delete
+    /// Path of file/directory to be delete
     pub path: String,
 }

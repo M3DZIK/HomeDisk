@@ -1,4 +1,4 @@
-//! Typed for a database
+//! Types for a database
 
 mod user;
 

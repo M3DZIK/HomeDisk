@@ -6,27 +6,28 @@ use super::{AuthError, FsError};
 #[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
 #[serde(tag = "error", content = "error_message", rename_all = "kebab-case")]
 pub enum Error {
+    /// Auth error.
     #[error("auth error - {0}")]
     AuthError(#[from] AuthError),
-
+    /// File System Error.
     #[error("fs error - {0}")]
     FsError(#[from] FsError),
-
+    /// User sends too many requests.
     #[error("too may requests, please slow down")]
     TooManyRequests,
-
+    /// Missing Json in Content-Type Header.
     #[error("missing json content type")]
     MissingJsonContentType,
-
+    /// Failed to deserialize json.
     #[error("error deserialize json")]
     JsonDataError,
-
+    /// Syntax error in JSON
     #[error("json syntax error")]
     JsonSyntaxError,
-
+    /// Failed to extract the Request body
     #[error("failed to extract the request body")]
     BytesRejection,
-
+    /// Other error
     #[error("unknown error - {0}")]
     Other(String),
 }
@@ -45,7 +46,7 @@ impl axum::response::IntoResponse for Error {
                 AuthError::PasswordTooShort => StatusCode::NOT_ACCEPTABLE,
                 AuthError::TokenGenerate => StatusCode::INTERNAL_SERVER_ERROR,
                 AuthError::InvalidToken => StatusCode::BAD_REQUEST,
-                AuthError::UnknownError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+                AuthError::Other(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },
             Self::FsError(ref err) => match err {
                 FsError::FileAlreadyExists => StatusCode::BAD_REQUEST,
@@ -57,8 +58,8 @@ impl axum::response::IntoResponse for Error {
                 FsError::DeleteDirectory(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::WriteFile(_) => StatusCode::INTERNAL_SERVER_ERROR,
                 FsError::Base64(_) => StatusCode::BAD_REQUEST,
-                FsError::ReadDir(_) => StatusCode::BAD_REQUEST,
-                FsError::UnknownError(_) => StatusCode::INTERNAL_SERVER_ERROR,
+                FsError::ReadDirectory(_) => StatusCode::BAD_REQUEST,
+                FsError::Other(_) => StatusCode::INTERNAL_SERVER_ERROR,
             },
             Self::TooManyRequests => StatusCode::TOO_MANY_REQUESTS,
             Self::MissingJsonContentType => StatusCode::BAD_REQUEST,
