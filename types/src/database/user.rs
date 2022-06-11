@@ -1,4 +1,4 @@
-use rust_utilities::crypto::sha::{encode, Algorithm, CryptographicHash};
+use crypto_utils::sha::{Algorithm, CryptographicHash};
 use uuid::Uuid;
 
 /// SQL user table
@@ -31,7 +31,7 @@ impl User {
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 
         // hash password using SHA-512
-        let password = encode(CryptographicHash::hash(
+        let password = hex::encode(CryptographicHash::hash(
             Algorithm::SHA512,
             password.as_bytes(),
         ));
@@ -52,9 +52,9 @@ impl User {
     ///
     /// let user = User::new("medzik", "whatever");
     ///
-    /// let dir = user.user_dir("/home/homedisk"); // will return  `/home/homedisk/medzik`
+    /// let dir = user.user_dir("/storage"); // will return `/storage/medzik`
     ///
-    /// assert_eq!(dir, "/home/homedisk/medzik")
+    /// assert_eq!(dir, "/storage/medzik")
     /// ```
     pub fn user_dir(&self, storage: &str) -> String {
         // get a user storage path

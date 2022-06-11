@@ -342,6 +342,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "crypto-utils"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c21850a20f41468aedddf2dcf88124ae8e6959c8c7b610c986f870fd62fbba3c"
+dependencies = [
+ "chrono",
+ "jsonwebtoken",
+ "serde",
+ "sha1",
+ "sha2",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -651,7 +664,6 @@ dependencies = [
  "futures-util",
  "homedisk-types",
  "log",
- "rust_utilities",
  "serde",
  "sqlx",
  "thiserror",
@@ -667,13 +679,13 @@ dependencies = [
  "axum-auth",
  "base64",
  "byte-unit",
+ "crypto-utils",
  "futures",
  "homedisk-database",
  "homedisk-types",
  "hyper",
  "jsonwebtoken",
  "log",
- "rust_utilities",
  "serde",
  "thiserror",
  "tower-http",
@@ -685,8 +697,9 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "axum",
+ "crypto-utils",
  "dirs",
- "rust_utilities",
+ "hex",
  "serde",
  "sqlx",
  "thiserror",
@@ -1192,20 +1205,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust_utilities"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8524c76496ed3097b6d24d7cb3b435cc8a84cbded6da7153942f6daa3ade9da7"
-dependencies = [
- "chrono",
- "hex",
- "jsonwebtoken",
- "serde",
- "sha-1",
- "sha2",
-]
-
-[[package]]
 name = "rustc-demangle"
 version = "0.1.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1290,10 +1289,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "sha-1"
-version = "0.10.0"
+name = "sha1"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "028f48d513f9678cda28f6e4064755b3fbb2af6acd672f2c209b62323f7aea0f"
+checksum = "c77f4e7f65455545c2153c1253d25056825e77ee2533f0e41deb65a93a34852f"
 dependencies = [
  "cfg-if",
  "cpufeatures",

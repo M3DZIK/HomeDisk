@@ -1,15 +1,13 @@
+use crypto_utils::jsonwebtoken::{Claims, Token};
 use homedisk_database::{Database, User};
 use homedisk_types::errors::{AuthError, ServerError};
-use rust_utilities::crypto::jsonwebtoken::{Claims, Token};
 
 /// Create user token
 pub fn create_token(user: &User, secret: &[u8], expires: i64) -> Result<String, ServerError> {
-    let token = Token::new(secret, Claims::new(user.id.clone(), expires));
+    let token = Token::new(secret, Claims::new(&user.id, expires))
+        .map_err(|_| ServerError::AuthError(AuthError::TokenGenerate))?;
 
-    match token {
-        Ok(token) => Ok(token.encoded),
-        Err(_) => Err(ServerError::AuthError(AuthError::TokenGenerate)),
-    }
+    Ok(token.encoded)
 }
 
 /// Search for a user
@@ -39,6 +37,7 @@ mod tests {
     #[test]
     fn test_create_token() {
         let secret = b"secret";
+
         let user = User::new("username", "password");
 
         create_token(&user, secret, 1).unwrap();

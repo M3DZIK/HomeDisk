@@ -135,7 +135,7 @@ mod tests {
 
     use crate::{Database, User};
 
-    /// Utils to open database in tests    
+    /// Utils to open database in tests
     async fn open_db() -> Database {
         Database::open("sqlite::memory:").await.expect("open db")
     }
