@@ -1,16 +1,22 @@
 # HomeDisk cloud server
 
-[![docs](https://img.shields.io/badge/docs-rust_docs-fff)](https://homedisk-doc.vercel.app)
-[![](https://img.shields.io/github/license/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![](https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![](https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk)](https://github.com/MedzikUser/HomeDisk)
-[![Rust CI](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml/badge.svg)](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
+[![docs-rs]](https://homedisk-doc.vercel.app)
+[![total-lines]](https://github.com/MedzikUser/HomeDisk)
+[![code-size]](https://github.com/MedzikUser/HomeDisk)
+[![CI]](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
+
+[docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
+[total-lines]: https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk?style=for-the-badge&logo=github&color=fede00
+[code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
+[CI]: https://img.shields.io/github/workflow/status/MedzikUser/rust-crypto-utils/Rust/main?style=for-the-badge
 
 ![](https://i.imgur.com/fOtiSf7.png)
 
 ![](https://i.imgur.com/vLautmq.png)
 
 ## 👨‍💻 Building
+
+First clone the repository: `git clone git@github.com:MedzikUser/HomeDisk.git`
 
 ### Server
 
