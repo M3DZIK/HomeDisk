@@ -19,7 +19,7 @@ pub async fn handle(
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
 
     // search for a user in database
-    let response = match db.find_user_by_id(token.claims.sub).await {
+    let response = match db.find_user_by_id(&token.claims.sub).await {
         Ok(res) => Response {
             username: res.username,
         },

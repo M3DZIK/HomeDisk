@@ -29,7 +29,7 @@ pub async fn handle(
     validate_path(&request.path)?;
 
     // search for a user by UUID from a token
-    let user = find_user(db, token.claims.sub).await?;
+    let user = find_user(&db, &token.claims.sub).await?;
 
     // directory where the file will be placed
     let path = format!(

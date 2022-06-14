@@ -13,53 +13,75 @@ pub struct Database {
 
 impl Database {
     /// Open a SQLite database
-    /// ```ignore,rust
+    /// ```
     /// use homedisk_database::Database;
     ///
-    /// // open database in memory
-    /// Database::open("sqlite::memory:").await?;
+    /// #[tokio::main]
+    /// async fn connect() {
+    ///     // open database in memory
+    ///     Database::open("sqlite::memory:").await.unwrap();
     ///
-    /// // open database from file
-    /// Database::open("path/to/file.db").await?;
+    ///     // open database from file
+    ///     Database::open("path/to/file.db").await.unwrap();
+    /// }
     /// ```
     pub async fn open(path: &str) -> Result<Self, Error> {
         debug!("Opening SQLite database");
 
+        // create a database pool
         let conn = SqlitePool::connect(path).await?;
 
+        // return `Database`
         Ok(Self { conn })
     }
 
     /// Create a new User
-    /// ```ignore,rust
+    /// ```
     /// use homedisk_database::{Database, User};
     ///
-    /// // create `User` type
-    /// let user = User::new("username", "password");
+    /// #[tokio::main]
+    /// async fn create_user() {
+    ///     // open database in memory
+    ///     let db = Database::open("sqlite::memory:").await.unwrap();
     ///
-    /// // create a user in database
-    /// db.create_user(&user).await?;
+    ///     // create `User` type
+    ///     let user = User::new("username", "password");
+    ///
+    ///     // create a user in database
+    ///     db.create_user(&user).await.unwrap();
+    /// }
     /// ```
     pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
         debug!("Creating user - {}", user.username);
 
+        // inster user to a database
         let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")
             .bind(&user.id)
             .bind(&user.username)
             .bind(&user.password);
 
+        // execute query and return output
         Ok(self.conn.execute(query).await?)
     }
 
     /// Search for a user
-    /// ```ignore,rust
+    /// ```
     /// use homedisk_database::{Database, User};
     ///
-    /// // create `User` type
-    /// let user = User::new("username", "password");
+    /// #[tokio::main]
+    /// async fn find_user() {
+    ///     // open database in memory
+    ///     let db = Database::open("sqlite::memory:").await.unwrap();
     ///
-    /// // search for a user in database
-    /// db.find_user(&user.username, &user.password).await?;
+    ///     // create `User` type
+    ///     let user = User::new("username", "password");
+    ///
+    ///     // create a user in database
+    ///     db.create_user(&user).await.unwrap();
+    ///
+    ///     // search for a user
+    ///     db.find_user(&user.username, &user.password).await.unwrap();
+    /// }
     /// ```
     pub async fn find_user(&self, username: &str, password: &str) -> Result<User, Error> {
         debug!("Searching for a user - {}", username);
@@ -83,6 +105,7 @@ impl Database {
         // get `password` row
         let password = row.try_get("password")?;
 
+        // return `User`
         Ok(User {
             id,
             username,
@@ -91,16 +114,25 @@ impl Database {
     }
 
     /// Search for a user by UUID
-    /// ```ignore,rust
+    /// ```
     /// use homedisk_database::{Database, User};
     ///
-    /// // create `User` type
-    /// let user = User::new("username", "password");
+    /// #[tokio::main]
+    /// async fn find_user_by_id() {
+    ///     // open database in memory
+    ///     let db = Database::open("sqlite::memory:").await.unwrap();
     ///
-    /// // search for a user by UUID in database
-    /// db.find_user_by_id(&user.id).await?;
+    ///     // create `User` type
+    ///     let user = User::new("username", "password");
+    ///
+    ///     // create a user in database
+    ///     db.create_user(&user).await.unwrap();
+    ///
+    ///     // search for a user using UUID
+    ///     db.find_user_by_id(&user.id).await.unwrap();
+    /// }
     /// ```
-    pub async fn find_user_by_id(&self, id: String) -> Result<User, Error> {
+    pub async fn find_user_by_id(&self, id: &str) -> Result<User, Error> {
         debug!("Searching for a user by UUID - {}", id);
 
         // create query request to database
@@ -119,6 +151,7 @@ impl Database {
         // get `password` row
         let password = row.try_get("password")?;
 
+        // return `User`
         Ok(User {
             id,
             username,
@@ -155,38 +188,7 @@ mod tests {
         db.create_user(&user).await.expect("create user");
     }
 
-    /// Open database in memory
-    #[tokio::test]
-    async fn open_db_in_memory() {
-        open_db().await;
-    }
-
-    /// Create a new user
-    #[tokio::test]
-    async fn create_user() {
-        let db = open_db().await;
-
-        new_user(&db).await;
-    }
-
-    /// Search for a user
-    #[tokio::test]
-    async fn find_user() {
-        let db = open_db().await;
-
-        new_user(&db).await;
-
-        let user = User::new("medzik", "Qwerty1234!");
-
-        let res = db
-            .find_user(&user.username, &user.password)
-            .await
-            .expect("find user");
-
-        assert_eq!(res.password, user.password)
-    }
-
-    /// Search for a user with an invalid password to see if the user is returned (it shouldn't be)
+    /// Test a search for a user with an invalid password to see if the user is returned (it shouldn't be)
     #[tokio::test]
     async fn find_user_wrong_password() {
         let db = open_db().await;
@@ -203,7 +205,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
-    /// Search for a user who does not exist
+    /// Test a search for a user who does not exist
     #[tokio::test]
     async fn find_user_wrong_username() {
         let db = open_db().await;
@@ -220,21 +222,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
-    /// Search for a user by UUID
-    #[tokio::test]
-    async fn find_user_by_id() {
-        let db = open_db().await;
-
-        new_user(&db).await;
-
-        let user = User::new("medzik", "Qwerty1234!");
-
-        let res = db.find_user_by_id(user.id).await.expect("find user");
-
-        assert_eq!(res.password, user.password)
-    }
-
-    /// Search for a user by UUID who does not exist
+    /// Test a search for a user by UUID who does not exist
     #[tokio::test]
     async fn find_user_wrong_id() {
         let db = open_db().await;
@@ -243,7 +231,7 @@ mod tests {
 
         let other_user = User::new("other_user", "my secret passphrase");
 
-        let err = db.find_user_by_id(other_user.id).await.unwrap_err();
+        let err = db.find_user_by_id(&other_user.id).await.unwrap_err();
 
         assert_eq!(err.to_string(), "user not found")
     }

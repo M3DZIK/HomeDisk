@@ -11,7 +11,7 @@ pub fn create_token(user: &User, secret: &[u8], expires: i64) -> Result<String, 
 }
 
 /// Search for a user
-pub async fn find_user(db: Database, user_id: String) -> Result<User, ServerError> {
+pub async fn find_user(db: &Database, user_id: &str) -> Result<User, ServerError> {
     match db.find_user_by_id(user_id).await {
         // if success return user
         Ok(user) => Ok(user),
