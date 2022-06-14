@@ -23,10 +23,10 @@
     "@mui/styled-engine-sc": "5.8.0",
     "axios": "0.27.2",
     "next": "12.1.6",
-    "react": "18.1.0",
+    "react": "18.2.0",
     "react-cookie": "4.1.1",
-    "react-dom": "18.1.0",
-    "react-is": "18.1.0",
+    "react-dom": "18.2.0",
+    "react-is": "18.2.0",
     "react-toastify": "9.0.4",
     "styled-components": "5.3.5"
   },
