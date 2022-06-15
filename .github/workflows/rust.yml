@@ -4,14 +4,8 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '**'
-      - '!website/**'
 
   pull_request:
-    paths:
-      - '**'
-      - '!website/**'
 
   workflow_dispatch:
 
@@ -49,7 +43,7 @@ jobs:
           path: |
             ~/.cargo/registry/cache/
             target/
-          key: build-${{ runner.os }}-${{ matrix.rust }}-rust-${{ steps.rust-toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-${{ matrix.rust }}-${{ steps.rust-toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: cargo build
         uses: actions-rs/cargo@v1
@@ -61,36 +55,6 @@ jobs:
         with:
           command: clippy
           args: --no-deps -- -D warnings
-
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        rust: [stable, nightly]
-
-    name: ${{ matrix.rust }} test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Rust toolchain
-        id: rust-toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: ${{ matrix.rust }}
-          override: true
-
-      - name: Cache
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: |
-            ~/.cargo/registry/cache/
-            target/
-          key: test-${{ runner.os }}-${{ matrix.rust }}-rust-${{ steps.rust-toolchain.outputs.rustc_hash }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: cargo test
         uses: actions-rs/cargo@v1

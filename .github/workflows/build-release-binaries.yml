@@ -2,14 +2,10 @@ name: Build release binaries (and publish them if this is a tag)
 
 on:
   push:
-    paths:
-      - '**'
-      - '!website/**'
+    branches:
+      - main
 
   # pull_request:
-  #  paths:
-  #    - '**'
-  #    - '!website/**'
 
   workflow_dispatch:
 
