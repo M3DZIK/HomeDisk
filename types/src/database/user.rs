@@ -30,6 +30,9 @@ impl User {
         let sha1_name = CryptographicHash::hash(Algorithm::SHA1, username.as_bytes());
         let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
 
+        // salting the password
+        let password = format!("{username}${password}");
+
         // hash password using SHA-512
         let password = hex::encode(CryptographicHash::hash(
             Algorithm::SHA512,
@@ -71,22 +74,47 @@ impl User {
 
 #[cfg(test)]
 mod tests {
+    use crypto_utils::sha::{Algorithm, CryptographicHash};
+
     use super::User;
 
-    /// Check if the username has been changed to lowercase
+    /// Check if the username is in lowercase
     #[test]
     fn check_username_is_in_lowercase() {
-        let user = User::new("MEdzIk", "SuperSecretPassword123!");
+        // example user data
+        let username = "mEDZIk";
+        let password = "password";
 
-        assert_eq!(user.username, "medzik")
+        // username in lowercase (expected username)
+        let username_expected = "medzik";
+
+        // create a new `User` type
+        let user = User::new(username, password);
+
+        // username validation with expected username
+        assert_eq!(user.username, username_expected)
     }
 
-    /// Check that the password is a checksum
+    /// Check that the password is a checksum with a salt
     #[test]
-    fn check_if_password_is_hashed() {
+    fn check_if_password_is_hashed_and_salted() {
+        // example user data
+        let username = "username";
         let password = "password";
-        let user = User::new("test", password);
 
-        assert!(user.password != password)
+        // create a new `User` type
+        let user = User::new(username, password);
+
+        // expected password salt (string)
+        let password_expected_salt = format!("{username}${password}");
+
+        // expected password (hashed)
+        let password_expected = hex::encode(CryptographicHash::hash(
+            Algorithm::SHA512,
+            password_expected_salt.as_bytes(),
+        ));
+
+        // password validation with expected password salt
+        assert_eq!(user.password, password_expected)
     }
 }

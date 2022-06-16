@@ -54,7 +54,7 @@ impl Database {
     pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
         debug!("Creating user - {}", user.username);
 
-        // inster user to a database
+        // insert user to a database
         let query = sqlx::query("INSERT INTO user (id, username, password) VALUES (?, ?, ?)")
             .bind(&user.id)
             .bind(&user.username)
