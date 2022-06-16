@@ -10,8 +10,9 @@ use homedisk_types::{
     fs::delete::Request,
 };
 
-use crate::fs::validate_path;
 use crate::middleware::{find_user, validate_jwt};
+
+use super::validate_path;
 
 /// Handle `/fs/delete` requests
 pub async fn handle(

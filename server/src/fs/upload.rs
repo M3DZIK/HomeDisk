@@ -12,8 +12,9 @@ use homedisk_types::{
     fs::upload::Pagination,
 };
 
-use crate::fs::validate_path;
 use crate::middleware::{find_user, validate_jwt};
+
+use super::validate_path;
 
 /// Handle `/fs/upload` requests
 pub async fn handle(

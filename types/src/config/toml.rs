@@ -8,7 +8,7 @@ use super::types::Config;
 
 impl Config {
     /// Parse configuration file
-    /// ```ignore,rust
+    /// ```no_run
     /// use homedisk_types::config::Config;
     ///
     /// let config = Config::parse().unwrap();

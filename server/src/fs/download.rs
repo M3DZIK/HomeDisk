@@ -1,6 +1,5 @@
 use std::fs;
 
-use crate::fs::validate_path;
 use axum::extract::Query;
 use axum::Extension;
 use axum_auth::AuthBearer;
@@ -9,6 +8,8 @@ use homedisk_types::fs::upload::Pagination;
 use homedisk_types::{config::Config, errors::ServerError};
 
 use crate::middleware::{find_user, validate_jwt};
+
+use super::validate_path;
 
 /// Handle `/fs/download` requests
 pub async fn handle(

@@ -33,7 +33,7 @@ impl User {
         // salting the password
         let password = format!("{username}${password}");
 
-        // hash password using SHA-512
+        // hash password using SHA-512 and encode it to String from Vec<u8>
         let password = hex::encode(CryptographicHash::hash(
             Algorithm::SHA512,
             password.as_bytes(),

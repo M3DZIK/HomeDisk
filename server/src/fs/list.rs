@@ -1,7 +1,6 @@
 use std::path::PathBuf;
 use std::{fs, io};
 
-use crate::fs::validate_path;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use byte_unit::Byte;
@@ -14,6 +13,8 @@ use homedisk_types::{
 };
 
 use crate::middleware::{find_user, validate_json, validate_jwt};
+
+use super::validate_path;
 
 /// Get directory size on disk (size of all files in directory).
 fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
