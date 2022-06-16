@@ -3,7 +3,7 @@
 [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
 [total-lines]: https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk?style=for-the-badge&logo=github&color=fede00
 [code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
-[CI]: https://img.shields.io/github/workflow/status/MedzikUser/rust-crypto-utils/Rust/main?style=for-the-badge
+[ci]: https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=for-the-badge
 
 [home-screenshot]: https://cdn.medzik.xyz/fz4QGfS.png
 [login-screenshot]: https://cdn.medzik.xyz/vo10bes.png
@@ -11,7 +11,7 @@
 [![docs-rs]](https://homedisk-doc.vercel.app)
 [![total-lines]](https://github.com/MedzikUser/HomeDisk)
 [![code-size]](https://github.com/MedzikUser/HomeDisk)
-[![CI]](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
+[![ci]](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
 
 ![home-screenshot]
 ![login-screenshot]
