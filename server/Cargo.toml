@@ -10,7 +10,7 @@ base64 = "0.13.0"
 byte-unit = "4.0.14"
 futures = "0.3.21"
 hyper = { version = "0.14.19", features = ["full"] }
-jsonwebtoken = "8.1.0"
+jsonwebtoken = "8.1.1"
 log = "0.4.17"
 crypto-utils = { version = "0.2.0", features = ["jwt"] }
 serde = { version = "1.0.137", features = ["derive"] }
