@@ -242,10 +242,7 @@ mod tests {
 
         let user = User::new(USERNAME, "wrong password 123!");
 
-        let err = db
-            .find_user(&user)
-            .await
-            .unwrap_err();
+        let err = db.find_user(&user).await.unwrap_err();
 
         assert_eq!(err.to_string(), "user not found")
     }
@@ -259,10 +256,7 @@ mod tests {
 
         let user = User::new("not_exists_user", PASSWORD);
 
-        let err = db
-            .find_user(&user)
-            .await
-            .unwrap_err();
+        let err = db.find_user(&user).await.unwrap_err();
 
         assert_eq!(err.to_string(), "user not found")
     }
