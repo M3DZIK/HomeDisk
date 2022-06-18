@@ -37,6 +37,27 @@ impl Database {
         Ok(Self { conn })
     }
 
+    /// Create all required tabled for HomeDisk
+    /// ```
+    /// use homedisk_database::Database;
+    ///
+    /// #[tokio::main]
+    /// async fn main() -> anyhow::Result<()> {
+    ///     // open database in memory
+    ///     let db = Database::open("sqlite::memory:").await?;
+    ///
+    ///     // create tables
+    ///     db.create_tables().await?;
+    ///
+    ///     Ok(())
+    /// }
+    /// ```
+    pub async fn create_tables(&self) -> Result<SqliteQueryResult, Error> {
+        let query = sqlx::query(include_str!("../../tables.sql"));
+
+        Ok(self.conn.execute(query).await?)
+    }
+
     /// Create a new User
     /// ```no_run
     /// use homedisk_database::{Database, User};
@@ -170,10 +191,6 @@ impl Database {
 
 #[cfg(test)]
 mod tests {
-    use std::fs;
-
-    use sqlx::Executor;
-
     use crate::{Database, User};
 
     const USERNAME: &str = "medzik";
@@ -186,13 +203,8 @@ mod tests {
 
     /// Utils to create a new user in tests
     async fn new_user(db: &Database) {
-        // create user table
-        db.conn
-            .execute(sqlx::query(
-                &fs::read_to_string("../tables.sql").expect("open tables file"),
-            ))
-            .await
-            .expect("create tables");
+        // create tables
+        db.create_tables().await.expect("create tables");
 
         // create new user
         let user = User::new(USERNAME, PASSWORD);

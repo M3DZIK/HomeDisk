@@ -13,7 +13,9 @@ async fn main() {
     let config = Config::parse().expect("parse config");
 
     // open database connection
-    let db = Database::open("homedisk.db").await.expect("open database file");
+    let db = Database::open("homedisk.db")
+        .await
+        .expect("open database file");
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
     let origins = config
@@ -31,7 +33,9 @@ async fn main() {
     );
 
     // start http server
-    serve_http(host, origins, db, config).await.expect("start http server");
+    serve_http(host, origins, db, config)
+        .await
+        .expect("start http server");
 }
 
 /// Init logger
