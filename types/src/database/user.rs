@@ -26,10 +26,6 @@ impl User {
         // change username to lowercase
         let username = username.to_lowercase();
 
-        // generate a user UUID
-        let sha1_name = CryptographicHash::hash(Algorithm::SHA1, username.as_bytes());
-        let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &sha1_name).to_string();
-
         // salting the password
         let password = format!("{username}${password}");
 
@@ -38,6 +34,13 @@ impl User {
             Algorithm::SHA512,
             password.as_bytes(),
         ));
+
+        // generate a user UUID
+        let id_sha1 = CryptographicHash::hash(
+            Algorithm::SHA1,
+            (format!("{username}${password}")).as_bytes(),
+        );
+        let id = Uuid::new_v5(&Uuid::NAMESPACE_X500, &id_sha1).to_string();
 
         // return `User`
         Self {
