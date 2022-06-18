@@ -13,7 +13,7 @@ uuid = "1.1.2"
 anyhow = "1.0.57"
 serde = { version = "1.0.137", features = ["derive"] }
 zeroize = { version = "1.5.5", features = ["derive"] }
-axum = { version = "0.5.7", optional = true }
+axum = { version = "0.5.8", optional = true }
 toml = { version = "0.5.9", optional = true }
 dirs = { version = "4.0.0", optional = true }
 crypto-utils = { version = "0.2.0", features = ["sha"], optional = true }
