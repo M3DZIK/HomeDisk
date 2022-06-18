@@ -2,7 +2,6 @@ use homedisk_database::Database;
 use homedisk_server::serve_http;
 use homedisk_types::config::Config;
 
-/// Main function
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     // init better_panic

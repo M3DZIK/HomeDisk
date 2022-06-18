@@ -15,6 +15,7 @@ pub struct Request {
 /// HTTP `/auth/login` Response
 #[derive(Debug, Serialize, Deserialize, Clone, Zeroize, ZeroizeOnDrop)]
 pub enum Response {
+    #[allow(missing_docs)]
     LoggedIn {
         /// User access token
         access_token: String,

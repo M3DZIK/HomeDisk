@@ -5,13 +5,16 @@ use serde::{Deserialize, Serialize};
 /// HTTP `/fs/list` Request
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Request {
+    /// Path to directory
     pub path: String,
 }
 
 /// HTTP `/fs/list` Response
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Response {
+    /// Vector with files info
     pub files: Vec<FileInfo>,
+    /// Vector with directories info
     pub dirs: Vec<DirInfo>,
 }
 
