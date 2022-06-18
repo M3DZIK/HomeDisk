@@ -14,18 +14,16 @@ pub struct Database {
 impl Database {
     /// Open a SQLite database
     /// ```no_run
+    /// # async fn foo() -> anyhow::Result<()> {
     /// use homedisk_database::Database;
     ///
-    /// #[tokio::main]
-    /// async fn main() -> anyhow::Result<()> {
-    ///     // open database in memory
-    ///     Database::open("sqlite::memory:").await?;
+    /// // open database in memory
+    /// Database::open("sqlite::memory:").await?;
     ///
-    ///     // open database from file
-    ///     Database::open("path/to/database.db").await?;
+    /// // open database from file
+    /// Database::open("path/to/database.db").await?;
     ///
-    ///     Ok(())
-    /// }
+    /// # Ok(()) }
     /// ```
     pub async fn open(path: &str) -> Result<Self, Error> {
         debug!("Opening SQLite database");
@@ -39,18 +37,11 @@ impl Database {
 
     /// Create all required tabled for HomeDisk
     /// ```
-    /// use homedisk_database::Database;
+    /// # async fn foo() -> anyhow::Result<()> {
+    /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
+    /// db.create_tables().await?;
     ///
-    /// #[tokio::main]
-    /// async fn main() -> anyhow::Result<()> {
-    ///     // open database in memory
-    ///     let db = Database::open("sqlite::memory:").await?;
-    ///
-    ///     // create tables
-    ///     db.create_tables().await?;
-    ///
-    ///     Ok(())
-    /// }
+    /// # Ok(()) }
     /// ```
     pub async fn create_tables(&self) -> Result<SqliteQueryResult, Error> {
         let query = sqlx::query(include_str!("../../tables.sql"));
@@ -59,22 +50,19 @@ impl Database {
     }
 
     /// Create a new User
-    /// ```no_run
-    /// use homedisk_database::{Database, User};
+    /// ```
+    /// # async fn foo() -> anyhow::Result<()> {
+    /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
+    /// # db.create_tables().await?;
+    /// use homedisk_database::User;
     ///
-    /// #[tokio::main]
-    /// async fn main() -> anyhow::Result<()> {
-    ///     // open database
-    ///     let db = Database::open("path/to/database.db").await?;
+    /// // create `User` type
+    /// let user = User::new("username", "password");
     ///
-    ///     // create `User` type
-    ///     let user = User::new("username", "password");
+    /// // create a user in database
+    /// db.create_user(&user).await?;
     ///
-    ///     // create a user in database
-    ///     db.create_user(&user).await?;
-    ///
-    ///     Ok(())
-    /// }
+    /// # Ok(()) }
     /// ```
     pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
         debug!("Creating user - {}", user.username);
@@ -91,24 +79,18 @@ impl Database {
 
     /// Search for a user
     /// ```
-    /// use homedisk_database::{Database, User};
+    /// # async fn foo() -> anyhow::Result<()> {
+    /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
+    /// # db.create_tables().await?;
+    /// use homedisk_database::User;
     ///
-    /// #[tokio::main]
-    /// async fn find_user() -> anyhow::Result<()> {
-    ///     // open database
-    ///     let db = Database::open("path/to/database.db").await?;
+    /// // create `User` type
+    /// let user = User::new("username", "password");
     ///
-    ///     // create `User` type
-    ///     let user = User::new("username", "password");
+    /// # db.create_user(&user).await?;
+    /// db.find_user(&user).await?;
     ///
-    ///     // create a user in database
-    ///     db.create_user(&user).await?;
-    ///
-    ///     // search for a user
-    ///     db.find_user(&user).await?;
-    ///
-    ///     Ok(())
-    /// }
+    /// # Ok(()) }
     /// ```
     pub async fn find_user(&self, user: &User) -> Result<User, Error> {
         debug!("Searching for a user - {}", user.username);
@@ -142,24 +124,18 @@ impl Database {
 
     /// Search for a user by UUID
     /// ```
-    /// use homedisk_database::{Database, User};
+    /// # async fn foo() -> anyhow::Result<()> {
+    /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
+    /// # db.create_tables().await?;
+    /// use homedisk_database::User;
     ///
-    /// #[tokio::main]
-    /// async fn find_user_by_id() -> anyhow::Result<()> {
-    ///     // open database
-    ///     let db = Database::open("path/to/database.db").await?;
+    /// // create `User` type
+    /// let user = User::new("username", "password");
     ///
-    ///     // create `User` type
-    ///     let user = User::new("username", "password");
+    /// # db.create_user(&user).await?;
+    /// db.find_user_by_id(&user.id).await?;
     ///
-    ///     // create a user in database
-    ///     db.create_user(&user).await?;
-    ///
-    ///     // search for a user using UUID
-    ///     db.find_user_by_id(&user.id).await?;
-    ///
-    ///     Ok(())
-    /// }
+    /// # Ok(()) }
     /// ```
     pub async fn find_user_by_id(&self, id: &str) -> Result<User, Error> {
         debug!("Searching for a user by UUID - {}", id);
