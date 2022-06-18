@@ -21,7 +21,7 @@ pub async fn handle(
     let user = User::new(&request.username, &request.password);
 
     // search for a user in database
-    let response = match db.find_user(&user.username, &user.password).await {
+    let response = match db.find_user(&user).await {
         Ok(user) => {
             // create user token
             let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
