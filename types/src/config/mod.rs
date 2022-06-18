@@ -1,6 +1,6 @@
 //! # Configuration file
 //!
-//! Path to a config file is `config.toml` in the server root directory.
+//! Path to a config file is `config.toml` in the system configuration directory (`~/.config/homedisk/config.toml`).
 //!
 //! Example config:
 //!

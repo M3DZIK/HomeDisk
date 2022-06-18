@@ -3,17 +3,17 @@ use homedisk_server::serve_http;
 use homedisk_types::config::Config;
 
 #[tokio::main]
-async fn main() -> anyhow::Result<()> {
+async fn main() {
     // init better_panic
     better_panic::install();
     // init logger
-    init_logger()?;
+    init_logger().expect("init logger");
 
     // parse config
-    let config = Config::parse()?;
+    let config = Config::parse().expect("parse config");
 
     // open database connection
-    let db = Database::open("homedisk.db").await?;
+    let db = Database::open("homedisk.db").await.expect("open database file");
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
     let origins = config
@@ -31,9 +31,7 @@ async fn main() -> anyhow::Result<()> {
     );
 
     // start http server
-    serve_http(host, origins, db, config).await?;
-
-    Ok(())
+    serve_http(host, origins, db, config).await.expect("start http server");
 }
 
 /// Init logger
