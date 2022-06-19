@@ -14,7 +14,7 @@ name = "homedisk"
 path = "./src/main.rs"
 
 [dependencies]
-anyhow = "1.0.57"
+anyhow = "1.0.58"
 better-panic = "0.3.0"
 log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
 simplelog = "0.12.0"
