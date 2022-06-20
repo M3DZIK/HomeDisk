@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-axum = { version = "0.5.8", features = ["multipart"] }
+axum = { version = "0.5.9", features = ["multipart"] }
 axum-auth = "0.2.0"
 base64 = "0.13.0"
 byte-unit = "4.0.14"
