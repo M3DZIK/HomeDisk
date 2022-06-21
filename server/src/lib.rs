@@ -29,8 +29,8 @@ pub async fn serve_http(
     // create http Router
     let app = Router::new()
         .route("/health-check", get(health_check))
-        .nest("/auth", auth::app())
-        .nest("/fs", fs::app())
+        .nest("/api/auth", auth::app())
+        .nest("/api/fs", fs::app())
         .layer(CorsLayer::new().allow_origin(AllowOrigin::list(origins)))
         .layer(Extension(db))
         .layer(Extension(config));

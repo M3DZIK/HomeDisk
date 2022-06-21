@@ -1,9 +1,10 @@
-pub mod create_dir;
-pub mod delete;
-pub mod download;
-pub mod list;
-pub mod upload;
+mod create_dir;
+mod delete;
+mod download;
+mod list;
+mod upload;
 
+/// Handle `/api/fs/*` requests
 pub fn app() -> axum::Router {
     use axum::routing::{delete, get, post};
 

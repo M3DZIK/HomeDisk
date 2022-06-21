@@ -13,7 +13,6 @@ use crate::middleware::{find_user, validate_json, validate_jwt};
 
 use super::validate_path;
 
-/// Handle `/fs/createdir` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,

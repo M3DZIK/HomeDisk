@@ -10,7 +10,6 @@ use homedisk_types::{
 
 use crate::middleware::{create_token, validate_json};
 
-/// Handle `/auth/register` requests
 pub async fn handle(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,
