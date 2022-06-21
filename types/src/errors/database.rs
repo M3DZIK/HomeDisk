@@ -1,7 +1,6 @@
 /// Database Error
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
-    /// User not found!
     /// Username or Password incorrect.
     #[error("user not found")]
     UserNotFound,

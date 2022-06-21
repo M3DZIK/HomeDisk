@@ -1,3 +1,5 @@
+#![doc(html_root_url = "https://homedisk-doc.medzik.xyz")]
+
 mod auth;
 mod error;
 mod fs;

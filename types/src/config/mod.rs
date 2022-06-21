@@ -2,7 +2,7 @@
 //!
 //! Path to a config file is `config.toml` in the system configuration directory (`~/.config/homedisk/config.toml`).
 //!
-//! Example config:
+//! ## Example config
 //!
 //! ```toml
 //! [http]
@@ -18,7 +18,7 @@
 //! path = "/home/homedisk" # # Directory where user files will be stored
 //! ```
 //!
-//! ## External docs
+//! ### External docs
 //! - [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 
 mod types;

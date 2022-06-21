@@ -38,4 +38,6 @@
 //!
 //! ## Configure
 //!
-//! Go to [config](../homedisk_types/config/index.html) module
+//! Go to [config](homedisk_types::config) module
+
+#![doc(html_root_url = "https://homedisk-doc.medzik.xyz")]

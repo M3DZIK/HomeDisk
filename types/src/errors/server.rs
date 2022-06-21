@@ -18,16 +18,16 @@ pub enum Error {
     /// Missing Json in Content-Type Header.
     #[error("missing json content type")]
     MissingJsonContentType,
-    /// Failed to deserialize json.
+    /// Failed to deserialize JSON.
     #[error("error deserialize json")]
     JsonDataError,
-    /// Syntax error in JSON
+    /// Syntax error in JSON.
     #[error("json syntax error")]
     JsonSyntaxError,
-    /// Failed to extract the Request body
+    /// Failed to extract the Request body.
     #[error("failed to extract the request body")]
     BytesRejection,
-    /// Other error
+    /// Other error.
     #[error("unknown error - {0}")]
     Other(String),
 }

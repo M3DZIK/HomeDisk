@@ -24,7 +24,7 @@ pub struct ConfigHTTP {
     pub host: String,
     /// Port HTTP Port
     pub port: u16,
-    /// CORS Domains (e.g ["site1.example.com", "site2.example.com"])
+    /// [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) Domains (e.g ["site1.example.com", "site2.example.com"])
     pub cors: Vec<String>,
 }
 
@@ -46,7 +46,8 @@ pub struct ConfigStorage {
 
 #[cfg(feature = "config")]
 impl Config {
-    /// Parse configuration file
+    /// Parse configuration file.
+    ///
     /// ```no_run
     /// use homedisk_types::config::Config;
     ///

@@ -38,7 +38,6 @@ async fn main() {
         .expect("start http server");
 }
 
-/// Init logger
 fn init_logger() -> anyhow::Result<()> {
     use std::fs::File;
 
@@ -55,7 +54,7 @@ fn init_logger() -> anyhow::Result<()> {
         WriteLogger::new(
             LevelFilter::Info,
             Config::default(),
-            File::create("logs.log").expect("create logs file"),
+            File::create("logs.log")?,
         ),
     ])?;
 

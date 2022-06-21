@@ -13,10 +13,11 @@ pub struct User {
 }
 
 impl User {
-    /// **Note this doesn't create a new user in the database!**
+    /// The function create a unique user UUID and create SHA-512 hash from salted user password
+    /// and returns the [User] type.
     ///
-    /// This function creates a unique UUID for a user and creates a password hash using SHA-512
-    /// and returns in the User type
+    /// **Note: This doesn't create a user in the database!**
+    ///
     /// ```
     /// use homedisk_types::database::User;
     ///
@@ -50,9 +51,8 @@ impl User {
         }
     }
 
-    /// User directory
-    /// function returns the directory where the user file is located
-    /// e.g.
+    /// The function returns the directory where the user file is located.
+    ///
     /// ```
     /// use homedisk_types::database::User;
     ///
