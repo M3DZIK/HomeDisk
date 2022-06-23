@@ -4,14 +4,11 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-thiserror = "1.0.31"
 log = "0.4.17"
 futures-util = "0.3.21"
-serde = { version = "1.0.137", features = ["derive"] }
 sqlx = { version = "0.6.0", features = ["runtime-tokio-rustls", "sqlite"] }
 uuid = { version = "1.1.2", features = ["v5"] }
 homedisk-types = { path = "../types", features = ["database"] }
 
 [dev-dependencies]
-anyhow = "1.0.58"
 tokio = { version = "1.19.2", features = ["rt-multi-thread", "macros"] }

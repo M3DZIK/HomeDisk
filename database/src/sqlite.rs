@@ -2,7 +2,7 @@ use futures_util::TryStreamExt;
 use log::debug;
 use sqlx::{sqlite::SqliteQueryResult, Executor, Row, SqlitePool};
 
-use super::{Error, User};
+use super::{Error, Result, User};
 
 /// SQL Database
 #[derive(Debug, Clone)]
@@ -14,7 +14,7 @@ pub struct Database {
 impl Database {
     /// Open a SQLite database
     /// ```no_run
-    /// # async fn foo() -> anyhow::Result<()> {
+    /// # async fn foo() -> homedisk_database::Result<()> {
     /// use homedisk_database::Database;
     ///
     /// // open database in memory
@@ -25,7 +25,7 @@ impl Database {
     ///
     /// # Ok(()) }
     /// ```
-    pub async fn open(path: &str) -> Result<Self, Error> {
+    pub async fn open(path: &str) -> Result<Self> {
         debug!("Opening SQLite database");
 
         // create a database pool
@@ -37,13 +37,13 @@ impl Database {
 
     /// Create all required tabled for HomeDisk
     /// ```
-    /// # async fn foo() -> anyhow::Result<()> {
+    /// # async fn foo() -> homedisk_database::Result<()> {
     /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
     /// db.create_tables().await?;
     ///
     /// # Ok(()) }
     /// ```
-    pub async fn create_tables(&self) -> Result<SqliteQueryResult, Error> {
+    pub async fn create_tables(&self) -> Result<SqliteQueryResult> {
         let query = sqlx::query(include_str!("../../tables.sql"));
 
         Ok(self.conn.execute(query).await?)
@@ -51,7 +51,7 @@ impl Database {
 
     /// Create a new User
     /// ```
-    /// # async fn foo() -> anyhow::Result<()> {
+    /// # async fn foo() -> homedisk_database::Result<()> {
     /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
     /// # db.create_tables().await?;
     /// use homedisk_database::User;
@@ -64,7 +64,7 @@ impl Database {
     ///
     /// # Ok(()) }
     /// ```
-    pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult, Error> {
+    pub async fn create_user(&self, user: &User) -> Result<SqliteQueryResult> {
         debug!("Creating user - {}", user.username);
 
         // insert user to a database
@@ -79,7 +79,7 @@ impl Database {
 
     /// Search for a user
     /// ```
-    /// # async fn foo() -> anyhow::Result<()> {
+    /// # async fn foo() -> homedisk_database::Result<()> {
     /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
     /// # db.create_tables().await?;
     /// use homedisk_database::User;
@@ -92,7 +92,7 @@ impl Database {
     ///
     /// # Ok(()) }
     /// ```
-    pub async fn find_user(&self, user: &User) -> Result<User, Error> {
+    pub async fn find_user(&self, user: &User) -> Result<User> {
         debug!("Searching for a user - {}", user.username);
 
         // create query request to database
@@ -124,7 +124,7 @@ impl Database {
 
     /// Search for a user by UUID
     /// ```
-    /// # async fn foo() -> anyhow::Result<()> {
+    /// # async fn foo() -> homedisk_database::Result<()> {
     /// # let db = homedisk_database::Database::open("sqlite::memory:").await?;
     /// # db.create_tables().await?;
     /// use homedisk_database::User;
@@ -137,7 +137,7 @@ impl Database {
     ///
     /// # Ok(()) }
     /// ```
-    pub async fn find_user_by_id(&self, id: &str) -> Result<User, Error> {
+    pub async fn find_user_by_id(&self, id: &str) -> Result<User> {
         debug!("Searching for a user by UUID - {}", id);
 
         // create query request to database

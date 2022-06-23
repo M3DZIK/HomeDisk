@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
 use super::{AuthError, FsError};
 
 /// HTTP Server Error
-#[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
+#[derive(Debug, Clone, Serialize, Deserialize, Error)]
 #[serde(tag = "error", content = "error_message", rename_all = "kebab-case")]
 pub enum Error {
     /// Auth error.

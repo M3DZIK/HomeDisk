@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
-/// HTTP `/auth/*` Errors
-#[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
+#[derive(Debug, Clone, Serialize, Deserialize, Error)]
 pub enum Error {
     /// Username or Password incorrect.
     #[error("user not found")]

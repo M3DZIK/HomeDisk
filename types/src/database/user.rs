@@ -22,6 +22,8 @@ impl User {
     /// use homedisk_types::database::User;
     ///
     /// let user = User::new("medzik", "SuperSecretPassword123!");
+    ///
+    /// # assert_eq!(user.username, "medzik")
     /// ```
     pub fn new(username: &str, password: &str) -> Self {
         // change username to lowercase
@@ -80,6 +82,19 @@ mod tests {
     use crypto_utils::sha::{Algorithm, CryptographicHash};
 
     use super::User;
+
+    /// Check if the id is reproducable
+    #[test]
+    fn check_id_reproducable() {
+        // example user data
+        let username = "test";
+        let password = "password";
+
+        let user_a = User::new(username, password);
+        let user_b = User::new(username, password);
+
+        assert_eq!(user_a.id, user_b.id)
+    }
 
     /// Check if the username is in lowercase
     #[test]

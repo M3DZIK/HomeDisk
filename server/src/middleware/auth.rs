@@ -1,9 +1,8 @@
-use crypto_utils::jsonwebtoken::{Claims, Token};
+use crypto_utils::jsonwebtoken::{Token, TokenData};
 use homedisk_types::errors::{AuthError, ServerError};
-use jsonwebtoken::TokenData;
 
 /// Validate user token
-pub fn validate_jwt(secret: &[u8], token: &str) -> Result<TokenData<Claims>, ServerError> {
+pub fn validate_jwt(secret: &[u8], token: &str) -> Result<TokenData, ServerError> {
     match Token::decode(secret, token.to_string()) {
         // if success return claims
         Ok(claims) => Ok(claims),

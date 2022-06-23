@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
+use thiserror::Error;
 
-/// `/fs/*` Error
-#[derive(Debug, Clone, Serialize, Deserialize, thiserror::Error)]
+#[derive(Debug, Clone, Serialize, Deserialize, Error)]
 pub enum Error {
     /// File doesn't exists.
     #[error("file doesn't exists")]
