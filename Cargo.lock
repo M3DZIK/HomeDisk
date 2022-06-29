@@ -343,15 +343,17 @@ dependencies = [
 
 [[package]]
 name = "crypto-utils"
-version = "0.3.0"
+version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d09d7237fa1de6fb962d691ece115c8f9d69e36aad536129e0b03bdaf8bda96"
+checksum = "3ce0daeee37b2a787f5a0d66c60d72722af27f7a6f10925bcdbdae752eaf13e9"
 dependencies = [
  "chrono",
+ "hmac",
  "jsonwebtoken",
  "serde",
  "sha1",
  "sha2",
+ "thiserror",
 ]
 
 [[package]]
@@ -362,6 +364,7 @@ checksum = "f2fb860ca6fafa5552fb6d0e816a69c8e49f0908bf524e30a90d97c85892d506"
 dependencies = [
  "block-buffer",
  "crypto-common",
+ "subtle",
 ]
 
 [[package]]
@@ -642,6 +645,15 @@ name = "hex"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
+
+[[package]]
+name = "hmac"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c49c37c09c17a53d937dfbb742eb3a961d65a994e6bcdcf37e7399d0cc8ab5e"
+dependencies = [
+ "digest",
+]
 
 [[package]]
 name = "homedisk"
@@ -1463,6 +1475,12 @@ dependencies = [
  "unicode-bidi",
  "unicode-normalization",
 ]
+
+[[package]]
+name = "subtle"
+version = "2.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6bdef32e8150c2a081110b42772ffe7d7c9032b606bc226c8260fd97e0976601"
 
 [[package]]
 name = "syn"
