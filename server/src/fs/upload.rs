@@ -50,10 +50,9 @@ pub async fn handle(
     // create a directory where the file will be placed
     // e.g. path ==> `/secret/files/images/screenshot.png`
     // directories up to `{storage dir}/{username}/secret/files/images/` will be created
-    match file_path.parent() {
-        Some(prefix) => fs::create_dir_all(&prefix)
-            .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?,
-        None => (),
+    if let Some(prefix) = file_path.parent() {
+        fs::create_dir_all(&prefix)
+            .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?
     }
 
     // get multipart field
