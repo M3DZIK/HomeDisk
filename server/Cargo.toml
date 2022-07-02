@@ -12,7 +12,7 @@ futures = "0.3.21"
 hyper = { version = "0.14.19", features = ["full"] }
 log = "0.4.17"
 crypto-utils = { version = "0.4.0", features = ["jwt"] }
-serde = { version = "1.0.137", features = ["derive"] }
+serde = { version = "1.0.138", features = ["derive"] }
 thiserror = "1.0.31"
 tower-http = { version = "0.3.4", features = ["full"] }
 homedisk-database = { path = "../database" }
