@@ -3,10 +3,10 @@ use std::fs;
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
-use homedisk_types::fs::create_dir::Request;
 use homedisk_types::{
     config::Config,
     errors::{FsError, ServerError},
+    fs::create_dir::Request,
 };
 
 use crate::middleware::{find_user, validate_json, validate_jwt};
@@ -42,6 +42,6 @@ pub async fn handle(
     fs::create_dir_all(path)
         .map_err(|err| ServerError::FsError(FsError::CreateDirectory(err.to_string())))?;
 
-    // send a blank Response
+    // send aan empty Response
     Ok(())
 }

@@ -5,11 +5,10 @@ use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
 use byte_unit::Byte;
 use homedisk_database::Database;
-use homedisk_types::fs::list::DirInfo;
 use homedisk_types::{
     config::Config,
     errors::{FsError, ServerError},
-    fs::list::{FileInfo, Request, Response},
+    fs::list::{DirInfo, FileInfo, Request, Response},
 };
 
 use crate::middleware::{find_user, validate_json, validate_jwt};

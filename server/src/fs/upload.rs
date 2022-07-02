@@ -1,8 +1,10 @@
 use std::io::Write;
 use std::{fs, path::Path};
 
-use axum::extract::{Multipart, Query};
-use axum::Extension;
+use axum::{
+    extract::{Multipart, Query},
+    Extension,
+};
 use axum_auth::AuthBearer;
 use futures::TryStreamExt;
 use homedisk_database::Database;
@@ -75,6 +77,6 @@ pub async fn handle(
         .await
         .map_err(|err| ServerError::FsError(FsError::WriteFile(err.to_string())))?;
 
-    // send a blank Response
+    // send an empty Response
     Ok(())
 }

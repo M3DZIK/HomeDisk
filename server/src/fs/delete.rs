@@ -1,7 +1,6 @@
 use std::{fs, path::Path};
 
-use axum::extract::Query;
-use axum::Extension;
+use axum::{extract::Query, Extension};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
 use homedisk_types::{
@@ -55,6 +54,6 @@ pub async fn handle(
             .map_err(|err| ServerError::FsError(FsError::DeleteDirectory(err.to_string())))?;
     }
 
-    // send a blank Response
+    // send an empty Response
     Ok(())
 }

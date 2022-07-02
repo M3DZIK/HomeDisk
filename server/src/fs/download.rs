@@ -1,7 +1,6 @@
 use std::fs;
 
-use axum::extract::Query;
-use axum::Extension;
+use axum::{extract::Query, Extension};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
 use homedisk_types::fs::upload::Pagination;
