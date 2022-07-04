@@ -29,13 +29,6 @@
 //!
 //! The compiled binary can be found in `./target/release/homedisk`
 //!
-//! ## 🖴 Create an empty SQLite database from a tables template
-//!
-//! ### Requirements
-//! - [SQLite3](https://sqlite.org)
-//!
-//! Run command `sqlite3 homedisk.db < tables.sql` to create SQLite database
-//!
 //! ## Configure
 //!
 //! Go to [config](homedisk_types::config) module

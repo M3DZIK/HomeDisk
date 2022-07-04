@@ -1,6 +1,11 @@
+use std::{fs::File, path::Path};
+
 use homedisk_database::Database;
 use homedisk_server::serve_http;
 use homedisk_types::config::Config;
+use log::{info, warn};
+
+pub const DATABASE_FILE: &str = "homedisk.db";
 
 #[tokio::main]
 async fn main() {
@@ -13,9 +18,36 @@ async fn main() {
     let config = Config::parse().expect("parse config");
 
     // open database connection
-    let db = Database::open("homedisk.db")
-        .await
-        .expect("open database file");
+    let db =
+        // if database file doesn't exists create it
+        if !Path::new(DATABASE_FILE).exists() {
+            warn!("Database file doesn't exists.");
+            info!("Creating database file...");
+
+            // create an empty database file
+            File::create(DATABASE_FILE).expect("create a database file");
+
+            // open database file
+            let db = Database::open(DATABASE_FILE)
+                .await
+                .expect("open database file");
+
+            // create tables in the database
+            db.create_tables()
+                .await
+                .expect("create tables in the database");
+
+            db
+        }
+        // if database file exists
+        else {
+            // open database connection
+            let db = Database::open(DATABASE_FILE)
+                .await
+                .expect("open database file");
+
+            db
+        };
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
     let origins = config
@@ -39,8 +71,6 @@ async fn main() {
 }
 
 fn init_logger() -> anyhow::Result<()> {
-    use std::fs::File;
-
     use log::LevelFilter;
     use simplelog::{ColorChoice, CombinedLogger, Config, TermLogger, TerminalMode, WriteLogger};
 

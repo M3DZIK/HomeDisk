@@ -28,9 +28,6 @@ To build run the command: `cargo build --release`
 
 The compiled binary can be found in `./target/release/homedisk`
 
-## 🖴 Creating tables in a SQLite database
+## Configure
 
-#### Requirements
-- SQLite3
-
-Run command `sqlite3 homedisk.db < tables.sql` to create SQLite database
+Go to [config](https://homedisk-doc.medzik.xyz/homedisk_types/config) module
