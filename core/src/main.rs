@@ -42,11 +42,9 @@ async fn main() {
         // if database file exists
         else {
             // open database connection
-            let db = Database::open(DATABASE_FILE)
+            Database::open(DATABASE_FILE)
                 .await
-                .expect("open database file");
-
-            db
+                .expect("open database file")
         };
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
