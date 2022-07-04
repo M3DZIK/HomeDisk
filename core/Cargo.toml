@@ -7,8 +7,6 @@ license = "GPL-3.0-or-later"
 version = "0.0.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [[bin]]
 name = "homedisk"
 path = "./src/main.rs"
@@ -16,8 +14,8 @@ path = "./src/main.rs"
 [dependencies]
 anyhow = "1.0.58"
 better-panic = "0.3.0"
-log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
 simplelog = "0.12.0"
+log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
 tokio = { version = "1.19.2", features = ["rt-multi-thread", "macros"] }
 homedisk-database = { path = "../database" }
 homedisk-server = { path = "../server" }

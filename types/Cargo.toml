@@ -12,7 +12,6 @@ thiserror = "1.0.31"
 uuid = "1.1.2"
 anyhow = "1.0.58"
 serde = { version = "1.0.138", features = ["derive"] }
-zeroize = { version = "1.5.6", features = ["derive"] }
 axum = { version = "0.5.11", optional = true }
 toml = { version = "0.5.9", optional = true }
 dirs = { version = "4.0.0", optional = true }

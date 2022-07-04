@@ -19,13 +19,16 @@ mod tests {
 
     use super::validate_jwt;
 
+    const USERNAME: &str = "username";
+    const PASSWORD: &str = "password";
+
     const SECRET: &[u8] = b"secret";
     const INVALID_SECRET: &[u8] = b"invalid secret";
 
     /// Test a token validation
     #[test]
     fn validate_token() {
-        let user = User::new("username", "password");
+        let user = User::new(USERNAME, PASSWORD);
 
         let token = create_token(&user, SECRET, 1).unwrap();
 
@@ -35,7 +38,7 @@ mod tests {
     /// Test a token validation (invalid secret)
     #[test]
     fn validate_token_invalid_secret() {
-        let user = User::new("username", "password");
+        let user = User::new(USERNAME, PASSWORD);
 
         let token = create_token(&user, SECRET, 1).unwrap();
 

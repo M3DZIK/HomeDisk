@@ -33,12 +33,16 @@ mod tests {
 
     use super::create_token;
 
+    const SECRET: &[u8] = b"secret";
+
+    const USERNAME: &str = "username";
+    const PASSWORD: &str = "password";
+
     /// Test a token creation
     #[test]
     fn test_create_token() {
-        let secret = b"secret";
-
-        let user = User::new("username", "password");
+        let secret = SECRET;
+        let user = User::new(USERNAME, PASSWORD);
 
         create_token(&user, secret, 1).unwrap();
     }

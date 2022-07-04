@@ -1,10 +1,9 @@
 //! HTTP `/auth/login` Request and Response types
 
 use serde::{Deserialize, Serialize};
-use zeroize::{Zeroize, ZeroizeOnDrop};
 
 /// HTTP `/auth/login` Request
-#[derive(Debug, Serialize, Deserialize, Clone, Zeroize, ZeroizeOnDrop)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Request {
     /// Username
     pub username: String,
@@ -13,7 +12,7 @@ pub struct Request {
 }
 
 /// HTTP `/auth/login` Response
-#[derive(Debug, Serialize, Deserialize, Clone, Zeroize, ZeroizeOnDrop)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Response {
     LoggedIn {
         /// User access token
