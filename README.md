@@ -5,16 +5,17 @@
 [code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
 [ci]: https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=for-the-badge
 
-[home-screenshot]: https://cdn.medzik.xyz/fz4QGfS.png
-[login-screenshot]: https://cdn.medzik.xyz/vo10bes.png
+[screenshot-home]: https://cdn.medzik.xyz/x4Glw7w.png
+[screenshot-login]: https://cdn.medzik.xyz/KpwY4nb.png
 
 [![docs-rs]](https://homedisk-doc.vercel.app)
 [![total-lines]](https://github.com/MedzikUser/HomeDisk)
 [![code-size]](https://github.com/MedzikUser/HomeDisk)
 [![ci]](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
 
-![home-screenshot]
-![login-screenshot]
+![screenshot-home]
+
+![screenshot-login]
 
 ## 👨‍💻 Building
 
