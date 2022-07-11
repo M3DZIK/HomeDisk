@@ -14,8 +14,8 @@ path = "./src/main.rs"
 [dependencies]
 anyhow = "1.0.58"
 better-panic = "0.3.0"
-simplelog = "0.12.0"
-log = { version = "0.4.17", features = ["max_level_debug", "release_max_level_warn"] }
+tracing-subscriber = "0.3.14"
+tracing = { version = "0.1.35", features = ["max_level_debug", "release_max_level_warn"] }
 tokio = { version = "1.19.2", features = ["rt-multi-thread", "macros"] }
 homedisk-database = { path = "../database" }
 homedisk-server = { path = "../server" }

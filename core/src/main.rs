@@ -3,16 +3,16 @@ use std::{fs::File, path::Path};
 use homedisk_database::Database;
 use homedisk_server::serve_http;
 use homedisk_types::config::Config;
-use log::{info, warn};
+use tracing::{info, warn};
+
+mod logger;
 
 pub const DATABASE_FILE: &str = "homedisk.db";
 
 #[tokio::main]
 async fn main() {
-    // init better_panic
-    better_panic::install();
-    // init logger
-    init_logger().expect("init logger");
+    // initialize logger
+    logger::init();
 
     // parse config
     let config = Config::parse().expect("parse config");
@@ -66,25 +66,4 @@ async fn main() {
     serve_http(host, origins, db, config)
         .await
         .expect("start http server");
-}
-
-fn init_logger() -> anyhow::Result<()> {
-    use log::LevelFilter;
-    use simplelog::{ColorChoice, CombinedLogger, Config, TermLogger, TerminalMode, WriteLogger};
-
-    CombinedLogger::init(vec![
-        TermLogger::new(
-            LevelFilter::Debug,
-            Config::default(),
-            TerminalMode::Mixed,
-            ColorChoice::Auto,
-        ),
-        WriteLogger::new(
-            LevelFilter::Info,
-            Config::default(),
-            File::create("logs.log")?,
-        ),
-    ])?;
-
-    Ok(())
 }
