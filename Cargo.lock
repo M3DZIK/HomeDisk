@@ -684,9 +684,9 @@ version = "0.0.0"
 dependencies = [
  "futures-util",
  "homedisk-types",
- "log",
  "sqlx",
  "tokio",
+ "tracing",
  "uuid",
 ]
 

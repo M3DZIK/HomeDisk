@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-log = "0.4.17"
+tracing = "0.1.35"
 futures-util = "0.3.21"
 sqlx = { version = "0.6.0", features = ["runtime-tokio-rustls", "sqlite"] }
 uuid = { version = "1.1.2", features = ["v5"] }

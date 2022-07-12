@@ -1,6 +1,8 @@
+use std::str::FromStr;
+
 use futures_util::TryStreamExt;
-use log::debug;
-use sqlx::{sqlite::SqliteQueryResult, Executor, Row, SqlitePool};
+use sqlx::{sqlite::{SqliteQueryResult, SqliteConnectOptions}, Executor, Row, SqlitePool, ConnectOptions};
+use tracing::{log::LevelFilter, debug};
 
 use super::{Error, Result, User};
 
@@ -28,8 +30,14 @@ impl Database {
     pub async fn open(path: &str) -> Result<Self> {
         debug!("Opening SQLite database");
 
+        // sqlite connection options
+        let mut options = SqliteConnectOptions::from_str(path)?;
+
+        // set log level to Debug
+        options.log_statements(LevelFilter::Debug);
+
         // create a database pool
-        let conn = SqlitePool::connect(path).await?;
+        let conn = SqlitePool::connect_with(options.clone()).await?;
 
         // return `Database`
         Ok(Self { conn })
