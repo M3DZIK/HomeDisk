@@ -23,6 +23,8 @@ pub enum Error {
     Base64(String),
     #[error("failed to read directory: {0}")]
     ReadDirectory(String),
+    #[error("failed to read file content: {0}")]
+    ReadFile(String),
     #[error("other error - {0}")]
     Other(String),
 }

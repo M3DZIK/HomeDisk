@@ -3,6 +3,7 @@ use std::fs;
 use axum::{extract::Query, Extension};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
+use homedisk_types::errors::FsError;
 use homedisk_types::fs::upload::Pagination;
 use homedisk_types::{config::Config, errors::ServerError};
 
@@ -33,7 +34,8 @@ pub async fn handle(
     );
 
     // read file content
-    let content = fs::read(path).unwrap();
+    let content =
+        fs::read(path).map_err(|err| ServerError::FsError(FsError::ReadFile(err.to_string())))?;
 
     // send file content in Response
     Ok(content)
