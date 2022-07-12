@@ -13,7 +13,5 @@ pub fn init() {
     better_panic::install();
 
     // initialize tracing
-    tracing_subscriber::fmt()
-        .with_max_level(MAX_LEVEL)
-        .init();
+    tracing_subscriber::fmt().with_max_level(MAX_LEVEL).init();
 }

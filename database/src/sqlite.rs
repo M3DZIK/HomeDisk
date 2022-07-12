@@ -1,8 +1,11 @@
 use std::str::FromStr;
 
 use futures_util::TryStreamExt;
-use sqlx::{sqlite::{SqliteQueryResult, SqliteConnectOptions}, Executor, Row, SqlitePool, ConnectOptions};
-use tracing::{log::LevelFilter, debug};
+use sqlx::{
+    sqlite::{SqliteConnectOptions, SqliteQueryResult},
+    ConnectOptions, Executor, Row, SqlitePool,
+};
+use tracing::{debug, log::LevelFilter};
 
 use super::{Error, Result, User};
 
@@ -31,13 +34,15 @@ impl Database {
         debug!("Opening SQLite database");
 
         // sqlite connection options
-        let mut options = SqliteConnectOptions::from_str(path)?;
+        let mut options = SqliteConnectOptions::from_str(path).map_err(Error::OpenDatabase)?;
 
         // set log level to Debug
         options.log_statements(LevelFilter::Debug);
 
         // create a database pool
-        let conn = SqlitePool::connect_with(options.clone()).await?;
+        let conn = SqlitePool::connect_with(options.clone())
+            .await
+            .map_err(Error::ConnectDatabase)?;
 
         // return `Database`
         Ok(Self { conn })
@@ -54,7 +59,7 @@ impl Database {
     pub async fn create_tables(&self) -> Result<SqliteQueryResult> {
         let query = sqlx::query(include_str!("../../tables.sql"));
 
-        Ok(self.conn.execute(query).await?)
+        self.conn.execute(query).await.map_err(Error::Execute)
     }
 
     /// Create a new User
@@ -82,7 +87,7 @@ impl Database {
             .bind(&user.password);
 
         // execute query and return output
-        Ok(self.conn.execute(query).await?)
+        self.conn.execute(query).await.map_err(Error::Execute)
     }
 
     /// Search for a user
@@ -113,14 +118,18 @@ impl Database {
         let mut stream = self.conn.fetch(query);
 
         // get rows from query
-        let row = stream.try_next().await?.ok_or(Error::UserNotFound)?;
+        let row = stream
+            .try_next()
+            .await
+            .map_err(Error::Execute)?
+            .ok_or(Error::UserNotFound)?;
 
         // get `id` row
-        let id = row.try_get("id")?;
+        let id = row.try_get("id").map_err(Error::GetRow)?;
         // get `username` row
-        let username = row.try_get("username")?;
+        let username = row.try_get("username").map_err(Error::GetRow)?;
         // get `password` row
-        let password = row.try_get("password")?;
+        let password = row.try_get("password").map_err(Error::GetRow)?;
 
         // return `User`
         Ok(User {
@@ -155,14 +164,18 @@ impl Database {
         let mut stream = self.conn.fetch(query);
 
         // get rows from query
-        let row = stream.try_next().await?.ok_or(Error::UserNotFound)?;
+        let row = stream
+            .try_next()
+            .await
+            .map_err(Error::Execute)?
+            .ok_or(Error::UserNotFound)?;
 
         // get `id` row
-        let id = row.try_get("id")?;
+        let id = row.try_get("id").map_err(Error::GetRow)?;
         // get `username` row
-        let username = row.try_get("username")?;
+        let username = row.try_get("username").map_err(Error::GetRow)?;
         // get `password` row
-        let password = row.try_get("password")?;
+        let password = row.try_get("password").map_err(Error::GetRow)?;
 
         // return `User`
         Ok(User {
@@ -243,7 +256,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
-    /// Test a search for a user who does not exist
+    /// Test a search for a user who doesn't exist
     #[tokio::test]
     async fn find_user_wrong_username() {
         let db = open_db().await;
@@ -257,7 +270,7 @@ mod tests {
         assert_eq!(err.to_string(), "user not found")
     }
 
-    /// Test a search for a user by UUID who does not exist
+    /// Test a search for a user by UUID who doesn't exist
     #[tokio::test]
     async fn find_user_wrong_id() {
         let db = open_db().await;

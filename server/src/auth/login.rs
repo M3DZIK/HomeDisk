@@ -29,7 +29,7 @@ pub async fn handle(
             Response::LoggedIn {
                 access_token: token,
             }
-        }
+        },
 
         // error while searching for a user
         Err(err) => {
@@ -39,7 +39,7 @@ pub async fn handle(
                 // other error
                 _ => Err(ServerError::AuthError(AuthError::Other(err.to_string()))),
             };
-        }
+        },
     };
 
     Ok(Json(response))

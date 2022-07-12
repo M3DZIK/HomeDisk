@@ -42,7 +42,7 @@ pub async fn handle(
             Response::LoggedIn {
                 access_token: token,
             }
-        }
+        },
 
         // error while searching for a user
         Err(err) => {
@@ -53,7 +53,7 @@ pub async fn handle(
 
             // other error
             return Err(ServerError::AuthError(AuthError::Other(err.to_string())));
-        }
+        },
     };
 
     // create directory for user files
