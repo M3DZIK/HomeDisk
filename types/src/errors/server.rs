@@ -7,9 +7,9 @@ use super::{AuthError, FsError};
 #[derive(Debug, Clone, Serialize, Deserialize, Error)]
 #[serde(tag = "error", content = "error_message", rename_all = "kebab-case")]
 pub enum Error {
-    #[error("auth error - {0}")]
+    #[error("auth error: {0}")]
     AuthError(#[from] AuthError),
-    #[error("fs error - {0}")]
+    #[error("fs error: {0}")]
     FsError(#[from] FsError),
     #[error("too may requests, please slow down")]
     TooManyRequests,
@@ -21,8 +21,20 @@ pub enum Error {
     JsonSyntaxError,
     #[error("failed to extract the request body")]
     BytesRejection,
-    #[error("other error - {0}")]
+    #[error("other error: {0}")]
     Other(String),
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+enum ResponseError {
+    Error(String)
+}
+
+impl Error {
+    fn into_response(self) -> ResponseError {
+        ResponseError::Error(self.to_string())
+    }
 }
 
 #[cfg(feature = "axum")]
@@ -51,7 +63,7 @@ impl axum::response::IntoResponse for Error {
             _ => StatusCode::BAD_REQUEST,
         };
 
-        let mut response = axum::Json(self).into_response();
+        let mut response = axum::Json(self.into_response()).into_response();
         *response.status_mut() = status;
 
         response
