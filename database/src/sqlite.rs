@@ -40,7 +40,7 @@ impl Database {
         options.log_statements(LevelFilter::Debug);
 
         // create a database pool
-        let conn = SqlitePool::connect_with(options.clone())
+        let conn = SqlitePool::connect_with(options)
             .await
             .map_err(Error::ConnectDatabase)?;
 

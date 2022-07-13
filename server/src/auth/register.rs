@@ -5,7 +5,7 @@ use homedisk_database::{Database, User};
 use homedisk_types::{
     auth::login::{Request, Response},
     config::Config,
-    errors::{AuthError, ServerError},
+    errors::{AuthError, FsError, ServerError},
 };
 
 use crate::middleware::{create_token, validate_json};
@@ -62,7 +62,8 @@ pub async fn handle(
         storage = config.storage.path,
         username = user.username,
     );
-    fs::create_dir_all(&user_dir).unwrap();
+    fs::create_dir_all(&user_dir)
+        .map_err(|e| ServerError::FsError(FsError::CreateDirectory(e.to_string())))?;
 
     Ok(Json(response))
 }

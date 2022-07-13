@@ -28,7 +28,7 @@ pub enum Error {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 enum ResponseError {
-    Error(String)
+    Error(String),
 }
 
 impl Error {
