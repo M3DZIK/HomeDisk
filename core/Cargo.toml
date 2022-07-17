@@ -1,6 +1,6 @@
 [package]
 name = "homedisk"
-authors = ["MedzikUser <nivua1fn@duck.com>"]
+authors = ["MedzikUser <medzik@duck.com>"]
 homepage = "https://github.com/HomeDisk/cloud"
 repository = "https://github.com/HomeDisk/cloud"
 license = "GPL-3.0-or-later"
