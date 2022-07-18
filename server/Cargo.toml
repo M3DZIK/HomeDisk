@@ -4,7 +4,7 @@ version = "0.0.0"
 edition = "2021"
 
 [dependencies]
-axum = { version = "0.5.12", features = ["multipart"] }
+axum = { version = "0.5.13", features = ["multipart"] }
 axum-auth = "0.2.0"
 base64 = "0.13.0"
 byte-unit = "4.0.14"
@@ -12,7 +12,7 @@ futures = "0.3.21"
 hyper = { version = "0.14.20", features = ["full"] }
 log = "0.4.17"
 crypto-utils = { version = "0.4.0", features = ["jwt"] }
-serde = { version = "1.0.138", features = ["derive"] }
+serde = { version = "1.0.139", features = ["derive"] }
 thiserror = "1.0.31"
 tower-http = { version = "0.3.4", features = ["full"] }
 homedisk-database = { path = "../database" }
