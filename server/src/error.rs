@@ -15,21 +15,18 @@ pub enum Error {
 /// Custom Result
 pub type Result<T> = std::result::Result<T, Error>;
 
-/// axum::Error
 impl From<axum::Error> for Error {
     fn from(err: axum::Error) -> Self {
         Error::Axum(err)
     }
 }
 
-/// hyper::Error
 impl From<hyper::Error> for Error {
     fn from(err: hyper::Error) -> Self {
         Error::Hyper(err)
     }
 }
 
-/// std::net::AddrParseError
 impl From<std::net::AddrParseError> for Error {
     fn from(err: std::net::AddrParseError) -> Self {
         Error::AddrParseError(err)

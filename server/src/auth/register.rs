@@ -16,7 +16,7 @@ pub async fn handle(
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
     // validate json request
-    let request = validate_json::<Request>(request)?;
+    let request = validate_json(request)?;
 
     // username must contain at least 4 characters
     if request.username.len() < 4 {
@@ -33,10 +33,12 @@ pub async fn handle(
         return Err(ServerError::AuthError(AuthError::PasswordTooShort));
     }
 
+    // create `User` type and hash password
     let user = User::new(&request.username, &request.password);
 
+    // create user in the database
     let response = match db.create_user(&user).await {
-        Ok(_) => {
+        Ok(_result) => {
             let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
             Response::LoggedIn {
@@ -56,14 +58,10 @@ pub async fn handle(
         },
     };
 
-    // create directory for user files
-    let user_dir = format!(
-        "{storage}/{username}",
-        storage = config.storage.path,
-        username = user.username,
-    );
-    fs::create_dir_all(&user_dir)
+    // create directory for the user files
+    fs::create_dir_all(&format!("{}/{}", config.storage.path, user.username,))
         .map_err(|e| ServerError::FsError(FsError::CreateDirectory(e.to_string())))?;
 
+    // send response
     Ok(Json(response))
 }

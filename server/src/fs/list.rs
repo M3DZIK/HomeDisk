@@ -11,9 +11,7 @@ use homedisk_types::{
     fs::list::{DirInfo, FileInfo, Request, Response},
 };
 
-use crate::middleware::{find_user, validate_json, validate_jwt};
-
-use super::validate_path;
+use crate::middleware::{find_user, validate_json, validate_jwt, validate_path};
 
 /// Get directory size on disk (size of all files in directory).
 fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
@@ -94,6 +92,8 @@ pub async fn handle(
                 .get_appropriate_unit(true)
                 .to_string();
 
+            // TODO: fix modification time
+
             // check how long it has been since the file was last modified
             let elapsed = metadata.modified().unwrap().elapsed().unwrap();
 
@@ -123,5 +123,6 @@ pub async fn handle(
         }
     }
 
+    // send response
     Ok(Json(Response { files, dirs }))
 }

@@ -14,7 +14,7 @@ pub async fn handle(
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<Json<Response>, ServerError> {
     // validate json request
-    let request = validate_json::<Request>(request)?;
+    let request = validate_json(request)?;
 
     // create `User` type
     let user = User::new(&request.username, &request.password);
@@ -42,5 +42,6 @@ pub async fn handle(
         },
     };
 
+    // send response
     Ok(Json(response))
 }

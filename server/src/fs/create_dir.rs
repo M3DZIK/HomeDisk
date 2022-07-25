@@ -9,9 +9,7 @@ use homedisk_types::{
     fs::create_dir::Request,
 };
 
-use crate::middleware::{find_user, validate_json, validate_jwt};
-
-use super::validate_path;
+use crate::middleware::{find_user, validate_json, validate_jwt, validate_path};
 
 pub async fn handle(
     Extension(db): Extension<Database>,
@@ -20,7 +18,7 @@ pub async fn handle(
     request: Result<Json<Request>, JsonRejection>,
 ) -> Result<(), ServerError> {
     // validate json request
-    let Json(request) = validate_json::<Request>(request)?;
+    let Json(request) = validate_json(request)?;
 
     // validate user token
     let token = validate_jwt(config.jwt.secret.as_bytes(), &token)?;
@@ -42,6 +40,6 @@ pub async fn handle(
     fs::create_dir_all(path)
         .map_err(|err| ServerError::FsError(FsError::CreateDirectory(err.to_string())))?;
 
-    // send aan empty Response
+    // send an empty response
     Ok(())
 }

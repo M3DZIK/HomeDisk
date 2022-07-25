@@ -2,7 +2,6 @@ mod login;
 mod register;
 mod whoami;
 
-/// Handle `/api/auth/*` requests
 pub fn app() -> axum::Router {
     use axum::routing::{get, post};
 

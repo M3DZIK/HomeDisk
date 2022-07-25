@@ -19,8 +19,8 @@ pub async fn handle(
 
     // search for a user in database
     let response = match db.find_user_by_id(&token.claims.sub).await {
-        Ok(res) => Response {
-            username: res.username,
+        Ok(user) => Response {
+            username: user.username,
         },
 
         // error while searching for a user
@@ -32,5 +32,6 @@ pub async fn handle(
         },
     };
 
+    // send response
     Ok(Json(response))
 }

@@ -14,9 +14,7 @@ use homedisk_types::{
     fs::upload::Pagination,
 };
 
-use crate::middleware::{find_user, validate_jwt};
-
-use super::validate_path;
+use crate::middleware::{find_user, validate_jwt, validate_path};
 
 pub async fn handle(
     Extension(db): Extension<Database>,
@@ -76,6 +74,6 @@ pub async fn handle(
         .await
         .map_err(|err| ServerError::FsError(FsError::WriteFile(err.to_string())))?;
 
-    // send an empty Response
+    // send an empty response
     Ok(())
 }

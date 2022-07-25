@@ -6,8 +6,8 @@
 //! [code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
 //! [ci]: https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=for-the-badge
 //!
-//! [home-screenshot]: https://cdn.medzik.xyz/x4Glw7w.png
-//! [login-screenshot]: https://cdn.medzik.xyz/KpwY4nb.png
+//! [home-screenshot]: https://i.imgur.com/x4Glw7w.png
+//! [login-screenshot]: https://i.imgur.com/KpwY4nb.png
 //!
 //! [![github]](https://github.com/MedzikUser/HomeDisk)
 //! [![docs-rs]](https://homedisk-doc.vercel.app)

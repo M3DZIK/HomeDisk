@@ -7,9 +7,7 @@ use homedisk_types::errors::FsError;
 use homedisk_types::fs::upload::Pagination;
 use homedisk_types::{config::Config, errors::ServerError};
 
-use crate::middleware::{find_user, validate_jwt};
-
-use super::validate_path;
+use crate::middleware::{find_user, validate_jwt, validate_path};
 
 pub async fn handle(
     Extension(db): Extension<Database>,
@@ -37,6 +35,6 @@ pub async fn handle(
     let content =
         fs::read(path).map_err(|err| ServerError::FsError(FsError::ReadFile(err.to_string())))?;
 
-    // send file content in Response
+    // send file content in response
     Ok(content)
 }
