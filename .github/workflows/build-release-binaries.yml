@@ -29,7 +29,7 @@ jobs:
         include:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-musl
-            artifact_name: target/x86_64-unknown-linux-musl/release/cloud
+            artifact_name: target/x86_64-unknown-linux-musl/release/homedisk
             release_name: x86_64-unknown-linux-musl
             cross: true
             strip: true
@@ -37,7 +37,7 @@ jobs:
 
           - os: ubuntu-latest
             target: armv7-unknown-linux-musleabihf
-            artifact_name: target/armv7-unknown-linux-musleabihf/release/cloud
+            artifact_name: target/armv7-unknown-linux-musleabihf/release/homedisk
             release_name: armv7-unknown-linux-musleabihf
             cross: true
             strip: false
@@ -45,7 +45,7 @@ jobs:
 
           - os: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            artifact_name: target/aarch64-unknown-linux-musl/release/cloud
+            artifact_name: target/aarch64-unknown-linux-musl/release/homedisk
             release_name: aarch64-unknown-linux-musl
             cross: true
             strip: false
@@ -53,7 +53,7 @@ jobs:
 
           - os: windows-latest
             target: x86_64-pc-windows-msvc
-            artifact_name: target/x86_64-pc-windows-msvc/release/cloud.exe
+            artifact_name: target/x86_64-pc-windows-msvc/release/homedisk.exe
             release_name: x86_64-pc-windows-msvc.exe
             cross: false
             strip: true
@@ -61,7 +61,7 @@ jobs:
 
           - os: macos-latest
             target: x86_64-apple-darwin
-            artifact_name: target/x86_64-apple-darwin/release/cloud
+            artifact_name: target/x86_64-apple-darwin/release/homedisk
             release_name: x86_64-apple-darwin
             cross: false
             strip: true
@@ -69,7 +69,7 @@ jobs:
 
           - os: macos-latest
             target: aarch64-apple-darwin
-            artifact_name: target/aarch64-apple-darwin/release/cloud
+            artifact_name: target/aarch64-apple-darwin/release/homedisk
             release_name: aarch64-apple-darwin
             cross: false
             strip: true
