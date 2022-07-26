@@ -2,9 +2,7 @@ use axum::{extract::rejection::JsonRejection, Json};
 use homedisk_types::errors::ServerError;
 
 /// Validate json request
-pub fn validate_json<T>(
-    payload: Result<Json<T>, JsonRejection>,
-) -> Result<Json<T>, ServerError> {
+pub fn validate_json<T>(payload: Result<Json<T>, JsonRejection>) -> Result<Json<T>, ServerError> {
     match payload {
         // if success return payload
         Ok(payload) => Ok(payload),
