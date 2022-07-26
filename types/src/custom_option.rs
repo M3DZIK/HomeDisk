@@ -8,6 +8,6 @@ pub trait OptionOkOrErr<T> {
 
 impl<T> OptionOkOrErr<T> for Option<T> {
     fn ok_or_err(self, desc: &str) -> Result<T, io::Error> {
-        self.ok_or(io::Error::new(io::ErrorKind::Other, desc))
+        self.ok_or_else(|| io::Error::new(io::ErrorKind::Other, desc))
     }
 }
