@@ -15,8 +15,8 @@ path = "./src/main.rs"
 anyhow = "1.0.58"
 better-panic = "0.3.0"
 tracing-subscriber = "0.3.15"
-tracing = { version = "0.1.35", features = ["max_level_debug", "release_max_level_info"] }
-tokio = { version = "1.20.0", features = ["rt-multi-thread", "macros"] }
+tracing = { version = "0.1.36", features = ["max_level_debug", "release_max_level_info"] }
+tokio = { version = "1.20.1", features = ["rt-multi-thread", "macros"] }
 homedisk-database = { path = "../database" }
 homedisk-server = { path = "../server" }
 homedisk-types = { path = "../types", features = ["config"] }
