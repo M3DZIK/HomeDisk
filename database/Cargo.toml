@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 tracing = "0.1.36"
 futures-util = "0.3.21"
-sqlx = { version = "0.6.0", features = ["runtime-tokio-rustls", "sqlite"] }
+sqlx = { version = "0.6.1", features = ["runtime-tokio-rustls", "sqlite"] }
 uuid = { version = "1.1.2", features = ["v5"] }
 homedisk-types = { path = "../types", features = ["database"] }
 

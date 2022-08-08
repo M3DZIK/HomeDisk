@@ -12,7 +12,7 @@ name = "homedisk"
 path = "./src/main.rs"
 
 [dependencies]
-anyhow = "1.0.58"
+anyhow = "1.0.60"
 better-panic = "0.3.0"
 tracing-subscriber = "0.3.15"
 tracing = { version = "0.1.36", features = ["max_level_debug", "release_max_level_info"] }
