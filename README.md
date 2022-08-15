@@ -5,8 +5,8 @@
 [code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
 [ci]: https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=for-the-badge
 
-[screenshot-home]: https://cdn.medzik.xyz/x4Glw7w.png
-[screenshot-login]: https://cdn.medzik.xyz/KpwY4nb.png
+[screenshot-home]: https://raw.githubusercontent.com/HomeDisk/.github/main/screenshots/home.png
+[screenshot-login]: https://raw.githubusercontent.com/HomeDisk/.github/main/screenshots/login.png
 
 [![docs-rs]](https://homedisk-doc.vercel.app)
 [![total-lines]](https://github.com/MedzikUser/HomeDisk)
