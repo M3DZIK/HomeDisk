@@ -2,7 +2,8 @@
 
 mod sqlite;
 
-pub use homedisk_types::database::User;
-pub use homedisk_types::errors::DatabaseError as Error;
-pub use homedisk_types::errors::DatabaseResult as Result;
+pub use homedisk_types::{
+    database::User,
+    errors::{DatabaseError as Error, DatabaseResult as Result},
+};
 pub use sqlite::*;

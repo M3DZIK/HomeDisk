@@ -15,9 +15,8 @@ pub fn validate_jwt(secret: &[u8], token: &str) -> Result<TokenData, ServerError
 mod tests {
     use homedisk_database::User;
 
-    use crate::middleware::create_token;
-
     use super::validate_jwt;
+    use crate::middleware::create_token;
 
     const USERNAME: &str = "username";
     const PASSWORD: &str = "password";

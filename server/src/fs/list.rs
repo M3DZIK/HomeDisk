@@ -1,5 +1,4 @@
-use std::path::PathBuf;
-use std::{fs, io};
+use std::{fs, io, path::PathBuf};
 
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;

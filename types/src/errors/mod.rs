@@ -7,7 +7,6 @@ mod fs;
 mod server;
 
 pub use auth::Error as AuthError;
-pub use database::Error as DatabaseError;
-pub use database::Result as DatabaseResult;
+pub use database::{Error as DatabaseError, Result as DatabaseResult};
 pub use fs::Error as FsError;
 pub use server::Error as ServerError;

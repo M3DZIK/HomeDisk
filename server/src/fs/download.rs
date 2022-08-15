@@ -3,9 +3,11 @@ use std::fs;
 use axum::{extract::Query, Extension};
 use axum_auth::AuthBearer;
 use homedisk_database::Database;
-use homedisk_types::errors::FsError;
-use homedisk_types::fs::upload::Pagination;
-use homedisk_types::{config::Config, errors::ServerError};
+use homedisk_types::{
+    config::Config,
+    errors::{FsError, ServerError},
+    fs::upload::Pagination,
+};
 
 use crate::middleware::{find_user, validate_jwt, validate_path};
 

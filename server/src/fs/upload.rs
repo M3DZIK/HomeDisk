@@ -1,5 +1,4 @@
-use std::io::Write;
-use std::{fs, path::Path};
+use std::{fs, io::Write, path::Path};
 
 use axum::{
     extract::{Multipart, Query},
