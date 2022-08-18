@@ -1,5 +1,8 @@
 # HomeDisk cloud server
 
+> **Warning**
+> Currently, work on the project is suspended because I'm not good at frontend and don't have time :(
+
 [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
 [total-lines]: https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk?style=for-the-badge&logo=github&color=fede00
 [code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github

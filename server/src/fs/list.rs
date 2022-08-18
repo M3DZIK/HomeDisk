@@ -91,8 +91,6 @@ pub async fn handle(
                 .get_appropriate_unit(true)
                 .to_string();
 
-            // TODO: fix modification time
-
             // check how long it has been since the file was last modified
             let elapsed = metadata.modified().unwrap().elapsed().unwrap();
 
