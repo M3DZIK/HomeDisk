@@ -118,14 +118,6 @@ jobs:
         shell: bash
         if: startsWith(github.ref, 'refs/tags/v')
 
-      - name: Get CHANGELOG.md entry
-        id: changelog_reader
-        uses: mindsers/changelog-reader-action@v1
-        with:
-          version: ${{ steps.tag_name.outputs.current_version }}
-          path: ./CHANGELOG.md
-        if: startsWith(github.ref, 'refs/tags/v')
-
       - name: Publish
         uses: svenstaro/upload-release-action@v2
         with:
@@ -133,5 +125,4 @@ jobs:
           file: ${{ matrix.artifact_name }}
           tag: ${{ github.ref }}
           asset_name: cloud-$tag-${{ matrix.release_name }}
-          body: ${{ steps.changelog_reader.outputs.log_entry }}
         if: startsWith(github.ref, 'refs/tags/v')
