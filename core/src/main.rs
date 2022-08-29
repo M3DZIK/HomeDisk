@@ -11,10 +11,8 @@ pub const DATABASE_FILE: &str = "homedisk.db";
 
 #[tokio::main]
 async fn main() {
-    // initialize logger
     logger::init();
 
-    // parse config
     let config = Config::parse().expect("parse config");
 
     // open database connection

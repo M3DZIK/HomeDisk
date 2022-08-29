@@ -45,16 +45,11 @@ impl Config {
     ///
     /// let config = Config::parse().unwrap();
     /// ```
-    pub fn parse() -> anyhow::Result<Config> {
-        // get path to the user's config directory
-        let sys_config_dir = dirs::config_dir().unwrap();
-        // path to the homedisk config file
-        let config_path = format!("{}/homedisk/config.toml", sys_config_dir.to_string_lossy());
+    pub fn parse() -> anyhow::Result<Self> {
+        let config_str = fs::read_to_string("config.toml")?;
 
-        // read file content to string
-        let config = fs::read_to_string(config_path)?;
+        let config = toml::from_str(&config_str)?;
 
-        // parse config and return it
-        Ok(toml::from_str(&config)?)
+        Ok(config)
     }
 }
