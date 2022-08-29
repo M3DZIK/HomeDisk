@@ -1,4 +1,3 @@
-# HTTP Server
 [http]
 # HTTP host
 host = "0.0.0.0"
@@ -10,14 +9,12 @@ cors = [
     "localhost:8000",
 ]
 
-# Json Web Token
 [jwt]
 # JWT Secret string (used to sign tokens)
 secret = "secret key used to sign tokens"
 # Token expiration time in hours
-expires = 24
+expires = 24 # one day
 
-# Storage
 [storage]
 # Directory where user files will be stored
 path = "/home/homedisk"

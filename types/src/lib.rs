@@ -2,7 +2,6 @@
 
 pub mod auth;
 pub mod config;
-pub mod custom_option;
 #[cfg(feature = "database")]
 pub mod database;
 pub mod errors;

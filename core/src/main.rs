@@ -13,7 +13,7 @@ pub const DATABASE_FILE: &str = "homedisk.db";
 async fn main() {
     logger::init();
 
-    let config = Config::parse().expect("parse config");
+    let config = Config::parse().expect("Failed to parse configuration file");
 
     // open database connection
     let db =
@@ -23,26 +23,25 @@ async fn main() {
             info!("Creating database file...");
 
             // create an empty database file
-            File::create(DATABASE_FILE).expect("create a database file");
+            File::create(DATABASE_FILE).expect("Failed to create a database file");
 
             // open database file
             let db = Database::open(DATABASE_FILE)
                 .await
-                .expect("open database file");
+                .expect("Failed to open database file");
 
             // create tables in the database
             db.create_tables()
                 .await
-                .expect("create tables in the database");
+                .expect("Failed to create tables in the database");
 
             db
         }
         // if database file exists
         else {
-            // open database connection
             Database::open(DATABASE_FILE)
                 .await
-                .expect("open database file")
+                .expect("Failed to open database file")
         };
 
     // change the type from Vec<String> to Vec<HeaderValue> so that the http server can correctly detect CORS hosts
@@ -60,7 +59,6 @@ async fn main() {
         port = config.http.port
     );
 
-    // start http server
     serve_http(host, origins, db, config)
         .await
         .expect("start http server");
