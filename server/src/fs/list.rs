@@ -1,4 +1,4 @@
-use std::{fs, io, path::PathBuf};
+use std::{fs, io, path::PathBuf, time::SystemTime};
 
 use axum::{extract::rejection::JsonRejection, Extension, Json};
 use axum_auth::AuthBearer;
@@ -91,26 +91,13 @@ pub async fn handle(
                 .get_appropriate_unit(true)
                 .to_string();
 
-            // check how long it has been since the file was last modified
-            let elapsed = metadata.modified().unwrap().elapsed().unwrap();
-
-            let seconds = elapsed.as_secs();
-            let minutes = seconds / 60;
-            let hours = minutes / 60;
-            let days = hours / 24;
-
-            let modified;
-
-            // format elapsed time
-            if days > 1 {
-                modified = format!("{} day(s)", days)
-            } else if hours > 1 {
-                modified = format!("{} hour(s)", hours)
-            } else if minutes > 1 {
-                modified = format!("{} minute(s)", minutes)
-            } else {
-                modified = format!("{} second(s)", seconds)
-            }
+            // get modification time in unix time format
+            let modified = metadata
+                .modified()
+                .unwrap()
+                .duration_since(SystemTime::UNIX_EPOCH)
+                .unwrap()
+                .as_secs();
 
             files.push(FileInfo {
                 name,

@@ -26,7 +26,7 @@ pub struct FileInfo {
     /// File size
     pub size: String,
     /// Latest modification of this file
-    pub modified: String,
+    pub modified: u64,
 }
 
 /// Info about a directory

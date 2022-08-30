@@ -13,8 +13,8 @@ pub enum Error {
     FsError(#[from] FsError),
     #[error("too may requests, please slow down")]
     TooManyRequests,
-    #[error("missing json in Content-Type header")]
-    MissingJsonContentType,
+    #[error("invalid Content-Type")]
+    InvalidContentType,
     #[error("failed to deserialize json")]
     JsonDataError,
     #[error("syntax error in json")]

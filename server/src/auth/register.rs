@@ -41,7 +41,7 @@ pub async fn handle(
         Ok(_result) => {
             let token = create_token(&user, config.jwt.secret.as_bytes(), config.jwt.expires)?;
 
-            Response::LoggedIn {
+            Response {
                 access_token: token,
             }
         },

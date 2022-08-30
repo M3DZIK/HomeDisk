@@ -47,7 +47,6 @@ pub async fn handle(
     // delete directory
     else if path.is_dir() {
         fs::remove_dir(&path)
-            // return error
             .map_err(|err| ServerError::FsError(FsError::DeleteDirectory(err.to_string())))?;
     }
 

@@ -63,10 +63,11 @@ pub async fn handle(
     let file = std::fs::File::create(&file_path)
         .map_err(|err| ServerError::FsError(FsError::CreateFile(err.to_string())))?;
 
-    // write file
+    // write file (chunk by chunk)
     field
         .try_fold((file, 0u64), |(mut file, written_len), bytes| async move {
-            file.write_all(bytes.as_ref()).expect("write file error");
+            file.write_all(bytes.as_ref())
+                .expect("failed to write chunk to file");
 
             Ok((file, written_len + bytes.len() as u64))
         })

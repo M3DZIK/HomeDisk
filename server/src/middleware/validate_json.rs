@@ -7,7 +7,7 @@ pub fn validate_json<T>(payload: Result<Json<T>, JsonRejection>) -> Result<Json<
         // if success return payload
         Ok(payload) => Ok(payload),
         // mission json in Content-Type Header
-        Err(JsonRejection::MissingJsonContentType(_)) => Err(ServerError::MissingJsonContentType),
+        Err(JsonRejection::MissingJsonContentType(_)) => Err(ServerError::InvalidContentType),
         // failed to deserialize json
         Err(JsonRejection::JsonDataError(_)) => Err(ServerError::JsonDataError),
         // syntax error in json
