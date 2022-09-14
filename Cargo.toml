@@ -1,8 +1,40 @@
-[workspace]
-members = [
-    "core",
-    "database",
-    "server",
-    "types",
-]
-resolver = "2"
+[package]
+name = "homedisk"
+authors = ["MedzikUser <medzik@duck.com>"]
+homepage = "https://github.com/HomeDisk/cloud"
+repository = "https://github.com/HomeDisk/cloud"
+license = "GPL-3.0-or-later"
+version = "0.0.0-dev"
+edition = "2021"
+
+[dependencies]
+# Types
+serde = { version = "1.0", features = ["derive"] }
+# Errors
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logger
+tracing = { version = "0.1", features = ["max_level_debug", "release_max_level_info", "log"] }
+tracing-subscriber = "0.3"
+# Backtrace in panic hook
+backtrace = "0.3"
+
+# Tokio runtime
+tokio = { version = "1.20", features = ["rt-multi-thread", "macros"] }
+
+# Database
+futures-util = "0.3"
+sqlx = { version = "0.6", features = ["runtime-tokio-rustls", "sqlite"] }
+uuid = { version = "1.1", features = ["v4"] }
+
+# Cryptographic
+crypto-utils = "0.4"
+hex = "0.4"
+
+# Config
+toml = "0.5"
+
+# HTTP server
+axum = { version = "0.6.0-rc.2", features = ["http2", "multipart"] }
+byte-unit = "4.0.14"
