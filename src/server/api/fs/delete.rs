@@ -29,9 +29,9 @@ pub async fn delete(
     }
 
     if path.is_dir() {
-        fs::remove_dir(&path).map_err(|_| Error::DeleteDirectory)?;
+        fs::remove_dir(path).map_err(|_| Error::DeleteDirectory)?;
     } else {
-        fs::remove_file(&path).map_err(|_| Error::DeleteFile)?;
+        fs::remove_file(path).map_err(|_| Error::DeleteFile)?;
     }
 
     Ok(Json(Response { success: true }))

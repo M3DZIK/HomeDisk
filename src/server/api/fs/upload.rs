@@ -34,7 +34,7 @@ pub async fn upload(
     // e.g. path ==> `/secret/files/images/screenshot.png`
     // directories up to `{storage dir}/{username}/secret/files/images/` will be created
     if let Some(prefix) = path.parent() {
-        fs::create_dir_all(&prefix).map_err(|_| Error::CreateDirectory)?
+        fs::create_dir_all(prefix).map_err(|_| Error::CreateDirectory)?
     }
 
     let field = multipart
