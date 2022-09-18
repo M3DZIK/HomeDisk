@@ -25,7 +25,8 @@ impl Database {
         debug!("Opening SQLite database: {}", path);
 
         // sqlite connection options
-        let mut options = SqliteConnectOptions::from_str(path).map_err(Error::OpenDatabase)?;
+        let mut options =
+            SqliteConnectOptions::from_str(path).map_err(|e| Error::OpenDatabase(e.to_string()))?;
 
         // set log level to Debug
         options.log_statements(LevelFilter::Debug);
@@ -33,7 +34,7 @@ impl Database {
         // create a database pool
         let pool = SqlitePool::connect_with(options)
             .await
-            .map_err(Error::ConnectDatabase)?;
+            .map_err(|e| Error::ConnectDatabase(e.to_string()))?;
 
         info!("Connected to database!");
 
@@ -45,7 +46,7 @@ impl Database {
         self.pool
             .execute(include_str!("../../tables.sql"))
             .await
-            .map_err(Error::CreateTables)
+            .map_err(|e| Error::CreateTables(e.to_string()))
     }
 
     /// Create new user in the database.
@@ -58,7 +59,10 @@ impl Database {
             .bind(&user.username)
             .bind(&user.password);
 
-        self.pool.execute(query).await.map_err(Error::Execute)
+        self.pool
+            .execute(query)
+            .await
+            .map_err(|e| Error::Execute(e.to_string()))
     }
 
     /// Search for a user.
@@ -77,7 +81,7 @@ impl Database {
         let row = stream
             .try_next()
             .await
-            .map_err(Error::Execute)?
+            .map_err(|e| Error::Execute(e.to_string()))?
             .ok_or(Error::UserNotFound)?;
 
         Self::find(row)
@@ -97,7 +101,7 @@ impl Database {
         let row = stream
             .try_next()
             .await
-            .map_err(Error::Execute)?
+            .map_err(|e| Error::Execute(e.to_string()))?
             .ok_or(Error::UserNotFound)?;
 
         Self::find(row)
@@ -105,11 +109,17 @@ impl Database {
 
     fn find(row: SqliteRow) -> Result<User> {
         // get `id` row
-        let id = row.try_get("id").map_err(Error::GetRow)?;
+        let id = row
+            .try_get("id")
+            .map_err(|e| Error::GetRow(e.to_string()))?;
         // get `username` row
-        let username = row.try_get("username").map_err(Error::GetRow)?;
+        let username = row
+            .try_get("username")
+            .map_err(|e| Error::GetRow(e.to_string()))?;
         // get `password` row
-        let password = row.try_get("password").map_err(Error::GetRow)?;
+        let password = row
+            .try_get("password")
+            .map_err(|e| Error::GetRow(e.to_string()))?;
 
         Ok(User {
             id,
@@ -154,7 +164,10 @@ mod tests {
     async fn test_find_user() {
         let db = new_user().await;
 
-        let user = db.find_user(&User::new(USERNAME, PASSWORD, false)).await.unwrap();
+        let user = db
+            .find_user(&User::new(USERNAME, PASSWORD, false))
+            .await
+            .unwrap();
 
         assert_eq!(user.username, USERNAME)
     }
@@ -168,6 +181,6 @@ mod tests {
             .await
             .unwrap_err();
 
-        assert_eq!(err.to_string(), "user not found")
+        assert_eq!(err, Error::UserNotFound)
     }
 }
