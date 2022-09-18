@@ -1,4 +1,5 @@
-//! [Configuration file types](Config).
+//! [Configuration file types](Config)
+
 use std::fs;
 
 use serde::{Deserialize, Serialize};

@@ -1,36 +1,13 @@
-# HomeDisk cloud server
+<p align="center">
+    <img width="500" src="https://raw.githubusercontent.com/HomeDisk/.github/main/img/HomeDisk.svg" alt="HomeDisk Icon" />
+</p>
 
-> **Warning**
-> Currently, work on the project is suspended because I'm not good at frontend and don't have time :(
-
-[docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
-[total-lines]: https://img.shields.io/tokei/lines/github/MedzikUser/HomeDisk?style=for-the-badge&logo=github&color=fede00
-[code-size]: https://img.shields.io/github/languages/code-size/MedzikUser/HomeDisk?style=for-the-badge&color=c8df52&logo=github
-[ci]: https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=for-the-badge
-
-[screenshot-home]: https://raw.githubusercontent.com/HomeDisk/.github/main/screenshots/home.png
-[screenshot-login]: https://raw.githubusercontent.com/HomeDisk/.github/main/screenshots/login.png
-
-[![docs-rs]](https://homedisk-doc.vercel.app)
-[![total-lines]](https://github.com/MedzikUser/HomeDisk)
-[![code-size]](https://github.com/MedzikUser/HomeDisk)
-[![ci]](https://github.com/MedzikUser/HomeDisk/actions/workflows/rust.yml)
-
-![screenshot-home]
-
-![screenshot-login]
-
-## 👨‍💻 Building
-
-First clone the repository: `git clone https://github.com/MedzikUser/HomeDisk.git`
-
-### Requirements
-- Rust
-
-To build run the command: `cargo build --release`
-
-The compiled binary can be found in `./target/release/homedisk`
-
-## Configure
-
-Go to [config](https://homedisk-doc.medzik.xyz/homedisk_types/config) module
+<p align="center">
+    <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/badge/built_with-Rust-dca282.svg?style=flat-square"></a>
+    &nbsp;
+    <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/badge/license-GPL_3.1-00bfff.svg?style=flat-square"></a>
+    &nbsp;
+    <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=flat-square"></a>
+    &nbsp;
+    <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/badge/docs.rs-66c2a5?style=flat-square&labelColor=555555&logo=docs.rs"></a>
+</p>
