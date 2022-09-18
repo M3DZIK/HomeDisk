@@ -9,5 +9,7 @@
     &nbsp;
     <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/github/workflow/status/MedzikUser/HomeDisk/Rust/main?style=flat-square"></a>
     &nbsp;
-    <a href="https://github.com/MedzikUser/HomeDisk"><img src="https://img.shields.io/badge/docs.rs-66c2a5?style=flat-square&labelColor=555555&logo=docs.rs"></a>
+    <a href="https://homedisk-doc.vercel.app"><img src="https://img.shields.io/badge/docs.rs-66c2a5?style=flat-square&labelColor=555555&logo=docs.rs"></a>
+    &nbsp;
+    <a href="https://documenter.getpostman.com/view/23280189/VVk9dwRk"><img src="https://img.shields.io/badge/API_Docs-66c2a5?style=flat-square&labelColor=555555&logo=postman"></a>
 </p>

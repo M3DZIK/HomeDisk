@@ -19,7 +19,6 @@ pub struct Database {
     pub pool: SqlitePool,
 }
 
-// TODO: Check UUID
 impl Database {
     /// Open a SQLite database
     pub async fn open(path: &str) -> Result<Self> {

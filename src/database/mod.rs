@@ -1,4 +1,4 @@
-//! [SQLite database functions](sqlite::Database).
+//! [SQLite database functions](sqlite::Database)
 
 pub mod error;
 mod sqlite;
