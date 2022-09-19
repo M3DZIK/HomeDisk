@@ -13,3 +13,22 @@
     &nbsp;
     <a href="https://documenter.getpostman.com/view/23280189/VVk9dwRk"><img src="https://img.shields.io/badge/API_Docs-887BB0?style=flat-square&labelColor=555555&logo=postman"></a>
 </p>
+
+## Documentation
+
+### 👨‍💻 Compile server
+
+```bash
+cargo build --release
+```
+
+Now you can run server using command `./target/release/homedisk`.
+
+### 🔒 Generate development TLS certificate
+
+```bash
+# Generate private key
+openssl genrsa -out cert.key 204
+# Generate certificate
+openssl req -new -x509 -key cert.key -out cert.pem -days 365
+```

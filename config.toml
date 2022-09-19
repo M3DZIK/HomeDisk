@@ -1,20 +1,14 @@
 [http]
-# HTTP host
 host = "0.0.0.0"
-# HTTP port
-port = 8080
-# Cors domains
-cors = [
-    "127.0.0.1:8000",
-    "localhost:8000",
-]
+httpPort = 8080 # http server port (recommended 80)
+httpsPort = 8443 # https server port (recommended 443)
+cors = [ "localhost:8000" ] # CORS domains
+tlsCert = "./cert.pem" # TLS certificate file
+tlsKey = "./cert.key" # TLS key file
 
 [jwt]
-# JWT Secret string (used to sign tokens)
-secret = "secret key used to sign tokens"
-# Token expiration time in hours
-expires = 24 # one day
+secret = "secret key used to sign tokens" # jsonwebtoken secret string used to sign tokens
+expires = 24 # token expiration time in hours (default one day)
 
 [storage]
-# Directory where user files will be stored
-path = "/home/homedisk"
+path = "/home/homedisk" # path to directory where user files will be stored

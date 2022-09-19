@@ -37,6 +37,7 @@ toml = "0.5"
 
 # HTTP server
 axum = { version = "0.6.0-rc.2", features = ["http2", "multipart"] }
+axum-server = { version = "0.4", features = ["tls-rustls"] }
 tower-http = { version = "0.3", features = ["full"] }
 hyper = { version = "0.14", features = ["full"] }
 byte-unit = "4.0.14"

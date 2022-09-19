@@ -10,6 +10,10 @@
 *.db-shm
 *.db-wal
 
+# Tls
+cert.key
+cert.pem
+
 # IDE configs
 .idea
 .vscode
