@@ -1,9 +1,9 @@
 use crypto_utils::sha::{Algorithm, CryptographicHash};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use uuid::Uuid;
 
 /// SQL user entry
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Serialize)]
 pub struct User {
     pub id: String,
     pub username: String,

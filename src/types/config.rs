@@ -1,17 +1,15 @@
-//! [Configuration file types](Config)
-
 use std::fs;
 
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct Config {
     pub http: ConfigHTTP,
     pub jwt: ConfigJWT,
     pub storage: ConfigStorage,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ConfigHTTP {
     pub host: String,
@@ -22,13 +20,13 @@ pub struct ConfigHTTP {
     pub tls_key: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct ConfigJWT {
     pub secret: String,
     pub expires: i64,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct ConfigStorage {
     pub path: String,
 }

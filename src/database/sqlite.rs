@@ -13,7 +13,7 @@ use super::{
 };
 
 /// SQLite database
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct Database {
     /// Sqlite connection pool
     pub pool: SqlitePool,
