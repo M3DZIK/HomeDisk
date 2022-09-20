@@ -5,6 +5,8 @@ use tracing::error;
 #[derive(Debug, Clone, Error)]
 pub enum Error {
     // auth error
+    #[error("Too many request, please slow down.")]
+    RateLimit,
     #[error("User not found")]
     UserNotFound,
     #[error("User already exists")]
@@ -62,6 +64,7 @@ impl axum::response::IntoResponse for Error {
         error!("Error: {:?}", self);
 
         let status = match self {
+            Error::RateLimit => StatusCode::TOO_MANY_REQUESTS,
             Error::GenerateToken => StatusCode::INTERNAL_SERVER_ERROR,
             Error::Database => StatusCode::INTERNAL_SERVER_ERROR,
             _ => StatusCode::BAD_REQUEST,

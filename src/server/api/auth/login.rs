@@ -5,14 +5,21 @@ use serde::{Deserialize, Serialize};
 use crate::{
     config::Config,
     database::{error::Error as DatabaseError, Database, User},
-    server::error::*,
+    server::{
+        error::*,
+        utils::ratelimit::{check_limit_login, ClientIp},
+    },
 };
 
 pub async fn login(
     Extension(db): Extension<Database>,
     Extension(config): Extension<Config>,
+    ClientIp(ip): ClientIp,
     request: Json<Request>,
 ) -> Result<Json<Response>> {
+    // check rate limit
+    check_limit_login(&ip)?;
+
     let user = User::new(&request.username, &request.password, false);
 
     let response = match db.find_user(&user).await {
