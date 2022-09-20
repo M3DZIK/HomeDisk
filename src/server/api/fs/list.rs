@@ -1,4 +1,4 @@
-use std::{fs, time::SystemTime};
+use std::{fs, io, path::PathBuf, time::SystemTime};
 
 use axum::{Extension, Json};
 use byte_unit::Byte;
@@ -15,6 +15,22 @@ use crate::{
     },
 };
 
+/// Get directory size on disk (size of all files in directory).
+fn dir_size(path: impl Into<PathBuf>) -> io::Result<u64> {
+    fn dir_size(mut dir: fs::ReadDir) -> io::Result<u64> {
+        dir.try_fold(0, |acc, file| {
+            let file = file?;
+            let size = match file.metadata()? {
+                data if data.is_dir() => dir_size(fs::read_dir(file.path())?)?,
+                data => data.len(),
+            };
+            Ok(acc + size)
+        })
+    }
+
+    dir_size(fs::read_dir(path.into())?)
+}
+
 pub async fn list(
     Extension(config): Extension<Config>,
     path: PathQuery,
@@ -26,34 +42,35 @@ pub async fn list(
 
     let path = format!("{}/{}", user.user_dir(&config.storage.path), path);
 
-    let paths = fs::read_dir(&path).map_err(|_| Error::FailedReadDirectory)?;
+    let mut paths = fs::read_dir(&path).map_err(|_| Error::FailedReadDirectory)?;
 
-    for dir_entry in paths {
-        let dir_entry = dir_entry.unwrap();
+    while let Some(Ok(entry)) = paths.next() {
+        let metadata = entry.metadata().unwrap();
 
-        let metadata = dir_entry.metadata().unwrap();
-
-        let name = dir_entry
+        let name = entry
             .path()
             .display()
             .to_string()
             .replace(&format!("{path}/"), "")
             .replace(&path, "");
 
+        let modified = metadata
+            .modified()
+            .unwrap()
+            .duration_since(SystemTime::UNIX_EPOCH)
+            .unwrap()
+            .as_secs();
+
         if metadata.is_dir() {
-            // TODO: add size and modification date
-            response.dirs.push(Entry::new(name, 0.to_string(), 0))
+            let size = Byte::from_bytes(dir_size(entry.path()).unwrap().into())
+                .get_appropriate_unit(true)
+                .to_string();
+
+            response.dirs.push(Entry::new(name, size, modified))
         } else {
             let size = Byte::from_bytes(metadata.len().into())
                 .get_appropriate_unit(true)
                 .to_string();
-
-            let modified = metadata
-                .modified()
-                .unwrap()
-                .duration_since(SystemTime::UNIX_EPOCH)
-                .unwrap()
-                .as_secs();
 
             response.files.push(Entry::new(name, size, modified));
         }
