@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-release:
-    uses: ./.github/workflows/build_releases.yml
+    uses: ./.github/workflows/build-releases.yml
 
   upload-release:
     runs-on: ubuntu-latest

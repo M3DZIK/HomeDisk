@@ -12,7 +12,7 @@ env:
 
 jobs:
   build-release:
-    uses: ./.github/workflows/build_releases.yml
+    uses: ./.github/workflows/build-releases.yml
 
   clippy-and-tests:
     strategy:
