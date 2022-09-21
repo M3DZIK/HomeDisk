@@ -97,7 +97,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --target=${{ matrix.target }} ${{ matrix.release_name }}
+          args: --release --target=${{ matrix.target }}
           use-cross: ${{ matrix.cross }}
 
       - name: Prepare artifact
