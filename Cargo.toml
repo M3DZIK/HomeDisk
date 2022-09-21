@@ -1,5 +1,6 @@
 [package]
 name = "homedisk"
+description = "Extremely fast and lightweight local cloud for your data written in Rust."
 authors = ["MedzikUser <medzik@duck.com>"]
 homepage = "https://github.com/HomeDisk/cloud"
 repository = "https://github.com/HomeDisk/cloud"
@@ -40,8 +41,11 @@ axum = { version = "0.6.0-rc.2", features = ["http2", "multipart"] }
 axum-server = { version = "0.4", features = ["tls-rustls"] }
 tower-http = { version = "0.3", features = ["full"] }
 hyper = { version = "0.14", features = ["full"] }
-byte-unit = "4.0.14"
+byte-unit = "4.0"
 
 # HTTP rate limiting
-once_cell = "1.14.0"
-governor = "0.5.0"
+once_cell = "1.14"
+governor = "0.5"
+
+# CLI
+clap = { version = "3.2", features = ["derive"] }

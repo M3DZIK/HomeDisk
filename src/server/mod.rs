@@ -89,7 +89,7 @@ async fn redirect_http_to_https(config: Config) {
         }
     };
 
-    debug!("🚀 Http redirect listening on http://{host}");
+    debug!("🚀 HTTPS redirect listening on http://{host}");
 
     axum::Server::bind(&host.parse().unwrap())
         .serve(redirect.into_make_service())
