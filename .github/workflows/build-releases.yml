@@ -15,6 +15,7 @@ jobs:
       matrix:
         target:
           - x86_64-unknown-linux-musl
+          - i686-unknown-linux-musl
           - armv7-unknown-linux-musleabihf
           - aarch64-unknown-linux-musl
           - x86_64-pc-windows-msvc
@@ -26,6 +27,14 @@ jobs:
             target: x86_64-unknown-linux-musl
             artifact_path: target/x86_64-unknown-linux-musl/release/homedisk
             release_name: x86_64-unknown-linux-musl
+            cross: true
+            strip: true
+            cargo_flags: ""
+
+          - os: ubuntu-latest
+            target: i686-unknown-linux-musl
+            artifact_path: target/i686-unknown-linux-musl/release/homedisk
+            release_name: i686-unknown-linux-musl
             cross: true
             strip: true
             cargo_flags: ""
