@@ -2,8 +2,6 @@ name: Build release binaries (and publish them if this is a tag)
 
 on:
   push:
-    tags:
-      - "*"
 
   # pull_request:
 
