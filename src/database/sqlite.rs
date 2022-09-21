@@ -19,6 +19,8 @@ pub struct Database {
     pub pool: SqlitePool,
 }
 
+pub const DATABASE_TABLES: &str = include_str!("../../sql/tables.sql");
+
 impl Database {
     /// Open a SQLite database
     pub async fn open(path: &str) -> Result<Self> {
@@ -44,7 +46,7 @@ impl Database {
     /// Create all required tables for HomeDisk.
     pub async fn create_tables(&self) -> Result<SqliteQueryResult> {
         self.pool
-            .execute(include_str!("../../tables.sql"))
+            .execute(DATABASE_TABLES)
             .await
             .map_err(|e| Error::CreateTables(e.to_string()))
     }

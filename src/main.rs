@@ -6,7 +6,11 @@
 //!
 //! Go to [config] module
 
-use std::{fs::File, io::Write, path::Path};
+use std::{
+    fs::{self, File},
+    io::Write,
+    path::Path,
+};
 
 use clap::Parser;
 use config::Config;
@@ -42,7 +46,7 @@ async fn main() {
     let args = Cli::parse();
 
     let config_path = args.config;
-    let database_path = &args.database;
+    let database_path = args.database;
 
     // if configuration file doesn't exist, create it
     if !Path::new(&config_path).exists() {
@@ -61,6 +65,12 @@ async fn main() {
 
     let config = Config::parse(&config_path).expect("notrace - Failed to parse configuration file");
 
+    // if storage directory doesn't exist, create it
+    if !Path::new(&config.storage.path).exists() {
+        fs::create_dir_all(&config.storage.path)
+            .expect("notrace - Failed to create storage directory");
+    }
+
     // open database connection
     let db =
         // if database file doesn't exists create it
@@ -69,10 +79,10 @@ async fn main() {
             info!("Creating database file...");
 
             // create an empty database file
-            File::create(database_path).expect("notrace - Failed to create a database file");
+            File::create(&database_path).expect("notrace - Failed to create a database file");
 
             // open database file
-            let db = Database::open(database_path)
+            let db = Database::open(&database_path)
                 .await
                 .expect("notrace - Failed to open database file");
 
@@ -85,7 +95,7 @@ async fn main() {
         }
         // if database file exists
         else {
-            Database::open(database_path)
+            Database::open(&database_path)
                 .await
                 .expect("notrace - Failed to open database file")
         };
