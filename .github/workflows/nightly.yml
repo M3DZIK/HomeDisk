@@ -1,0 +1,53 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-release:
+    uses: ./.github/workflows/build_releases.yml
+
+  upload-release:
+    runs-on: ubuntu-latest
+    needs: [build-release]
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: ./
+
+      - name: Move artifacts
+        run: |
+          mkdir release
+          mv release-*/* release/
+          echo "Generated $(ls ./release | wc -l) files:"
+          du -h -d 0 ./release/*
+
+      - name: Delete tag and release
+        uses: dev-drprasad/delete-tag-and-release@085c6969f18bad0de1b9f3fe6692a3cd01f64fe5 # 0.2.0
+        with:
+          delete_release: true
+          tag_name: nightly
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sleep for a few seconds to prevent timing issues between the deletion and creation of the release
+        run: sleep 10
+
+      - name: Upload all release files
+        uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a # 0.1.14
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          tag_name: "nightly"
+          draft: false
+          fail_on_unmatched_files: true
+          files: |
+            ./release/*
