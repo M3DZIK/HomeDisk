@@ -8,7 +8,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  binaries:
+  build-binaries:
     strategy:
       fail-fast: false
 
