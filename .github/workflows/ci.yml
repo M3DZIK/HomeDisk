@@ -21,7 +21,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         rust: [stable, nightly]
 
-    name: ${{ matrix.rust }} on ${{ matrix.os }}
+    name: clippy and tests ${{ matrix.rust }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     steps:

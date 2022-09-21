@@ -104,7 +104,7 @@ jobs:
         shell: bash
         run: |
           mkdir release
-          mv ${{ matrix.artifact_path }} release/${{ matrix.artifact_path }}
+          mv ${{ matrix.artifact_path }} release/${{ matrix.release_name }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
