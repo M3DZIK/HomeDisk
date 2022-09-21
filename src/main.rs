@@ -6,7 +6,7 @@
 //!
 //! Go to [config] module
 
-use std::{fs::File, path::Path};
+use std::{fs::File, io::Write, path::Path};
 
 use config::Config;
 use tracing::{info, warn};
@@ -23,10 +23,27 @@ mod server;
 pub const DATABASE_FILE: &str = "homedisk.db";
 /// Default configuration file.
 pub const CONFIG_FILE: &str = "config.toml";
+/// Default configuration file content.
+pub static DEFAULT_CONFIG_CONTENT: &'static [u8] = include_bytes!("../config.toml");
 
 #[tokio::main]
 async fn main() {
     logger::init();
+
+    // if configuration file doesn't exist, create it
+    if !Path::new(CONFIG_FILE).exists() {
+        warn!("Configuration file doesn't exists.");
+
+        let mut file =
+            File::create(CONFIG_FILE).expect("notrace - Failed to create configuration file");
+
+        file.write_all(DEFAULT_CONFIG_CONTENT)
+            .expect("notrace - Failed to write default configuration to config file");
+
+        info!("Created default configuration file.");
+
+        std::process::exit(0);
+    }
 
     let config = Config::parse(CONFIG_FILE).expect("notrace - Failed to parse configuration file");
 
