@@ -2,7 +2,10 @@ mod api;
 pub mod error;
 pub mod utils;
 
-use std::{path::{PathBuf, Path}, process::exit};
+use std::{
+    path::{Path, PathBuf},
+    process::exit,
+};
 
 use anyhow::anyhow;
 use axum::{
@@ -18,20 +21,27 @@ use tower_http::{
     cors::{AllowOrigin, CorsLayer},
     BoxError,
 };
-use tracing::{debug, info, error};
+use tracing::{debug, error, info};
 
 use crate::{config::Config, database::Database};
 
 pub async fn start_server(config: Config, db: Database) -> anyhow::Result<()> {
-    let host = format!("{}:{}", config.http.host, config.http.https_port);
+    let host = if config.http.enable_https {
+        format!("{}:{}", config.http.host, config.http.https_port)
+    } else {
+        format!("{}:{}", config.http.host, config.http.http_port)
+    };
 
-    // check if tls cert and key file exists
-    if !Path::new(&config.http.tls_cert).exists() || !Path::new(&config.http.tls_key).exists() {
-        error!("TLS cert or/and key file not found!");
-        exit(1);
+    if config.http.enable_https {
+        // check if tls cert and key file exists
+        if !Path::new(&config.http.tls_cert).exists() || !Path::new(&config.http.tls_key).exists() {
+            error!("TLS cert or/and key file not found!");
+            exit(1);
+        }
+
+        // start http redirect to https
+        tokio::spawn(redirect_http_to_https(config.clone()));
     }
-
-    tokio::spawn(redirect_http_to_https(config.clone()));
 
     info!("🚀 Server has launched on https://{host}");
 
@@ -43,23 +53,33 @@ pub async fn start_server(config: Config, db: Database) -> anyhow::Result<()> {
         .map(|e| e.parse().expect("Failed to parse CORS hosts"))
         .collect::<Vec<HeaderValue>>();
 
-    let tls_config = RustlsConfig::from_pem_file(
-        PathBuf::from("").join("").join(&config.http.tls_cert),
-        PathBuf::from("").join("").join(&config.http.tls_key),
-    )
-    .await
-    .unwrap();
-
     let app = Router::new()
         .nest("/api", api::app())
         .route("/", get(api::health))
         .layer(CorsLayer::new().allow_origin(AllowOrigin::list(origins)))
-        .layer(Extension(config))
+        .layer(Extension(config.clone()))
         .layer(Extension(db));
 
-    axum_server::bind_rustls(host.parse()?, tls_config)
-        .serve(app.into_make_service())
-        .await?;
+    // if https is enabled, run it, otherwise run server http
+    if config.http.enable_https {
+        // start https server
+        let tls_config = RustlsConfig::from_pem_file(
+            PathBuf::from("").join("").join(&config.http.tls_cert),
+            PathBuf::from("").join("").join(&config.http.tls_key),
+        )
+        .await
+        .unwrap();
+
+        axum_server::bind_rustls(host.parse()?, tls_config)
+            .serve(app.into_make_service())
+            .await?;
+    } else {
+        // start http server
+        axum::Server::bind(&host.parse().unwrap())
+            .serve(app.into_make_service())
+            .await
+            .unwrap();
+    }
 
     Err(anyhow!("Server unexpected stopped!"))
 }

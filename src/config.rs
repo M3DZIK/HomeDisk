@@ -14,6 +14,7 @@ pub struct Config {
 pub struct ConfigHTTP {
     pub host: String,
     pub http_port: u16,
+    pub enable_https: bool,
     pub https_port: u16,
     pub cors: Vec<String>,
     pub tls_cert: String,

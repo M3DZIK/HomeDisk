@@ -1,6 +1,7 @@
 [http]
 host = "0.0.0.0"
 httpPort = 8080 # http server port (recommended 80)
+enableHttps = true # if true start https server and http will be redirect to https
 httpsPort = 8443 # https server port (recommended 443)
 cors = [ "localhost:8000" ] # CORS domains
 tlsCert = "./cert.pem" # TLS certificate file
