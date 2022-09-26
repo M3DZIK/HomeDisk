@@ -80,7 +80,7 @@ jobs:
           echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
 
       - name: Upload release files
-        uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a # 0.1.14
+        uses: softprops/action-gh-release@cd28b0f5ee8571b76cfdaa62a30d51d752317477 # 0.1.14
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: false
