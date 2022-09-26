@@ -2,7 +2,7 @@ mod api;
 pub mod error;
 pub mod utils;
 
-use std::path::PathBuf;
+use std::{path::{PathBuf, Path}, process::exit};
 
 use anyhow::anyhow;
 use axum::{
@@ -18,12 +18,18 @@ use tower_http::{
     cors::{AllowOrigin, CorsLayer},
     BoxError,
 };
-use tracing::{debug, info};
+use tracing::{debug, info, error};
 
 use crate::{config::Config, database::Database};
 
 pub async fn start_server(config: Config, db: Database) -> anyhow::Result<()> {
     let host = format!("{}:{}", config.http.host, config.http.https_port);
+
+    // check if tls cert and key file exists
+    if !Path::new(&config.http.tls_cert).exists() || !Path::new(&config.http.tls_key).exists() {
+        error!("TLS cert or/and key file not found!");
+        exit(1);
+    }
 
     tokio::spawn(redirect_http_to_https(config.clone()));
 

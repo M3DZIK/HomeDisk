@@ -28,7 +28,7 @@ Now you can run server using command `./target/release/homedisk`.
 
 ```bash
 # Generate private key
-openssl genrsa -out cert.key 204
+openssl genrsa -out cert.key 2048
 # Generate certificate
 openssl req -new -x509 -key cert.key -out cert.pem -days 365
 ```

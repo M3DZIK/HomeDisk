@@ -11,4 +11,4 @@ secret = "secret key used to sign tokens" # jsonwebtoken secret string used to s
 expires = 24 # token expiration time in hours (default one day)
 
 [storage]
-path = "/home/homedisk" # path to directory where user files will be stored
+path = "storage" # path to directory where user files will be stored
